@@ -2,6 +2,8 @@
 #define LIBPRO
 
 void open_ppm(int image[]);
-void drawLine(int x1, int y1, int x2, int y2);
+void drawPixel(int x, int y, int color, int image[], int width, int max);
+void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width, int max);
+
 
 #endif

@@ -1,6 +1,7 @@
 #include "libgmini.h"
 #include "libgmini.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(int image[])
@@ -76,7 +77,49 @@ void open_ppm(int image[])
 	fclose(img);
 }
 
-void drawLine(int x1, int y1, int x2, int y2)
+// Draw a pixel with the given color
+void drawPixel(int x, int y, int color, int image[], int width, int max)
 {
-	
+	int index=y*width+x;
+	if (index>=max)
+	{
+		return;
+	}
+	image[index]=color;
+}
+
+void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width, int max)
+{
+	int dx = abs(x1-x0);
+	int sx;
+	if(x0<x1)
+		sx=1;
+	else
+		sx=-1;
+
+	int dy = -abs(y1-y0);
+	int sy;
+	if(y0<y1)
+		sy=1;
+	else
+		sy=-1;
+
+	int err = dx+dy;
+	int e2=0;
+	drawPixel(x0, y0, color, image, width, max);
+	while(x0!=x1 && y0!=y1)
+	{
+		drawPixel(x0, y0, color, image, width, max);
+		e2=2*err;
+		if(e2>=dy)
+		{
+			err=err+dy;
+			x0=x0+sx;
+		}
+		if(e2<=dx)
+		{
+			err=err+dx;
+			y0=y0+sy;
+		}
+	}
 }

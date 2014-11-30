@@ -22,11 +22,14 @@ int main() {
 
 	width = 722;
 	height = 541;
+	//int i;
+	int max=width*height;
 	init_image(image);
 	image[height/3*width+width/4] = colorRGB(255, 255, 255);
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 	open_ppm(image);
+	drawLine(50, 50, 1000, 2000, 0, image, width, max);
 	while(0==0)
 		mini_update(image);
 	mini_close();
