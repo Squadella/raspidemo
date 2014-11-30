@@ -25,12 +25,14 @@ int main() {
 	//int i;
 	int max=width*height;
 	init_image(image);
-	image[height/3*width+width/4] = colorRGB(255, 255, 255);
+	//image[height/3*width+width/4] = colorRGB(255, 255, 255);
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 	open_ppm(image);
-	drawLine(50, 50, 1000, 2000, 0, image, width, max);
+	starField(image, max);
+	//drawLine(50, 50, 1000, 2000, colorRGB(255,255,255), image, width, max);
 	while(0==0)
+
 		mini_update(image);
 	mini_close();
 	return 0;

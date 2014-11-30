@@ -123,3 +123,15 @@ void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width,
 		}
 	}
 }
+
+void starField(int image[], int max)
+{
+	int i;
+	for (i=0; i<max ;i++)
+	{
+		if(!(rand()%100))
+		{
+			image[i]=colorRGB(255,0,0);
+		}
+	}
+}
