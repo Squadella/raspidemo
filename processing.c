@@ -2,6 +2,7 @@
 #include "libgmini.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(int image[])
@@ -106,10 +107,11 @@ void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width,
 
 	int err = dx+dy;
 	int e2=0;
-	drawPixel(x0, y0, color, image, width, max);
-	while(x0!=x1 && y0!=y1)
+	while(1)
 	{
 		drawPixel(x0, y0, color, image, width, max);
+		if(x0==x1 && y0==y1)
+			break;
 		e2=2*err;
 		if(e2>=dy)
 		{
@@ -126,12 +128,13 @@ void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width,
 
 void starField(int image[], int max)
 {
+	srand(time(NULL));
 	int i;
 	for (i=0; i<max ;i++)
 	{
 		if(!(rand()%100))
 		{
-			image[i]=colorRGB(255,0,0);
+			image[i]=colorRGB(255,255,255);
 		}
 	}
 }
