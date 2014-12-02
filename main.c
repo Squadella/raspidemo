@@ -39,6 +39,8 @@ int main() {
 
 	while(i<num)
 	{
+		/* The mini_update fonction is heavy in ressources trying to put it one in a while and not too often
+		Trying to understand the behavior of mini_update in loops*/
 		for(j=0; j<height; j++)
 		{
 			temp=i;
