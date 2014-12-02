@@ -1,7 +1,9 @@
 #include "libgmini.h"
 #include "libgmini.h"
+#include "processing.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(int image[])
@@ -78,60 +80,62 @@ void open_ppm(int image[])
 }
 
 // Draw a pixel with the given color
-void drawPixel(int x, int y, int color, int image[], int width, int max)
+void drawPixel(Pixel pixel, int *image, int width, int max)
 {
-	int index=y*width+x;
+	int index=(pixel.y)*width+(pixel.x);
 	if (index>=max)
 	{
 		return;
 	}
-	image[index]=color;
+	*(image+index)=(pixel.color);
 }
 
-void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width, int max)
+void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 {
-	int dx = abs(x1-x0);
+	int dx = abs((end.x)-(start.x));
 	int sx;
-	if(x0<x1)
+	if((start.x)<(end.x))
 		sx=1;
 	else
 		sx=-1;
 
-	int dy = -abs(y1-y0);
+	int dy = -abs((end.y)-(start.y));
 	int sy;
-	if(y0<y1)
+	if((start.y)<(end.y))
 		sy=1;
 	else
 		sy=-1;
 
 	int err = dx+dy;
 	int e2=0;
-	drawPixel(x0, y0, color, image, width, max);
-	while(x0!=x1 && y0!=y1)
+	while(1)
 	{
-		drawPixel(x0, y0, color, image, width, max);
+		drawPixel(start, image, width, max);
+		if((start.x)==(end.x) && (start.y)==(end.y))
+			break;
 		e2=2*err;
 		if(e2>=dy)
 		{
 			err=err+dy;
-			x0=x0+sx;
+			(start.x)=(start.x)+sx;
 		}
 		if(e2<=dx)
 		{
 			err=err+dx;
-			y0=y0+sy;
+			(start.y)=(start.y)+sy;
 		}
 	}
 }
 
-void starField(int image[], int max)
+void starField(int image[], int max, int color)
 {
+
 	int i;
 	for (i=0; i<max ;i++)
 	{
 		if(!(rand()%100))
 		{
-			image[i]=colorRGB(255,0,0);
+			image[i]=color;
 		}
 	}
-}
+};
