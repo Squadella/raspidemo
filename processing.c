@@ -79,28 +79,28 @@ void open_ppm(int image[])
 }
 
 // Draw a pixel with the given color
-void drawPixel(int x, int y, int color, int image[], int width, int max)
+void drawPixel(Pixel pixel, int *image, int width, int max)
 {
-	int index=y*width+x;
+	int index=(pixel.y)*width+(pixel.x);
 	if (index>=max)
 	{
 		return;
 	}
-	image[index]=color;
+	*(image+index)=color;
 }
 
-void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width, int max)
+void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 {
-	int dx = abs(x1-x0);
+	int dx = abs((end.x)-(start.x);
 	int sx;
-	if(x0<x1)
+	if((start.x)<(end.x)))
 		sx=1;
 	else
 		sx=-1;
 
-	int dy = -abs(y1-y0);
+	int dy = -abs((end.y)-(start.y);
 	int sy;
-	if(y0<y1)
+	if((start.y)<(end.y))
 		sy=1;
 	else
 		sy=-1;
@@ -109,7 +109,7 @@ void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width,
 	int e2=0;
 	while(1)
 	{
-		drawPixel(x0, y0, color, image, width, max);
+		drawPixel(pixel, image, width, max);
 		if(x0==x1 && y0==y1)
 			break;
 		e2=2*err;
@@ -126,15 +126,15 @@ void drawLine(int x0, int y0, int x1, int y1, int color, int image[], int width,
 	}
 }
 
-void starField(int image[], int max)
+void starField(int image[], int max, int color)
 {
-	srand(time(NULL));
+
 	int i;
 	for (i=0; i<max ;i++)
 	{
 		if(!(rand()%100))
 		{
-			image[i]=colorRGB(255,255,255);
+			image[i]=color;
 		}
 	}
-}
+};
