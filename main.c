@@ -7,19 +7,22 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAXSIZE 1600*1200
 
 
-void init_image(int image[]) {
+void init_image(int *image) {
 	int i;
 
 	for(i=0; i<MAXSIZE; i++)
-		image[i] = colorRGB(0, 0, 0);
+		*(image+i) = colorRGB(0, 0, 0);
 }
 
 int main() {
-	int image1[MAXSIZE], image2[MAXSIZE], width, height;
+	int width, height;
+	int *image2 = malloc(sizeof(int)*MAXSIZE);
+	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	width = 722;
 	height = 541;
 	int i=0, num=10, j, lol=0, temp;
@@ -29,7 +32,7 @@ int main() {
 
 	out=fopen("out.txt", "w");
 	init_image(image1);
-	//init_image(image2);
+	init_image(image2);
 	//image[height/3*width+width/4] = colorRGB(255, 255, 255);
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
@@ -42,12 +45,12 @@ int main() {
 			for(lol=0; lol<width; lol+=temp*(width-1)/num)
 			{
 				fprintf(out,"%d, %d\n", lol, temp);
-				drawPixel(lol, j, colorRGB(255, 0, 0), p_image, width, max);
+				drawPixel(lol, j, colorRGB(255, 0, 0), image1, width, max);
 				temp++;
 			}
-			mini_update(p_image);
+			mini_update(image1);
 		}
-		starField(p_image, max);
+		starField(image1, max);
 		//drawLine(i*(width-1)/num, 0, i*(width-1)/num, height-1, colorRGB(i*(width-1)/num,i*(width-1)/num,i*(width-1)/num), image, width, max);	
 		
 		i++;
