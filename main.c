@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #define MAXSIZE 1600*1200
 
@@ -21,55 +22,35 @@ void init_image(int *image) {
 }
 
 int main() {
-	srand(time(NULL));
-	int width, height;
-	int *image2 = malloc(sizeof(int)*MAXSIZE);
-	int *image1 = malloc(sizeof(int)*MAXSIZE);
-	width = 722;
-	height = 541;
-	int i=0, num=10000/*, j, lol=0, temp*/;
-	int max=(width-1)*(height-1);
-	int *p_image = image1;
-	FILE* out;
 
-	out=fopen("out.txt", "w");
+	srand(time(NULL));
+	
+	int width, height;
+	width = 1366;
+	height = 768;
+	int *image1 = malloc(sizeof(int)*MAXSIZE);
+	int i=0, num = (height-1)/2;
+	int max = (width-1)*(height-1);
+	Pixel pixel;
+
 	init_image(image1);
-	init_image(image2);
-	//image[height/3*width+width/4] = colorRGB(255, 255, 255);
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 
-/*	while(i<num)
-	{
-		The mini_update fonction is heavy in ressources trying to put it one in a while and not too often
-		Trying to understand the behavior of mini_update in loops
-		for(j=0; j<height; j++)
-		{
-			temp=i;
-			for(lol=0; lol<width; lol+=temp*(width-1)/num)
-			{
-				fprintf(out,"%d, %d\n", lol, temp);
-				drawPixel(lol, j, colorRGB(255, 0, 0), image1, width, max);
-				temp++;
-				mini_update(image1);
-			}
+	pixel.x=(width-1)/2;
+	pixel.y=(height-1)/2;
 
-		}
-		starField(image1, max, colorRGB((i*10)%256, (i*10)%256, (i*10)%256));
-		//drawLine(i*(width-1)/num, 0, i*(width-1)/num, height-1, colorRGB(i*(width-1)/num,i*(width-1)/num,i*(width-1)/num), image, width, max);	
-		i++;
-	}
-	mini_update(image1);
-*/	for(i=0; i<num; i++)
+	for (i = 1; i < num; ++i)
 	{
-		starField(image1, max, colorRGB((i*42)%256, ((i*42)+64)%256, ((i*42)+128)%256));
+		pixel.color=colorRGB(i%256, (i^3)%256, (i^i)%256);
+		drawCircle(pixel, i, image1, width, max);
 		mini_update(image1);
 	}
 
 	while(0==0)
-		mini_update(p_image);
+		mini_update(image1);
 
-	fclose(out);
+	free(image1);
 	mini_close();
 	return 0;
 }

@@ -7,9 +7,10 @@ typedef struct Pixel{
 	int color;
 }Pixel;
 
-void open_ppm(int image[]);
-void drawPixel(Pixel pixel, int image[], int width, int max);
-void drawLine(Pixel start, Pixel end, int image[], int width, int max);
-void starField(int image[], int max, int color);
+void open_ppm(int *image);
+void drawPixel(Pixel pixel, int *image, int width, int max);
+void drawLine(Pixel start, Pixel end, int *image, int width, int max);
+void starField(int *image, int max, int color);
+void drawCircle(Pixel center, int radius, int *image, int width, int max);
 
 #endif

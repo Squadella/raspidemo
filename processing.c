@@ -1,11 +1,12 @@
 #include "libgmini.h"
 #include "libgmini.h"
+#include "processing.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 //Open a ppm file and print it in the window
-void open_ppm(int image[])
+void open_ppm(int *image)
 {
 
 	// initialising the file
@@ -73,7 +74,7 @@ void open_ppm(int image[])
 			fclose(img);
 			return;
 		}
-		image[i]=colorRGB(red,blue,green);
+		*(image+i)=colorRGB(red,blue,green);
 	}
 	fclose(img);
 }
@@ -86,19 +87,20 @@ void drawPixel(Pixel pixel, int *image, int width, int max)
 	{
 		return;
 	}
-	*(image+index)=color;
+	*(image+index)=pixel.color;
 }
 
-void drawLine(Pixel start, Pixel end, int image[], int width, int max)
+void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
-	int dx = abs((end.x)-(start.x);
+	int dx = abs((end.x)-(start.x));
 	int sx;
-	if((start.x)<(end.x)))
+
+	if((start.x)<(end.x))
 		sx=1;
 	else
 		sx=-1;
 
-	int dy = -abs((end.y)-(start.y);
+	int dy = -abs((end.y)-(start.y));
 	int sy;
 	if((start.y)<(end.y))
 		sy=1;
@@ -109,24 +111,25 @@ void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 	int e2=0;
 	while(1)
 	{
-		drawPixel(pixel, image, width, max);
-		if(x0==x1 && y0==y1)
+		start.color = colorRGB(255, 255, 255);
+		drawPixel(start, image, width, max);
+		if(start.x==end.x && start.y==end.y)
 			break;
 		e2=2*err;
 		if(e2>=dy)
 		{
 			err=err+dy;
-			x0=x0+sx;
+			start.x=start.x+sx;
 		}
 		if(e2<=dx)
 		{
 			err=err+dx;
-			y0=y0+sy;
+			start.y=start.y+sy;
 		}
 	}
 }
 
-void starField(int image[], int max, int color)
+void starField(int *image, int max, int color)
 {
 
 	int i;
@@ -134,7 +137,46 @@ void starField(int image[], int max, int color)
 	{
 		if(!(rand()%100))
 		{
-			image[i]=color;
+			*(image+i)=color;
 		}
 	}
-};
+}
+
+void drawCircle(Pixel center, int radius, int *image, int width, int max)
+{
+	Pixel pixel, temp;
+	int err = 2-2*radius;
+	pixel.x = -radius;
+	pixel.y = 0;
+	do
+	{
+		//setPixel(xm-x, ym+y); I. Quadrant
+		temp.x = center.x-pixel.x;
+		temp.y = center.y+pixel.y;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm-y, ym-x);   II. Quadrant
+		temp.x = center.x-pixel.y;
+		temp.y = center.y-pixel.x;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm+x, ym-y);  III. Quadrant
+		temp.x = center.x+pixel.x;
+		temp.y = center.y-pixel.y;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm+y, ym+x);   IV. Quadrant
+		temp.x = center.x+pixel.y;
+		temp.y = center.y+pixel.x;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		radius = err;
+		if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
+		if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
+
+	} while (pixel.x < 0);
+}
