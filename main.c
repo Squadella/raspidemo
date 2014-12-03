@@ -1,6 +1,6 @@
 // to compile: 
 // $ gcc -Wall -lXext main.c
-
+// test
 
 #include "libgmini.h"
 #include "processing.h"
