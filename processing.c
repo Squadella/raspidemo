@@ -138,4 +138,43 @@ void starField(int image[], int max, int color)
 			image[i]=color;
 		}
 	}
-};
+}
+
+void drawCircle(Pixel center, int radius, int *image, int width, int max)
+{
+	Pixel pixel, temp;
+	int err = 2-2*radius;
+	pixel.x = -radius;
+	pixel.y = 0;
+	do
+	{
+		//setPixel(xm-x, ym+y); I. Quadrant
+		temp.x = center.x-pixel.x;
+		temp.y = center.y+pixel.y;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm-y, ym-x);   II. Quadrant
+		temp.x = center.x-pixel.y;
+		temp.y = center.y-pixel.x;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm+x, ym-y);  III. Quadrant
+		temp.x = center.x+pixel.x;
+		temp.y = center.y-pixel.y;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		//setPixel(xm+y, ym+x);   IV. Quadrant
+		temp.x = center.x+pixel.y;
+		temp.y = center.y+pixel.x;
+		temp.color=center.color;
+		drawPixel(temp, image, width, max);
+
+		radius = err;
+		if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
+		if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
+
+	} while (pixel.x < 0);
+}
