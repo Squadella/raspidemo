@@ -90,6 +90,15 @@ void drawPixel(Pixel pixel, int *image, int width, int max)
 	*(image+index)=(pixel.color);
 }
 
+void drawPixelIndex(int index, int color, int max, int *image)
+{
+	if(index>=max)
+	{
+		return;
+	}
+	*(image+index)=color;
+}
+
 void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
@@ -177,4 +186,46 @@ void drawCircle(Pixel center, int radius, int *image, int width, int max)
 		if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
 
 	} while (pixel.x < 0);
+}
+
+void fillImage(int image*, int color, int width, int max)
+{
+	int i;
+	Pixel pixel;
+	for(i=0; i<max; i++)
+	{
+		drawPixelIndex(i, color, max);
+	}
+}
+
+//Test must be realised, think the function doesn't work...
+void changeImage(int *current, int *next)
+{
+	int temp=&current;
+	&current=&next;
+	&next=temp;
+	mini_update(current);
+}
+
+//Function doesn't wok now have to find a way to make color going blank whatever the color you choose
+void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max)
+{
+	int i;
+	int stepcolor=(255-start.color)/((heightBeam)/2);
+	Pixel pixelSymStart;
+	pixelSymStart.x=start.x;
+	pixelSymStart.y=(start.y)+(heightBeam/2);
+	Pixel pixelSymEnd;
+	pixelSymEnd.x=end.x;
+	pixelSymEnd.y=(end.y)+(heightBeam/2);
+	for(i=0; i<(heightBeam/2); i++)
+	{
+		drawLine(start, end, image, width, max);
+		drawLine(pixelSymStart, pixelSymEnd, image, width, max);
+		start.y++;
+		end.y++;
+		pixelSymStart.y--;
+		pixelSymEnd.y--;
+		start.color+=stepcolor;
+	}
 }

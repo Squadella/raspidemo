@@ -30,10 +30,11 @@ int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
 	int width, height, nbrLine, space, x, y, y1;
+	//Dynamic allocation of the variables for avoiding segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
-	width = 722;
-	height = 541;
+	width = 1600;
+	height = 1200;
 	int max=(width)*(height);
 	int *p_image = image1;
 	init_image(image1);
@@ -62,14 +63,23 @@ int main() {
 			pixel.y=y1;
 			pixel1.y=y;
 			pixel1.x=x;
-			drawLine(pixel, pixel1, image1, width, max);
+			drawLine(pixel, pixel1, image2, width, max);
 		}
-		mini_update(image1);
+		changeImage(image1, image2);
 		y1=y;
 	}
 
 	//Drawing a blank star field
-	starField(image1, max, colorRGB(255, 255, 255));
+	//starField(image1, max, colorRGB(255, 255, 255));
+	pixel.x=0;
+	pixel.y=100;
+	pixel.color=colorRGB(255, 0, 0);
+	pixel1.x=1000;
+	pixel1.y=100;
+	pixel1.color=colorRGB(255, 0, 0);
+
+	beamOfLight(pixel, pixel1, 20, image1, width, max);
+
 
 	//Keeping the window open
 	while(0==0)
