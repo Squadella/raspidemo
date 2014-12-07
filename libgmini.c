@@ -53,6 +53,13 @@ int colorRGB(int r, int g, int b) {
 	return( r<<16 | g<<8 | b );
 }
 
+void invertRGB(int color, int *red, int *green, int *blue)
+{
+	*red=color/65536;
+	*green=(color%65536)/256;
+	*blue=color % 256;
+}
+
 void convert_32_to_32_rgb888(void *src, void *dst, int pixels) {
 	int32 *p = (int32 *) src;
 	int32 *q = (int32 *) dst;

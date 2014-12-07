@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(int image[])
@@ -188,37 +189,50 @@ void drawCircle(Pixel center, int radius, int *image, int width, int max)
 	} while (pixel.x < 0);
 }
 
-void fillImage(int image*, int color, int width, int max)
+void fillImage(int *image, int color, int width, int max)
 {
 	int i;
-	Pixel pixel;
 	for(i=0; i<max; i++)
 	{
-		drawPixelIndex(i, color, max);
+		drawPixelIndex(i, color, max, image);
 	}
 }
 
-//Test must be realised, think the function doesn't work...
-void changeImage(int *current, int *next)
+//Can't change adress with malloc have to find another way
+/*void changeImage(int *current, int *next)
 {
-	int temp=&current;
+	int **temp=&current;
 	&current=&next;
 	&next=temp;
 	mini_update(current);
-}
+}*/
 
 //Function doesn't wok now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max)
+void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
 {
-	int i;
-	int stepcolor=(255-start.color)/((heightBeam)/2);
+	int i, r=0, g=0, b=0;
+
+	//Anti-"CoreDump"!
+	if(heightBeam<2)
+	{
+		return;
+	}
+
+	//Sets the color incrementation period
+	invertRGB(start.color, &r, &g, &b);
+	int stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
+
+	//Initializes the symetrical pixels
 	Pixel pixelSymStart;
-	pixelSymStart.x=start.x;
-	pixelSymStart.y=(start.y)+(heightBeam/2);
 	Pixel pixelSymEnd;
+	pixelSymStart.x=start.x;
 	pixelSymEnd.x=end.x;
-	pixelSymEnd.y=(end.y)+(heightBeam/2);
-	for(i=0; i<(heightBeam/2); i++)
+	pixelSymStart.y=(start.y)+(heightBeam);
+	pixelSymEnd.y=(end.y)+(heightBeam);
+	pixelSymStart.color=start.color;
+	pixelSymEnd.color=end.color;
+
+	for(i=0; i<=(heightBeam/2); i++)
 	{
 		drawLine(start, end, image, width, max);
 		drawLine(pixelSymStart, pixelSymEnd, image, width, max);
@@ -227,5 +241,8 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 		pixelSymStart.y--;
 		pixelSymEnd.y--;
 		start.color+=stepcolor;
+		pixelSymStart.color+=stepcolor;
 	}
+	usleep(speed);
+	mini_update(image);
 }
