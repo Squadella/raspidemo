@@ -9,6 +9,8 @@ processing.o: processing.c
 
 libgmini.o: libgmini.c
 	gcc -Wall libgmini.c -c -lXext
+	
+.PHONY:clean
 
 clean:
 	rm -f *.o demo
