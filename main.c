@@ -29,7 +29,7 @@ void init_image(int *image)
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height/*, nbrLine, space, x, y, y1 */;
+	int width, height, nbrLine, space, x, y, y1 ;
 	//Dynamic allocation of the variables for avoiding segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
@@ -39,7 +39,7 @@ int main() {
 	int *p_image = image1;
 	init_image(image1);
 	init_image(image2);
-	Pixel pixel, pixel1;
+	Pixel pixel, pixel1, pixel3;
 
 	//Debug file
 	FILE* out;
@@ -68,6 +68,7 @@ int main() {
 			drawLine(pixel, pixel1, image1, width, max);
 		}
 		//changeImage(image1, image2);
+		mini_update(p_image);
 		y1=y;
 	}
 
@@ -81,7 +82,20 @@ int main() {
 	pixel1.x=width;
 	pixel1.y=(rand()%height)+1;
 	pixel1.color=colorRGB(77, 210, 207);
+	pixel3.x=width/2;
+	pixel3.y=height/2;
+	pixel3.color=colorRGB(255,0,0);
+	drawCircle(pixel3, 120, image1, height, width);
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
+	mini_update(image1);
+	sleep(1);
+
+	for(i=0; i<256; i++)
+	{
+		fillImage(image1, colorRGB(i,i/3,i/2), width, max);
+		mini_update(image1);
+		usleep(100000);
+	}
 
 	//Keeping the window open
 	while(0==0)
