@@ -1,4 +1,4 @@
-//Our libraries!Pierre est un con!
+//Our libraries!
 #include "libgmini.h"
 #include "processing.h"
 
