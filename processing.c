@@ -25,13 +25,13 @@ void open_ppm(int image[])
 	}
 	
 	//If the file is opened
-	unsigned int height=0;
-	unsigned int width=0;
-	unsigned int size=0;
-	unsigned int i=0;
-	unsigned int red=0;
-	unsigned int blue=0;
-	unsigned int green=0;
+	uint height=0;
+	uint width=0;
+	uint size=0;
+	uint i=0;
+	uint red=0;
+	uint blue=0;
+	uint green=0;
 	//getting the specification of the file
 	returnTest=fscanf(img, "%*[^\n]\n");
 	if (returnTest!=1)
@@ -81,9 +81,9 @@ void open_ppm(int image[])
 }
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, int *image, int width, int max)
+void drawPixel(Pixel pixel, int *image, uint width, uint max)
 {
-	int index=(pixel.y)*width+(pixel.x);
+	uint index=(pixel.y)*width+(pixel.x);
 	if (index>=max)
 	{
 		return;
@@ -91,7 +91,7 @@ void drawPixel(Pixel pixel, int *image, int width, int max)
 	*(image+index)=(pixel.color);
 }
 
-void drawPixelIndex(int index, int color, int max, int *image)
+void drawPixelIndex(uint index, int color, uint max, int *image)
 {
 	if(index>=max)
 	{
@@ -100,7 +100,7 @@ void drawPixelIndex(int index, int color, int max, int *image)
 	*(image+index)=color;
 }
 
-void drawLine(Pixel start, Pixel end, int image[], int width, int max)
+void drawLine(Pixel start, Pixel end, int image[], uint width, uint max)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -137,7 +137,7 @@ void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 	}
 }
 
-void starField(int *image, int max, int color)
+void starField(int *image, uint max, int color)
 {
 
 	int i;
@@ -150,10 +150,10 @@ void starField(int *image, int max, int color)
 	}
 }
 
-void drawCircle(Pixel center, int radius, int *image, int height, int width)
+void drawCircle(Pixel center, uint radius, int *image, uint height, uint width)
 {
 	Pixel pixel, temp;
-	int max=height*width;
+	uint max=height*width;
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
@@ -194,9 +194,9 @@ void drawCircle(Pixel center, int radius, int *image, int height, int width)
 	} while (pixel.x < 0);
 }
 
-void fillImage(int *image, int color, int width, int max)
+void fillImage(int *image, int color, uint width, uint max)
 {
-	int i;
+	uint i;
 	for(i=0; i<max; i++)
 	{
 		drawPixelIndex(i, color, max, image);
@@ -213,9 +213,9 @@ void fillImage(int *image, int color, int width, int max)
 }*/
 
 //Function doesn't wok now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
+void beamOfLight(Pixel start, Pixel end, uint heightBeam, int *image, uint width, uint max, uint speed)
 {
-	int i, r=0, g=0, b=0;
+	uint i, r=0, g=0, b=0;
 
 	//Anti-"CoreDump"!
 	if(heightBeam<2)
@@ -225,7 +225,7 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 
 	//Sets the color incrementation period
 	invertRGB(start.color, &r, &g, &b);
-	int stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
+	uint stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
 
 	//Initializes the symetrical pixels
 	Pixel pixelSymStart;

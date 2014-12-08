@@ -49,11 +49,11 @@ static int blitcounter;
 static int source_index;
 static int destination_index;
 
-int colorRGB(int r, int g, int b) {
+unsigned int colorRGB(uint r, uint g, uint b) {
 	return( r<<16 | g<<8 | b );
 }
 
-void invertRGB(int color, int *red, int *green, int *blue)
+void invertRGB(uint color, uint *red, uint *green, uint *blue)
 {
 	*red=color/65536;
 	*green=(color%65536)/256;
