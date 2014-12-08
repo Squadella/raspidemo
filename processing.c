@@ -137,7 +137,7 @@ void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 	}
 }
 
-void starField(int image[], int max, int color)
+void starField(int *image, int max, int color)
 {
 
 	int i;
@@ -145,17 +145,22 @@ void starField(int image[], int max, int color)
 	{
 		if(!(rand()%100))
 		{
-			image[i]=color;
+			*(image+i)=color;
 		}
 	}
 }
 
-void drawCircle(Pixel center, int radius, int *image, int width, int max)
+void drawCircle(Pixel center, int radius, int *image, int height, int width)
 {
 	Pixel pixel, temp;
+	int max=height*width;
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
+	if(radius*2>height || radius*2>width)
+	{
+		return;
+	}
 	do
 	{
 		//setPixel(xm-x, ym+y); I. Quadrant
@@ -246,3 +251,19 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 	usleep(speed);
 	mini_update(image);
 }
+/*
+void movingStarField(int *image, int max, int color)
+{
+	//Initialisations
+	int i;
+
+	starField(image, max, color);
+
+	for(i=0; i<=max; i++)
+	{
+		if(*(image+i)==color)
+		{
+
+		}
+	}
+}*/
