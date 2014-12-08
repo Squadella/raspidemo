@@ -33,8 +33,8 @@ int main() {
 	//Dynamic allocation of the variables for avoiding segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
-	width = 1000;
-	height = 1000;
+	width = 800;
+	height = 600;
 	int max=(width)*(height);
 	int *p_image = image1;
 	init_image(image1);
@@ -53,7 +53,7 @@ int main() {
 	int i;
 
 	// Drawing descending lines with Breseham
-	nbrLine=10;
+/*	nbrLine=10;
 	space=width/nbrLine;
 	y1=0;
 	pixel1.color=colorRGB(255,0,0);
@@ -73,13 +73,13 @@ int main() {
 
 	//Drawing a blank star field
 	starField(image1, max, colorRGB(255, 255, 255));
-
+*/
 	//Drawing a light beam
 	pixel.x=0;
-	pixel.y=rand()%1000;
+	pixel.y=rand()%height;
 	pixel.color=colorRGB(0, 200, 0);
-	pixel1.x=1000;
-	pixel1.y=(rand()%1000)+1;
+	pixel1.x=width;
+	pixel1.y=(rand()%height)+1;
 	pixel1.color=colorRGB(77, 210, 207);
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 
