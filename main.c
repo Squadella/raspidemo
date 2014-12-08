@@ -13,7 +13,7 @@
 
 void init_image(int *image) 
 {
-	uint i;
+	int i;
 	for(i=0; i<MAXSIZE; i++)
 		*(image+i) = colorRGB(0, 0, 0);
 }
@@ -29,13 +29,13 @@ void init_image(int *image)
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	uint width, height, nbrLine, space, x, y, y1 ;
+	int width, height, nbrLine, space, x, y, y1 ;
 	//Dynamic allocation of the variables for avoiding segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	width = 800;
 	height = 600;
-	uint max=(width)*(height);
+	int max=(width)*(height);
 	int *p_image = image1;
 	init_image(image1);
 	init_image(image2);
@@ -50,7 +50,7 @@ int main() {
 	printf("press ESC to quit\n");
 	pixel.color=colorRGB(255, 0, 0);
 	//int r, g, b, i;
-	uint i;
+	int i;
 
 	// Drawing descending lines with Breseham
 /*	nbrLine=10;
@@ -88,16 +88,17 @@ int main() {
 	drawCircle(pixel3, 120, image1, height, width);
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 	mini_update(image1);
-	sleep(1);
+	sleep(10);
 
 	for(i=0; i<256; i++)
 	{
 		pixel.x=0;
-		pixel.y=rand()%(height-1);
+		pixel.y=rand()%(height);
 		pixel1.x=width;
-		pixel1.y=(rand()%(height-1))+1;
+		pixel1.y=(rand()%(height))+1;
+		fprintf(out, "pixel.x: %d,  pixel.y: %d, pixel1.x: %d, pixel1.y: %d\n", pixel.x, pixel.y, pixel1.x, pixel1.y);
 		fillImage(image1, colorRGB(i,i/3,i/2), width, max);
-		beamOfLight(pixel, pixel1, rand()%150, image1, width-1, max, 10000);
+		beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 		mini_update(image1);
 		usleep(100000);
 	}

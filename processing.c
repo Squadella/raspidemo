@@ -81,9 +81,9 @@ void open_ppm(int image[])
 }
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, int *image, uint width, uint max)
+void drawPixel(Pixel pixel, int *image, int width, int max)
 {
-	uint index=(pixel.y)*width+(pixel.x);
+	int index=(pixel.y)*width+(pixel.x);
 	if (index>=max)
 	{
 		return;
@@ -91,7 +91,7 @@ void drawPixel(Pixel pixel, int *image, uint width, uint max)
 	*(image+index)=(pixel.color);
 }
 
-void drawPixelIndex(uint index, int color, uint max, int *image)
+void drawPixelIndex(int index, int color, int max, int *image)
 {
 	if(index>=max)
 	{
@@ -100,7 +100,7 @@ void drawPixelIndex(uint index, int color, uint max, int *image)
 	*(image+index)=color;
 }
 
-void drawLine(Pixel start, Pixel end, int image[], uint width, uint max)
+void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -137,7 +137,7 @@ void drawLine(Pixel start, Pixel end, int image[], uint width, uint max)
 	}
 }
 
-void starField(int *image, uint max, int color)
+void starField(int *image, int max, int color)
 {
 
 	int i;
@@ -150,10 +150,10 @@ void starField(int *image, uint max, int color)
 	}
 }
 
-void drawCircle(Pixel center, uint radius, int *image, uint height, uint width)
+void drawCircle(Pixel center, int radius, int *image, int height, int width)
 {
 	Pixel pixel, temp;
-	uint max=height*width;
+	int max=height*width;
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
@@ -194,9 +194,9 @@ void drawCircle(Pixel center, uint radius, int *image, uint height, uint width)
 	} while (pixel.x < 0);
 }
 
-void fillImage(int *image, int color, uint width, uint max)
+void fillImage(int *image, int color, int width, int max)
 {
-	uint i;
+	int i;
 	for(i=0; i<max; i++)
 	{
 		drawPixelIndex(i, color, max, image);
@@ -213,9 +213,9 @@ void fillImage(int *image, int color, uint width, uint max)
 }*/
 
 //Function doesn't wok now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, uint heightBeam, int *image, uint width, uint max, uint speed)
+void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
 {
-	uint i, r=0, g=0, b=0;
+	int i, r=0, g=0, b=0;
 
 	//Anti-"CoreDump"!
 	if(heightBeam<2)
@@ -225,7 +225,7 @@ void beamOfLight(Pixel start, Pixel end, uint heightBeam, int *image, uint width
 
 	//Sets the color incrementation period
 	invertRGB(start.color, &r, &g, &b);
-	uint stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
+	int stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
 
 	//Initializes the symetrical pixels
 	Pixel pixelSymStart;
