@@ -84,7 +84,7 @@ void open_ppm(int image[])
 void drawPixel(Pixel pixel, int *image, int width, int max)
 {
 	int index=(pixel.y)*width+(pixel.x);
-	if (index>=max)
+	if (index>=max || index<0)
 	{
 		return;
 	}
@@ -251,19 +251,60 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 	usleep(speed);
 	mini_update(image);
 }
-/*
-void movingStarField(int *image, int max, int color)
+
+void movingStarField(int *image, int max, int color, int colorBG, int height, int width)
 {
 	//Initialisations
-	int i;
+	int widthTemp, heightTemp;
+	Pixel pixel;
+	pixel.color=color;
 
 	starField(image, max, color);
-
-	for(i=0; i<=max; i++)
+	for (heightTemp=0; heightTemp<height/2; heightTemp++)
 	{
-		if(*(image+i)==color)
+		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
 
+			if(*(image+(widthTemp*heightTemp))==color)
+			{
+				if(widthTemp<(width/2) && heightTemp<(height/2))
+				{
+					pixel.x=widthTemp-1;
+					pixel.y=heightTemp-1;
+					drawPixel(pixel, image, width, max);
+					*(image+widthTemp*heightTemp)=colorBG;
+				}
+				else if(widthTemp<(width/2) && heightTemp>(height/2))
+				{
+					pixel.x=widthTemp-1;
+					pixel.y=heightTemp+1;
+					drawPixel(pixel, image, width, max);
+					*(image+widthTemp*heightTemp)=colorBG;
+				}	
+			}
 		}
 	}
-}*/
+	for (heightTemp=height; heightTemp>height/2; heightTemp--)
+	{
+		for(widthTemp=0; widthTemp<=width; widthTemp++)
+		{
+			if(*(image+(widthTemp*height))==color)
+			{
+				if(widthTemp>(width/2) && heightTemp<(height/2))
+				{
+					pixel.x=widthTemp+1;
+					pixel.y=heightTemp-1;
+					drawPixel(pixel, image, width, max);
+					*(image+widthTemp*heightTemp)=colorBG;
+				}
+				else if(widthTemp>(width/2) && heightTemp>(height/2))
+				{
+					pixel.x=widthTemp+1;
+					pixel.y=heightTemp+1;
+					drawPixel(pixel, image, width, max);
+					*(image+widthTemp*heightTemp)=colorBG;	
+				}
+			}
+		}
+	}
+}

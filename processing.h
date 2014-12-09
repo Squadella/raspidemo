@@ -27,6 +27,7 @@ void fillImage(int *image, int color, int width, int max);
 void changeImage(int *current, int *next);
 //Create a beam of light with the given color and given position with a blank fading inside
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed);
-
+//Move all the point of the given color to the edges
+void movingStarField(int *image, int max, int color, int colorBG, int height, int width);
 
 #endif
