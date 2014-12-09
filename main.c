@@ -42,8 +42,8 @@ int main() {
 	Pixel pixel, pixel1, pixel3;
 
 	//Debug file
-	FILE* out;
-	out=fopen("out.txt", "w");
+	/*FILE* out;
+	out=fopen("out.txt", "w");*/
 
 	//Opening the image window
 	mini_open("foobar", width, height);
@@ -88,8 +88,8 @@ int main() {
 	drawCircle(pixel3, 120, image1, height, width);
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 	mini_update(image1);
-	sleep(10);
-
+	sleep(1);
+	/*
 	for(i=0; i<256; i++)
 	{
 		pixel.x=0;
@@ -101,13 +101,25 @@ int main() {
 		beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 		mini_update(image1);
 		usleep(100000);
+	}*/
+
+	fillImage(image1, colorRGB(255,255,255), width, max);
+	starField(image1, max, colorRGB(255,255,255));
+	drawPixel(pixel, image1, width, max);
+	mini_update(image1);
+	//sleep(10);
+	for (i=0; i<100; i++)
+	{
+		movingStarField(image1, max, colorRGB(255,255,255), colorRGB(0,0,0), height, width);
+		mini_update(image1);
+		usleep(10000);
 	}
 
 	//Keeping the window open
 	while(0==0)
 		mini_update(p_image);
 
-	fclose(out);
+	//fclose(out);
 	mini_close();
 	return 0;
 }

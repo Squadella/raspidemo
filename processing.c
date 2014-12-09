@@ -259,27 +259,28 @@ void movingStarField(int *image, int max, int color, int colorBG, int height, in
 	Pixel pixel;
 	pixel.color=color;
 
-	starField(image, max, color);
-	for (heightTemp=0; heightTemp<height/2; heightTemp++)
+	for(heightTemp=0; heightTemp<=height/2; heightTemp++)
 	{
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
-
-			if(*(image+(widthTemp*heightTemp))==color)
+			if(*(image+(widthTemp+(heightTemp*width)))==color)
 			{
-				if(widthTemp<(width/2) && heightTemp<(height/2))
+				pixel.x=widthTemp;
+				pixel.y=heightTemp;
+				pixel.color=colorBG;
+				drawPixel(pixel, image, width, max);
+				pixel.color=color;
+				if(widthTemp<=(width/2))
 				{
-					pixel.x=widthTemp-1;
-					pixel.y=heightTemp-1;
-					drawPixel(pixel, image, width, max);
-					*(image+widthTemp*heightTemp)=colorBG;
+					pixel.x-=1;
+					pixel.y-=1;
+					drawPixel(pixel, image, width, max);	
 				}
-				else if(widthTemp<(width/2) && heightTemp>(height/2))
+				else if(widthTemp>(width/2))
 				{
-					pixel.x=widthTemp-1;
-					pixel.y=heightTemp+1;
+					pixel.x+=1;
+					pixel.y-=1;
 					drawPixel(pixel, image, width, max);
-					*(image+widthTemp*heightTemp)=colorBG;
 				}	
 			}
 		}
@@ -288,21 +289,24 @@ void movingStarField(int *image, int max, int color, int colorBG, int height, in
 	{
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
-			if(*(image+(widthTemp*height))==color)
+			if(*(image+(widthTemp+(heightTemp*width)))==color)
 			{
-				if(widthTemp>(width/2) && heightTemp<(height/2))
-				{
-					pixel.x=widthTemp+1;
-					pixel.y=heightTemp-1;
-					drawPixel(pixel, image, width, max);
-					*(image+widthTemp*heightTemp)=colorBG;
-				}
-				else if(widthTemp>(width/2) && heightTemp>(height/2))
+				pixel.x=widthTemp;
+				pixel.y=heightTemp;
+				pixel.color=colorBG;
+				drawPixel(pixel, image, width, max);
+				pixel.color=color;
+				if(widthTemp>(width/2))
 				{
 					pixel.x=widthTemp+1;
 					pixel.y=heightTemp+1;
 					drawPixel(pixel, image, width, max);
-					*(image+widthTemp*heightTemp)=colorBG;	
+				}
+				else if(widthTemp<(width/2))
+				{
+					pixel.x=widthTemp-1;
+					pixel.y=heightTemp+1;
+					drawPixel(pixel, image, width, max);	
 				}
 			}
 		}
