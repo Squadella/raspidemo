@@ -6,80 +6,6 @@
 #include <time.h>
 #include <unistd.h>
 
-//Open a ppm file and print it in the window
-void open_ppm(int image[])
-{
-
-	// initialising the file
-	FILE *img;
-	int returnTest;
-	/*const char fileName[25];
-	printf("Enter the name of the file you want to open:");
-	scanf("loup.ppm", fileName);*/
-	img=fopen("loup.ppm", "r");
-
-	if (img==NULL) //if the program is unable to open the fil exit the function
-	{
-		printf("Unable to open file!\n");
-		return;
-	}
-	
-	//If the file is opened
-	uint height=0;
-	uint width=0;
-	uint size=0;
-	uint i=0;
-	uint red=0;
-	uint blue=0;
-	uint green=0;
-	//getting the specification of the file
-	returnTest=fscanf(img, "%*[^\n]\n");
-	if (returnTest!=1)
-	{
-	}
-	returnTest=fscanf(img, "%*[^\n]\n");
-	if (returnTest!=1)
-	{
-	}
-	returnTest=fscanf(img, "%u", &width);
-	if (returnTest!=1)
-	{
-		fclose(img);
-		return;
-	}
-	returnTest=fscanf(img, "%u", &height);
-	if (returnTest!=1)
-	{
-		fclose(img);
-		return;
-	}
-	size=width*height;
-	//writing the table with the new values
-	for (i=0;i<size; i++)
-	{
-		if(fscanf(img, "%u", &green)!=1)
-		{
-			printf("Reading red error at index %u!\n", i);
-			fclose(img);
-			return;
-		}
-		if(fscanf(img, "%u", &red)!=1)
-		{
-			printf("Reading green error at index %u!\n",i);
-			fclose(img);
-			return;
-		}
-		if(fscanf(img, "%u", &blue)!=1)
-		{
-			printf("Reading blue error at index %u!\n", i);
-			fclose(img);
-			return;
-		}
-		image[i]=colorRGB(red,blue,green);
-	}
-	fclose(img);
-}
-
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, int *image, int width, int max)
 {
@@ -100,7 +26,28 @@ void drawPixelIndex(int index, int color, int max, int *image)
 	*(image+index)=color;
 }
 
-void drawLine(Pixel start, Pixel end, int image[], int width, int max)
+void fillImage(int *image, int color, int width, int max)
+{
+	int i;
+	for(i=0; i<max; i++)
+	{
+		drawPixelIndex(i, color, max, image);
+	}
+}
+
+void replaceColor(int color1, int color2, int *image, int max)
+{
+	int index;
+	for(index=0; index<max; index++)
+	{
+		if(*(image+index)==color1)
+		{
+			drawPixelIndex(index, color2, max, image);
+		}
+	}
+}
+
+void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -133,19 +80,6 @@ void drawLine(Pixel start, Pixel end, int image[], int width, int max)
 		{
 			err=err+dx;
 			(start.y)=(start.y)+sy;
-		}
-	}
-}
-
-void starField(int *image, int max, int color)
-{
-
-	int i;
-	for (i=0; i<max ;i++)
-	{
-		if(!(rand()%100))
-		{
-			*(image+i)=color;
 		}
 	}
 }
@@ -194,14 +128,19 @@ void drawCircle(Pixel center, int radius, int *image, int height, int width)
 	} while (pixel.x < 0);
 }
 
-void fillImage(int *image, int color, int width, int max)
+void starField(int *image, int max, int color)
 {
+
 	int i;
-	for(i=0; i<max; i++)
+	for (i=0; i<max ;i++)
 	{
-		drawPixelIndex(i, color, max, image);
+		if(!(rand()%100))
+		{
+			*(image+i)=color;
+		}
 	}
 }
+
 
 //Can't change adress with malloc have to find another way
 /*void changeImage(int *current, int *next)
@@ -252,24 +191,29 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 	mini_update(image);
 }
 
-void movingStarField(int *image, int max, int color, int colorBG, int height, int width)
+void movingToCorner(int *image, int max, int color, int colorBG, int height, int width)
 {
 	//Initialisations
 	int widthTemp, heightTemp;
 	Pixel pixel;
 	pixel.color=color;
 
+	//Going to the middle from the top
 	for(heightTemp=0; heightTemp<=height/2; heightTemp++)
 	{
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
+			//If the pixel found is the good color
 			if(*(image+(widthTemp+(heightTemp*width)))==color)
 			{
+				//Suppressing the old pixel
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
 				drawPixel(pixel, image, width, max);
 				pixel.color=color;
+
+				//Creating a new pixel at the good position
 				if(widthTemp<=(width/2))
 				{
 					pixel.x-=1;
@@ -285,17 +229,22 @@ void movingStarField(int *image, int max, int color, int colorBG, int height, in
 			}
 		}
 	}
+	//Going to the middle from the bottom
 	for (heightTemp=height; heightTemp>height/2; heightTemp--)
 	{
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
+			//If the pixel found is the good color
 			if(*(image+(widthTemp+(heightTemp*width)))==color)
 			{
+				//Suppressing the old pixel
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
 				drawPixel(pixel, image, width, max);
 				pixel.color=color;
+				
+				//Creating a new pixel at the good position
 				if(widthTemp>(width/2))
 				{
 					pixel.x=widthTemp+1;

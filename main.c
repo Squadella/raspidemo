@@ -21,7 +21,6 @@ void init_image(int *image)
 /*
 	Things to do and test:
 		-do we keep a black image for reseting the windows?
-		-do we do a function for fill a table in the wanted color? (je pense que ça peut être utile si on fait une fênètre qui change de couleur en mode arc en ciel)
 		-implement the double buffering
 		-creating PGM effects
 */
@@ -103,17 +102,19 @@ int main() {
 		usleep(100000);
 	}*/
 
-	fillImage(image1, colorRGB(255,255,255), width, max);
-	starField(image1, max, colorRGB(255,255,255));
+	fillImage(image1, colorRGB(0,0,0), width, max);
+	starField(image1, max, colorRGB(0,0,0));
 	drawPixel(pixel, image1, width, max);
 	mini_update(image1);
 	//sleep(10);
 	for (i=0; i<100; i++)
 	{
-		movingStarField(image1, max, colorRGB(255,255,255), colorRGB(0,0,0), height, width);
+		movingToCorner(image1, max, colorRGB(0,0,0), colorRGB(i,i/3,i/2), height, width);
 		mini_update(image1);
 		usleep(10000);
 	}
+
+	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);
 
 	//Keeping the window open
 	while(0==0)

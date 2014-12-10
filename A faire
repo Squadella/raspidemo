@@ -1,2 +1,4 @@
 Function graphique:
 faire une fonction movePixelcircle() qui permettrai de déplacer tous les pixels de l'écran suivant un cercle.
+modifier la fonction cercle ou en ajouter une autre qui permettari de tracer des arc de cercle sur les bords de l'écran (a des endroits ou l'on ne peut pas tracer des cercles entier sans segfault)
+ajouter l'effet de feu

@@ -9,25 +9,23 @@ typedef struct Pixel{
 	int color;
 }Pixel;
 
-//Open a .ppm image
-void open_ppm(int *image);
 //Change the state of one pixel in the image table
 void drawPixel(Pixel pixel, int *image, int width, int max);
 //Change the state of one pixel in the image table with the given index
 void drawPixelIndex(int index, int color, int max, int *image);
-//Draw a line in the given image
-void drawLine(Pixel start, Pixel end, int *image, int width, int max);
-//Draw a starfiel on the given image with the given color
-void starField(int *image, int max, int color);
-//Draw a circle 
-void drawCircle(Pixel center, int radius, int *image, int height, int width);
 //Fill the image with the given color
 void fillImage(int *image, int color, int width, int max);
-//Change the showed image
-void changeImage(int *current, int *next);
+//Replace color1 with color2 on the entire image
+void replaceColor(int color1, int color2, int *image, int max);
+//Draw a line in the given image
+void drawLine(Pixel start, Pixel end, int *image, int width, int max);
+//Draw a circle 
+void drawCircle(Pixel center, int radius, int *image, int height, int width);
+//Draw a starfiel on the given image with the given color
+void starField(int *image, int max, int color);
 //Create a beam of light with the given color and given position with a blank fading inside
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed);
 //Move all the point of the given color to the edges
-void movingStarField(int *image, int max, int color, int colorBG, int height, int width);
+void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
 
 #endif
