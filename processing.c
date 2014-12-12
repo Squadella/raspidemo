@@ -141,16 +141,6 @@ void starField(int *image, int max, int color)
 	}
 }
 
-
-//Can't change adress with malloc have to find another way
-/*void changeImage(int *current, int *next)
-{
-	int **temp=&current;
-	&current=&next;
-	&next=temp;
-	mini_update(current);
-}*/
-
 //Function doesn't wok now have to find a way to make color going blank whatever the color you choose
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
 {

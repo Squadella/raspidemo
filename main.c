@@ -19,11 +19,10 @@ void init_image(int *image)
 }
 
 /*
-	Things to do and test:
-		-do we keep a black image for reseting the windows?
-		-implement the double buffering
-		-creating PGM effects
-*/
+Things to do and test:
+-do we keep a black image for reseting the windows?
+-implement the double buffering
+-creating PGM effects*/
 
 int main() {
 	//Initialisation of all the variables
@@ -47,15 +46,15 @@ int main() {
 	//Opening the image window
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
-	pixel.color=colorRGB(255, 0, 0);
+	pixel.color=colorRGB(0, 2, 255);
 	//int r, g, b, i;
 	int i;
-
+/*
 	// Drawing descending lines with Breseham
-/*	nbrLine=10;
+	nbrLine=10;
 	space=width/nbrLine;
 	y1=0;
-	pixel1.color=colorRGB(255,0,0);
+	pixel1.color=colorRGB(0,2,255);
 	for (y=0; y<height; y+=3)
 	{
 		for (x=0; x<width; x+=space)
@@ -70,15 +69,15 @@ int main() {
 		mini_update(p_image);
 		y1=y;
 	}
-
-	//Drawing a blank star field
-	starField(image1, max, colorRGB(255, 255, 255));
 */
+	//Drawing a blank star field
+	//starField(image1, max, colorRGB(255, 255, 255));
+
 	//Drawing a light beam
-	pixel.x=0;
+	/*pixel.x=100;
 	pixel.y=rand()%height;
 	pixel.color=colorRGB(0, 200, 0);
-	pixel1.x=width;
+	pixel1.x=width-100;
 	pixel1.y=(rand()%height)+1;
 	pixel1.color=colorRGB(77, 210, 207);
 	pixel3.x=width/2;
@@ -87,7 +86,9 @@ int main() {
 	drawCircle(pixel3, 120, image1, height, width);
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 	mini_update(image1);
-	sleep(1);
+	sleep(1);*/
+	
+	//Radom lazer on a changing color background
 	/*
 	for(i=0; i<256; i++)
 	{
@@ -95,13 +96,67 @@ int main() {
 		pixel.y=rand()%(height);
 		pixel1.x=width;
 		pixel1.y=(rand()%(height))+1;
-		fprintf(out, "pixel.x: %d,  pixel.y: %d, pixel1.x: %d, pixel1.y: %d\n", pixel.x, pixel.y, pixel1.x, pixel1.y);
 		fillImage(image1, colorRGB(i,i/3,i/2), width, max);
 		beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 		mini_update(image1);
-		usleep(100000);
-	}*/
+	usleep(100000);
+	}
+	*/
 
+	//Rainow background
+	int red=255, green=0, blue=0;
+	for (space=0; i<10; i++)
+	{
+		for(i=0; i<255; i++)
+		{
+			blue++;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			red--;
+			//printf("%d %d %d\n", red, green, blue);
+			mini_update(image1);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			usleep(1000);
+		}
+		for(i=0; i<255; i++)
+		{
+			green++;
+			//printf("%d %d %d\n", red, green, blue);
+			mini_update(image1);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			blue--;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=0; i<255; i++)
+		{
+			red++;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			green--;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+	}
+	/*
 	fillImage(image1, colorRGB(0,0,0), width, max);
 	starField(image1, max, colorRGB(0,0,0));
 	drawPixel(pixel, image1, width, max);
@@ -114,8 +169,7 @@ int main() {
 		usleep(10000);
 	}
 
-	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);
-
+	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
 	//Keeping the window open
 	while(0==0)
 		mini_update(p_image);
