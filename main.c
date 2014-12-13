@@ -1,4 +1,4 @@
-//Our libraries!
+//Our libraries
 #include "libgmini.h"
 #include "processing.h"
 
@@ -20,15 +20,15 @@ void init_image(int *image)
 
 /*
 Things to do and test:
--do we keep a black image for reseting the windows?
--implement the double buffering
+-do we keep a black image to reset the window?
+-implement double-buffering
 -creating PGM effects*/
 
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height, nbrLine, space, x, y, y1 ;
-	//Dynamic allocation of the variables for avoiding segfault
+	int width, height, nbrLine, space;
+	//Dynamic allocation of the variables to avoid segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	width = 800;
@@ -37,7 +37,8 @@ int main() {
 	int *p_image = image1;
 	init_image(image1);
 	init_image(image2);
-	Pixel pixel, pixel1, pixel3;
+	uint palette[256];
+	//Pixel pixel, pixel1, pixel3;
 
 	//Debug file
 	/*FILE* out;
@@ -46,11 +47,21 @@ int main() {
 	//Opening the image window
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
-	pixel.color=colorRGB(0, 2, 255);
+	//pixel.color=colorRGB(0, 2, 255);
 	//int r, g, b, i;
-	int i;
+	int i, j;
+
+	/*RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
+	initGradientPalette(palette, start, end);*/
+	open_ppm(palette, "fire.ppm");
+	
+	for (i = 0 ; i < width ; ++i)
+	{
+		for(j = 600 ; j >= 0 ; j--)
+			*(image1+(j*width+i)) = palette[j%256];
+	}
 /*
-	// Drawing descending lines with Breseham
+	// Drawing descending lines with Bresenham
 	nbrLine=10;
 	space=width/nbrLine;
 	y1=0;
@@ -88,7 +99,7 @@ int main() {
 	mini_update(image1);
 	sleep(1);*/
 	
-	//Radom lazer on a changing color background
+	//Random laser on a changing color background
 	/*
 	for(i=0; i<256; i++)
 	{
@@ -103,8 +114,8 @@ int main() {
 	}
 	*/
 
-	//Rainow background
-	int red=255, green=0, blue=0;
+	//Rainbow background
+	/*int red=255, green=0, blue=0;
 	for (space=0; i<10; i++)
 	{
 		for(i=0; i<255; i++)
@@ -155,7 +166,7 @@ int main() {
 			mini_update(image1);
 			usleep(1000);
 		}
-	}
+	}*/
 	/*
 	fillImage(image1, colorRGB(0,0,0), width, max);
 	starField(image1, max, colorRGB(0,0,0));

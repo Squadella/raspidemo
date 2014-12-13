@@ -9,6 +9,14 @@ typedef struct Pixel{
 	int color;
 }Pixel;
 
+typedef struct RGBTriplet
+{
+	unsigned char red;
+	unsigned char green;
+	unsigned char blue;
+}RGBTriplet;
+
+void open_ppm(uint image[], char* file);
 //Change the state of one pixel in the image table
 void drawPixel(Pixel pixel, int *image, int width, int max);
 //Change the state of one pixel in the image table with the given index
@@ -27,5 +35,9 @@ void starField(int *image, int max, int color);
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed);
 //Move all the point of the given color to the edges
 void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
+//Creates a gradient color palette
+void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
+//Fire effect
+void drawFire(int *image, int max, int height, int width);
 
 #endif

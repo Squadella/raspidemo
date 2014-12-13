@@ -6,6 +6,80 @@
 #include <time.h>
 #include <unistd.h>
 
+//Open a ppm file and print it in the window
+void open_ppm(uint image[], char* file)
+{
+
+	// initialising the file
+	FILE *img;
+	int returnTest;
+	/*const char fileName[25];
+	printf("Enter the name of the file you want to open:");
+	scanf("loup.ppm", fileName);*/
+	img=fopen(file, "r");
+
+	if (img==NULL) //if the program is unable to open the fil exit the function
+	{
+		printf("Unable to open file!\n");
+		return;
+	}
+	
+	//If the file is opened
+	uint height=0;
+	uint width=0;
+	uint size=0;
+	uint i=0;
+	uint red=0;
+	uint blue=0;
+	uint green=0;
+	//getting the specification of the file
+	returnTest=fscanf(img, "%*[^\n]\n");
+	if (returnTest!=1)
+	{
+	}
+	returnTest=fscanf(img, "%*[^\n]\n");
+	if (returnTest!=1)
+	{
+	}
+	returnTest=fscanf(img, "%u", &width);
+	if (returnTest!=1)
+	{
+		fclose(img);
+		return;
+	}
+	returnTest=fscanf(img, "%u", &height);
+	if (returnTest!=1)
+	{
+		fclose(img);
+		return;
+	}
+	size=width*height;
+	//writing the table with the new values
+	for (i=0;i<size; i++)
+	{
+		if(fscanf(img, "%u", &green)!=1)
+		{
+			printf("Reading red error at index %u!\n", i);
+			fclose(img);
+			return;
+		}
+		if(fscanf(img, "%u", &red)!=1)
+		{
+			printf("Reading green error at index %u!\n",i);
+			fclose(img);
+			return;
+		}
+		if(fscanf(img, "%u", &blue)!=1)
+		{
+			printf("Reading blue error at index %u!\n", i);
+			fclose(img);
+			return;
+		}
+		image[i]=colorRGB(red,blue,green);
+	}
+	fclose(img);
+}
+
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, int *image, int width, int max)
 {
@@ -250,4 +324,27 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 			}
 		}
 	}
+}
+
+void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
+{
+	int i;
+	double n;
+	unsigned char red;
+	unsigned char green;
+	unsigned char blue;
+
+	for(i = 0 ; i < 256 ; i++)
+	{	
+		n = (double)i / (double)255;
+		red = (double)startColor.red * (1.0 - n) + (double)endColor.red * n;
+		green = (double)startColor.green * (1.0 - n) + (double)endColor.green * n;
+		blue = (double)startColor.blue * (1.0 - n) + (double)endColor.blue * n;
+		palette[i] = (red<<16 | green<<8 | blue);
+	}
+}
+
+void drawFire(int *image, int max, int height, int width)
+{
+
 }
