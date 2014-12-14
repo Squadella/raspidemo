@@ -350,6 +350,8 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	int average;
 	int loop = height;
 
+do
+	{
 	for(i = 0 ; i < width ; i++)
 	{
 		for(j = 600 ; j >= 590 ; j--)
@@ -358,7 +360,7 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 
 	for(i = 0 ; i < width ; i += 75-(rand() % 50))
 	{
-		if(i-1 < width)
+		if(i - 1 < width)
 		{
 			*(image1 + (595 * width + i)) = colorRGB(255, 255, 255);
 			*(image1 + (595 * width + i + 1)) = colorRGB(255, 255, 255);
@@ -372,8 +374,7 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		}
 	}
 
-	while(loop != 0)
-	{
+	
 		for(i = 0 ; i < width ; i++)
 		{
 			for(j = 0 ; j < height ; j++)
@@ -393,6 +394,6 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		image1 = image2;
 
 		loop--;
-	}
+	}while(loop != 0);
 	
 }
