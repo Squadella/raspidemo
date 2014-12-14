@@ -344,7 +344,55 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 	}
 }
 
-void drawFire(int *image, int max, int height, int width)
+void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width)
 {
+	int i, j;
+	int average;
+	int loop = height;
 
+	for(i = 0 ; i < width ; i++)
+	{
+		for(j = 600 ; j >= 590 ; j--)
+			*(image1 + (j * width + i)) = palette[230 - (rand() % 30)];
+	}
+
+	for(i = 0 ; i < width ; i += 75-(rand() % 50))
+	{
+		if(i-1 < width)
+		{
+			*(image1 + (595 * width + i)) = colorRGB(255, 255, 255);
+			*(image1 + (595 * width + i + 1)) = colorRGB(255, 255, 255);
+			*(image1 + (595 * width + i - 1)) = colorRGB(255, 255, 255);
+			*(image1 + (594 * width + i)) = colorRGB(255, 255, 255);
+			*(image1 + (594 * width + i + 1)) = colorRGB(255, 255, 255);
+			*(image1 + (594 * width + i - 1)) = colorRGB(255, 255, 255);
+			*(image1 + (596 * width + i)) = colorRGB(255, 255, 255);
+			*(image1 + (596 * width + i + 1)) = colorRGB(255, 255, 255);
+			*(image1 + (596 * width + i - 1)) = colorRGB(255, 255, 255);
+		}
+	}
+
+	while(loop != 0)
+	{
+		for(i = 0 ; i < width ; i++)
+		{
+			for(j = 0 ; j < height ; j++)
+			{
+				average = (*(image1 + ((j - 1) * width + i)) + *(image1 + ((j + 1) * width + i)) + *(image1 + (j * width + (i - 1)))+*(image1 + (j * width + (i + 1)))) / 4;
+				if(average != 0)
+				{
+					*(image2 + (j - 1) * width + i) = average - 1;
+				}
+				else
+				{
+					*(image2 + (j - 1) * width + i) = 0;
+				}
+			}
+		}
+		mini_update(image2);
+		image1 = image2;
+
+		loop--;
+	}
+	
 }

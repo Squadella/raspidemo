@@ -27,7 +27,7 @@ Things to do and test:
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height, nbrLine, space;
+	int width, height/*, nbrLine, space*/;
 	//Dynamic allocation of the variables to avoid segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
@@ -49,17 +49,12 @@ int main() {
 	printf("press ESC to quit\n");
 	//pixel.color=colorRGB(0, 2, 255);
 	//int r, g, b, i;
-	int i, j;
 
 	/*RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
 	initGradientPalette(palette, start, end);*/
 	open_ppm(palette, "fire.ppm");
 	
-	for (i = 0 ; i < width ; ++i)
-	{
-		for(j = 600 ; j >= 0 ; j--)
-			*(image1+(j*width+i)) = palette[j%256];
-	}
+	drawFire(image1, image2, palette, max, height, width);
 /*
 	// Drawing descending lines with Bresenham
 	nbrLine=10;
