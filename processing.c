@@ -215,7 +215,7 @@ void starField(int *image, int max, int color)
 	}
 }
 
-//Function doesn't wok now have to find a way to make color going blank whatever the color you choose
+//Function doesn't work now have to find a way to make color going blank whatever the color you choose
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
 {
 	int i, r=0, g=0, b=0;
@@ -350,50 +350,53 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	int average;
 	int loop = height;
 
-do
+	while(loop != 0)
 	{
-	for(i = 0 ; i < width ; i++)
-	{
-		for(j = 600 ; j >= 590 ; j--)
-			*(image1 + (j * width + i)) = palette[230 - (rand() % 30)];
-	}
-
-	for(i = 0 ; i < width ; i += 75-(rand() % 50))
-	{
-		if(i - 1 < width)
-		{
-			*(image1 + (595 * width + i)) = colorRGB(255, 255, 255);
-			*(image1 + (595 * width + i + 1)) = colorRGB(255, 255, 255);
-			*(image1 + (595 * width + i - 1)) = colorRGB(255, 255, 255);
-			*(image1 + (594 * width + i)) = colorRGB(255, 255, 255);
-			*(image1 + (594 * width + i + 1)) = colorRGB(255, 255, 255);
-			*(image1 + (594 * width + i - 1)) = colorRGB(255, 255, 255);
-			*(image1 + (596 * width + i)) = colorRGB(255, 255, 255);
-			*(image1 + (596 * width + i + 1)) = colorRGB(255, 255, 255);
-			*(image1 + (596 * width + i - 1)) = colorRGB(255, 255, 255);
-		}
-	}
-
-	
 		for(i = 0 ; i < width ; i++)
 		{
-			for(j = 0 ; j < height ; j++)
+			for(j = 600 ; j >= 590 ; j--)
+				image1[j * width + i] = palette[225 - (rand() % 30)];
+		}
+
+		for(i = 0 ; i < width ; i += 60 - (rand() % 50))
+		{
+			if(i - 1 < width)
 			{
-				average = (*(image1 + ((j - 1) * width + i)) + *(image1 + ((j + 1) * width + i)) + *(image1 + (j * width + (i - 1)))+*(image1 + (j * width + (i + 1)))) / 4;
+				image1[595 * width + i] = colorRGB(255, 255, 255);
+				image1[595 * width + i + 1] = colorRGB(255, 255, 255);
+				image1[595 * width + i - 1] = colorRGB(255, 255, 255);
+				image1[594 * width + i] = colorRGB(255, 255, 255);
+				image1[594 * width + i + 1] = colorRGB(255, 255, 255);
+				image1[594 * width + i - 1] = colorRGB(255, 255, 255);
+				image1[596 * width + i] = colorRGB(255, 255, 255);
+				image1[596 * width + i + 1] = colorRGB(255, 255, 255);
+				image1[596 * width + i - 1] = colorRGB(255, 255, 255);
+			}
+		}
+
+		for(i = 0 ; i < width ; i++)
+		{
+			for(j = 1 ; j < height ; j++)
+			{
+				average = (image1[(j - 1) * width + i] + image1[j * width + (i - 1) % width] + image1[j * width + (i + 1) % width] + image1[(j - 1) * width + (i -1) % width] + image1[(j - 1) * width + (i + 1) % width] + image1[(j + 1) * width + (i - 1) % width] + image1[(j + 1) * width + (i + 1) % width]) / 7;
 				if(average != 0)
 				{
-					*(image2 + (j - 1) * width + i) = average - 1;
+					image2[(j - 1) * width + i] = (average - 1);
+					//printf("%d\n", image2[(j - 1) * width + i]);
+					//fflush(stdout);
 				}
 				else
 				{
-					*(image2 + (j - 1) * width + i) = 0;
+					image2[(j - 1) * width + i] = 0;
+					//printf("%d\n", image2[(j - 1) * width + i]);
+					//fflush(stdout);
 				}
 			}
 		}
 		mini_update(image2);
 		image1 = image2;
 
-		loop--;
-	}while(loop != 0);
+		//loop--;
+	}
 	
 }

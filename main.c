@@ -181,6 +181,8 @@ int main() {
 		mini_update(p_image);
 
 	//fclose(out);
+	free(image1);
+	free(image2);
 	mini_close();
 	return 0;
 }
