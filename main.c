@@ -27,14 +27,13 @@ Things to do and test:
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height/*, nbrLine, space*/;
+	int width, height/*, nbrLine, space, i*/;
 	//Dynamic allocation of the variables to avoid segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	width = 800;
 	height = 600;
 	int max=(width)*(height);
-	int *p_image = image1;
 	init_image(image1);
 	init_image(image2);
 	uint palette[256];
@@ -111,7 +110,7 @@ int main() {
 
 	//Rainbow background
 	/*int red=255, green=0, blue=0;
-	for (space=0; i<10; i++)
+	for (space=0; space<10; space++)
 	{
 		for(i=0; i<255; i++)
 		{
@@ -178,11 +177,11 @@ int main() {
 	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
 	//Keeping the window open
 	while(0==0)
-		mini_update(p_image);
+		mini_update(image1);
 
-	//fclose(out);
 	free(image1);
 	free(image2);
+	//fclose(out);
 	mini_close();
 	return 0;
 }

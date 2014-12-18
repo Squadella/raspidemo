@@ -378,19 +378,11 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		{
 			for(j = 1 ; j < height ; j++)
 			{
-				average = (image1[(j - 1) * width + i] + image1[j * width + (i - 1) % width] + image1[j * width + (i + 1) % width] + image1[(j - 1) * width + (i -1) % width] + image1[(j - 1) * width + (i + 1) % width] + image1[(j + 1) * width + (i - 1) % width] + image1[(j + 1) * width + (i + 1) % width]) / 7;
+				average = (image1[(j - 1) * width + i] + image1[j * width + (i - 1) % width] + image1[j * width + (i + 1) % width]) / 3;
 				if(average != 0)
-				{
 					image2[(j - 1) * width + i] = (average - 1);
-					//printf("%d\n", image2[(j - 1) * width + i]);
-					//fflush(stdout);
-				}
 				else
-				{
 					image2[(j - 1) * width + i] = 0;
-					//printf("%d\n", image2[(j - 1) * width + i]);
-					//fflush(stdout);
-				}
 			}
 		}
 		mini_update(image2);
