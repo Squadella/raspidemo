@@ -28,7 +28,9 @@ void replaceColor(int color1, int color2, int *image, int max);
 //Draw a line in the given image
 void drawLine(Pixel start, Pixel end, int *image, int width, int max);
 //Draw a circle 
-void drawCircle(Pixel center, int radius, int *image, int height, int width);
+//Other way to draw a circle but malfunctioning...
+void drawCircle2(Pixel center, int radius, int *image, int width, int max);
+void drawCircle(const Pixel center, int radius, int *image, int height, int width);
 //Draw a starfiel on the given image with the given color
 void starField(int *image, int max, int color);
 //Create a beam of light with the given color and given position with a blank fading inside

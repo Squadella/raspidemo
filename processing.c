@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(uint image[], char* file)
@@ -158,42 +159,76 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 	}
 }
 
-void drawCircle(Pixel center, int radius, int *image, int height, int width)
+void drawCircle2(Pixel center, int radius, int *image, int width, int max)
+{
+	//Initialisations
+	Pixel start, end;
+	start.color=center.color;
+	end.color=center.color;
+	int y, x;
+	
+	for (y = -radius; y < radius; y++)
+	{
+		x = (int)(sqrt((float)(radius*radius - y * y)));
+		start.x=center.x-x;
+		end.x=center.x-x;
+		start.y=center.y+y;
+		end.y=center.y-y;
+		printf("%d, %d, %d, %d\n", start.x, start.y, end.x, end.y);
+		drawLine(start, end, image, width, max);
+		start.x=center.x+x;
+		end.x=center.x+x;
+		drawLine(start, end, image, width, max);
+	}
+}
+
+void drawCircle(const Pixel center, int radius, int *image, int height, int width)
 {
 	Pixel pixel, temp;
 	int max=height*width;
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
-	if(radius*2>height || radius*2>width)
+	/*if(radius*2>height || radius*2>width)
 	{
 		return;
-	}
+	}*/
 	do
 	{
 		//setPixel(xm-x, ym+y); I. Quadrant
 		temp.x = center.x-pixel.x;
 		temp.y = center.y+pixel.y;
 		temp.color=center.color;
-		drawPixel(temp, image, width, max);
+		//if (temp.x>=0)
+		//{
+			drawPixel(temp, image, width, max);
+		//}
 
 		//setPixel(xm-y, ym-x);   II. Quadrant
 		temp.x = center.x-pixel.y;
 		temp.y = center.y-pixel.x;
 		temp.color=center.color;
-		drawPixel(temp, image, width, max);
+	//	if(temp.x>=0)
+	//	{
+		//	if(temp.y>=0)
+		//	{
+				drawPixel(temp, image, width, max);
+		//	}
+		//}
 
 		//setPixel(xm+x, ym-y);  III. Quadrant
 		temp.x = center.x+pixel.x;
 		temp.y = center.y-pixel.y;
 		temp.color=center.color;
-		drawPixel(temp, image, width, max);
+		//if(temp.y>=0)
+		//{
+			drawPixel(temp, image, width, max);
+		//}
 
 		//setPixel(xm+y, ym+x);   IV. Quadrant
 		temp.x = center.x+pixel.y;
 		temp.y = center.y+pixel.x;
 		temp.color=center.color;
-		drawPixel(temp, image, width, max);
 
 		radius = err;
 		if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0

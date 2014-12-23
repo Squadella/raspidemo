@@ -39,10 +39,12 @@ int main()
 	pixel3.x=width/2;
 	pixel3.y=height/2;
 	pixel3.color=colorRGB(255,0,0);
-	drawCircle(pixel3, 120, image1, height, width);
+	drawCircle2(pixel3, 100, image1, height, max);
+	//drawCircle(pixel3, 100, image1, height, width);
 
 	while(0==0)
 		mini_update(image1);
+
 	free(image1);
 	//drawCircle(Pixel center, int radius, int *image, int height, int width)
 	return 0;
