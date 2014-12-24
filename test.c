@@ -1,6 +1,7 @@
 //Our libraries
 #include "libgmini.h"
 #include "processing.h"
+#include "alphabet.h"
 
 //Other libraries
 #include <unistd.h>
@@ -36,10 +37,16 @@ int main()
 	printf("press ESC to quit\n");
 
 	//Starting drawing!
-	pixel3.x=width/2;
-	pixel3.y=height/2;
+	
+	pixel3.x=100;
+	pixel3.y=100;
 	pixel3.color=colorRGB(255,0,0);
-	drawCircle2(pixel3, 100, image1, height, max);
+	//
+	drawAlphabet('D', 10, image1, pixel3, width, max);
+	pixel3.x+=100;
+	pixel3.y+=10;
+	drawAlphabet('A', 10, image1, pixel3, width, max);
+	//drawCircle2(pixel3, 100, image1, height, max);
 	//drawCircle(pixel3, 100, image1, height, width);
 
 	while(0==0)

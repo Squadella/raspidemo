@@ -37,6 +37,11 @@ int main() {
 	init_image(image1);
 	init_image(image2);
 	uint palette[256];
+
+	//The intro of the demo
+	//Fonction drawLulz();
+	
+	
 	//Pixel pixel, pixel1, pixel3;
 
 	//Debug file

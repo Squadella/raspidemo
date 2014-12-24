@@ -1,5 +1,4 @@
 #include "libgmini.h"
-#include "libgmini.h"
 #include "processing.h"
 #include <stdio.h>
 #include <stdlib.h>
