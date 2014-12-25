@@ -46,6 +46,13 @@ int main()
 	pixel3.x+=100;
 	pixel3.y+=10;
 	drawAlphabet('A', 10, image1, pixel3, width, max);
+	pixel3.x+=100;
+	pixel3.y-=10;
+	drawAlphabet('E', 10, image1, pixel3, width, max);
+	pixel3.x+=100;
+	drawAlphabet('M', 10, image1, pixel3, width, max);
+	pixel3.x+=110;
+	drawAlphabet('O', 10, image1, pixel3, width, max);
 	//drawCircle2(pixel3, 100, image1, height, max);
 	//drawCircle(pixel3, 100, image1, height, width);
 

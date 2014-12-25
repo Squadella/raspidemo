@@ -48,8 +48,8 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 				index++;
 			}
 			drawLine(start, end, image, width, max);
-
 			break;
+
 		case 'D':
 			//Drawing the vertical bar of D
 			start.x=center.x-(4*resize);
@@ -100,6 +100,78 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			end.x=center.x+(5*resize);
 			end.y=center.y+resize;
 			drawLine(start, end, image, width, max);
+			break;
+
+		case 'E':
+			//Drawing the vertical line of E
+			start.x=center.x-(4*resize);
+			start.y=center.y-(5*resize);
+			end.x=center.x-(4*resize);
+			end.y=center.y+(6*resize);
+			drawLine(start, end, image, width, max);
+
+			//Drawing the superior vertical line
+			end.x=center.x+(3*resize);
+			end.y=center.y-(5*resize);
+			drawLine(start, end, image, width, max);
+
+			//Drawing the middle vertical line
+			start.y=start.y+(5*resize);
+			end.y=end.y+(5*resize);
+			drawLine(start, end, image, width, max);
+
+			//Drawing the bottom line
+			start.y=start.y+(6*resize);
+			end.y=end.y+(6*resize);
+			drawLine(start, end, image, width, max);
+			break;
+
+		case 'M':
+			//Drawing the left vertial line
+			start.x=center.x-(5*resize);
+			start.y=center.y-(5*resize);
+			end.x=center.x-(5*resize);
+			end.y=center.y+(6*resize);
+			drawLine(start, end, image, width, max);
+
+			//Drawing the right vertical line
+			start.x+=10*resize;
+			end.x+=10*resize;
+			drawLine(start, end, image, width, max);
+
+			//Drawing the right center of M
+			end.x=center.x;
+			end.y=center.y+(4*resize);
+			drawLine(start, end, image, width, max);
+
+			//Drawing the left center of M
+			start.x-=10*resize;
+			drawLine(start, end, image, width, max);
+			break;
+
+		case 'O':
+			//Drawing the top half circle
+			drawQuarterCircle(center, 5*resize, image, height, width, 3);
+			drawQuarterCircle(center, 5*resize, image, height, width, 4);
+
+			//Drawing the bottom half circle
+			start.y=center.y+resize;
+			start.x=center.x;
+			drawQuarterCircle(start, 5*resize, image, height, width, 1);
+			drawQuarterCircle(start, 5*resize, image, height, width, 2);
+
+			//Drawing a line between the two half circles in the right
+			start.x=center.x+(5*resize);
+			start.y=center.y;
+			end.x=center.x+(5*resize);
+			end.y=center.y+resize;
+			drawLine(start, end, image, width, max);
+
+			//Drawing a line between the two half circles in the left
+			start.x-=10*resize;
+			end.x-=10*resize;
+			drawLine(start, end, image, width, max);
+			break;
 
 		default:
 			return;
