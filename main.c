@@ -1,6 +1,7 @@
 //Our libraries
 #include "libgmini.h"
 #include "processing.h"
+#include "alphabet.h"
 
 //Other libraries
 #include <unistd.h>
@@ -27,7 +28,8 @@ Things to do and test:
 int main() {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height/*, nbrLine, space, i*/;
+	int width, height/*, nbrLine, space*/, i, j, resize;
+	Pixel pixel3;
 	//Dynamic allocation of the variables to avoid segfault
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
@@ -38,19 +40,49 @@ int main() {
 	init_image(image2);
 	uint palette[256];
 
+	//Opening the image window
+	mini_open("foobar", width, height);
+	printf("press ESC to quit\n");
+
 	//The intro of the demo
 	//Fonction drawLulz();
+	//Affichage de demo en stockant le résultat de drawlulz dans image2
+	mini_update(image1);
+	pixel3.x=100;
+	pixel3.y=height;
+	resize=10;
+	pixel3.color=0;
+	for(i=1; i<height; i++)
+	{
+		for(j=resize*6; j<width; j+=71*resize)
+		{
+			pixel3.color=colorRGB(i,i/3,i/2);
+			drawAlphabet('D', resize, image1, pixel3, width, max);
+			pixel3.x+=10*resize;
+			drawAlphabet('E', resize, image1, pixel3, width, max);
+			pixel3.x+=10*resize;
+			drawAlphabet('M', resize, image1, pixel3, width, max);
+			pixel3.x+=10*resize;
+			drawAlphabet('O', resize, image1, pixel3, width, max);
+			pixel3.x=j;
+		}
+		pixel3.y--;
+		if (i%(height/10)==0)
+		{
+			resize--;
+		}
+		mini_update(image1);
+		usleep(100);
+		replaceImage(image1, image2, max);
+	}
 	
-	
+
 	//Pixel pixel, pixel1, pixel3;
 
 	//Debug file
 	/*FILE* out;
 	out=fopen("out.txt", "w");*/
 
-	//Opening the image window
-	mini_open("foobar", width, height);
-	printf("press ESC to quit\n");
 	//pixel.color=colorRGB(0, 2, 255);
 	//int r, g, b, i;
 

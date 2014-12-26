@@ -109,6 +109,15 @@ void fillImage(int *image, int color, int width, int max)
 	}
 }
 
+void replaceImage(int *image1, int *image2, int max)
+{
+	int i;
+	for(i=0; i<max; i++)
+	{
+		image1[i]=image2[i];
+	}
+}
+
 void replaceColor(int color1, int color2, int *image, int max)
 {
 	int index;
@@ -169,11 +178,12 @@ void drawCircle2(Pixel center, int radius, int *image, int width, int max)
 	for (y = -radius; y < radius; y++)
 	{
 		x = (int)(sqrt((float)(radius*radius - y * y)));
+		printf("%d\n", x);
 		start.x=center.x-x;
 		end.x=center.x-x;
 		start.y=center.y+y;
 		end.y=center.y-y;
-		printf("%d, %d, %d, %d\n", start.x, start.y, end.x, end.y);
+		//printf("%d, %d, %d, %d\n", start.x, start.y, end.x, end.y);
 		drawLine(start, end, image, width, max);
 		start.x=center.x+x;
 		end.x=center.x+x;
@@ -198,36 +208,37 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.x = center.x-pixel.x;
 		temp.y = center.y+pixel.y;
 		temp.color=center.color;
-		//if (temp.x>=0)
-		//{
+		if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+		{
 			drawPixel(temp, image, width, max);
-		//}
+		}
 
 		//setPixel(xm-y, ym-x);   II. Quadrant
 		temp.x = center.x-pixel.y;
 		temp.y = center.y-pixel.x;
 		temp.color=center.color;
-	//	if(temp.x>=0)
-	//	{
-		//	if(temp.y>=0)
-		//	{
-				drawPixel(temp, image, width, max);
-		//	}
-		//}
+		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+		{
+			drawPixel(temp, image, width, max);
+		}
 
 		//setPixel(xm+x, ym-y);  III. Quadrant
 		temp.x = center.x+pixel.x;
 		temp.y = center.y-pixel.y;
 		temp.color=center.color;
-		//if(temp.y>=0)
-		//{
+		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+		{
 			drawPixel(temp, image, width, max);
-		//}
+		}
 
 		//setPixel(xm+y, ym+x);   IV. Quadrant
 		temp.x = center.x+pixel.y;
 		temp.y = center.y+pixel.x;
 		temp.color=center.color;
+		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+		{
+			drawPixel(temp, image, width, max);
+		}
 
 		radius = err;
 		if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0

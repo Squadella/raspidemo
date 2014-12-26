@@ -25,10 +25,12 @@ int main()
 	int width, height/*, nbrLine, space*/, i, j, resize;
 	//Dynamic allocation of the variables to avoid segfault
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
+	int *image2 = malloc(sizeof(int)*MAXSIZE);
 	width = 800;
 	height = 600;
 	int max=(width)*(height);
 	init_image(image1);
+	init_image(image2);
 
 	//uint palette[256];
 	Pixel pixel3;
@@ -38,11 +40,12 @@ int main()
 	printf("press ESC to quit\n");
 
 	//Starting drawing!
-	
+	/*
 	//The word demo is asceding the windows and become smaller
 	pixel3.x=100;
 	pixel3.y=height;
 	resize=10;
+	fillImage(image2, colorRGB(0, 0, 0), width, max);
 	for(i=1; i<height; i++)
 	{
 		for(j=resize*6; j<width; j+=71*resize)
@@ -64,11 +67,12 @@ int main()
 		}
 		mini_update(image1);
 		usleep(100);
-		fillImage(image1, colorRGB(0, 0, 0), width, max);
+		replaceImage(image1, image2, max);
 	}
-	
-	//drawCircle2(pixel3, 100, image1, height, max);
-	//drawCircle(pixel3, 100, image1, height, width);
+	*/
+	pixel3.x=width/2;
+	pixel3.y=height/2;
+	drawCircle(pixel3, 450, image1, height, width);
 
 	while(0==0)
 		mini_update(image1);

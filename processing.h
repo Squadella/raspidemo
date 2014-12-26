@@ -23,13 +23,15 @@ void drawPixel(Pixel pixel, int *image, int width, int max);
 void drawPixelIndex(int index, int color, int max, int *image);
 //Fill the image with the given color
 void fillImage(int *image, int color, int width, int max);
+//Replace the printed image by another
+void replaceImage(int *image1, int *image2, int max);
 //Replace color1 with color2 on the entire image
 void replaceColor(int color1, int color2, int *image, int max);
 //Draw a line in the given image
 void drawLine(Pixel start, Pixel end, int *image, int width, int max);
-//Draw a circle 
 //Other way to draw a circle but malfunctioning...
 void drawCircle2(Pixel center, int radius, int *image, int width, int max);
+//Draw a circle 
 void drawCircle(const Pixel center, int radius, int *image, int height, int width);
 //Draw a starfiel on the given image with the given color
 void starField(int *image, int max, int color);
