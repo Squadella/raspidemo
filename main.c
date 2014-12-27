@@ -29,8 +29,8 @@ int main() {
 	srand(time(NULL));
 	int width, height/*, nbrLine, space, i*/;
 	//Dynamic allocation of the variables to avoid segfault
-	int *image2 = malloc(sizeof(int)*MAXSIZE);
-	int *image1 = malloc(sizeof(int)*MAXSIZE);
+	int *image2 = malloc(sizeof(uint)*MAXSIZE);
+	int *image1 = malloc(sizeof(uint)*MAXSIZE);
 	width = 800;
 	height = 600;
 	int max=(width)*(height);
@@ -51,9 +51,9 @@ int main() {
 
 	/*RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
 	initGradientPalette(palette, start, end);*/
-	open_ppm(palette, "fire.ppm");
+	open_ppm(palette, "fire2.ppm");
 	
-	drawFire(image1, image2, palette, max, height, width);
+	drawPlasma(image1, image2, palette, max, height, width, 1000);
 /*
 	// Drawing descending lines with Bresenham
 	nbrLine=10;

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 //Open a ppm file and print it in the window
 void open_ppm(uint image[], char* file)
@@ -344,7 +345,59 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 	}
 }
 
-void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width)
+void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
+{
+	int i, j;
+	uint average;
+	uint loop = timer;
+
+	for (i = 0 ; i < width; ++i)
+	{
+		for (j = 0; j < height; ++j)
+		{
+			image1[j * width + i] = colorRGB(0, 0, 0); 
+		}
+	}
+
+	while(loop != 0)
+	{	
+		for(i = 0 ; i < width ; i+= width / 500)
+			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
+
+		for (i = 0 ; i < width ; ++i)
+		{
+			for (j = height-2 ; j > 1 ; --j)
+			{
+				if(i > 0 || i < width-1)
+				{
+					average = (image1[(j + 1) * width + (i - 1)] + image1[(j + 1) * width + i] + image1[(j + 1) * width + (i + 1)]) / 3;
+					if(average > 0)
+						image1[j * width + i] = average - 1;
+					else
+						image1[j * width + i] = 0;
+				}
+				else
+					image1[j * width + i] = 0;
+
+			}
+		}
+
+		for (i = 0 ; i < width; ++i)
+		{
+			for (j = 0; j < height; ++j)
+			{
+				image2[j * width + i] = palette[image1[j * width + i]]; 
+			}
+		}
+
+		usleep(10);
+		mini_update(image2);
+		loop--;
+	}
+	
+}
+
+void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
 {
 	int i, j;
 	int average;
@@ -353,42 +406,58 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	while(loop != 0)
 	{
 		for(i = 0 ; i < width ; i++)
-		{
-			for(j = 600 ; j >= 590 ; j--)
-				image1[j * width + i] = palette[225 - (rand() % 30)];
-		}
+			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
 
-		for(i = 0 ; i < width ; i += 60 - (rand() % 50))
+		for (i = 0 ; i < width ; ++i)
 		{
-			if(i - 1 < width)
+			for (j = 1 ; j < (height - 1) ; ++j)
 			{
-				image1[595 * width + i] = colorRGB(255, 255, 255);
-				image1[595 * width + i + 1] = colorRGB(255, 255, 255);
-				image1[595 * width + i - 1] = colorRGB(255, 255, 255);
-				image1[594 * width + i] = colorRGB(255, 255, 255);
-				image1[594 * width + i + 1] = colorRGB(255, 255, 255);
-				image1[594 * width + i - 1] = colorRGB(255, 255, 255);
-				image1[596 * width + i] = colorRGB(255, 255, 255);
-				image1[596 * width + i + 1] = colorRGB(255, 255, 255);
-				image1[596 * width + i - 1] = colorRGB(255, 255, 255);
+				average = (image1[(j - 1) * width + ((i - 1) % width)] + image1[(j - 1) * width + (i % width)] + image1[(j - 1) * width + ((i + 1) % width)]) / 3;
+				image2[j * width + i] = palette[(average - 1) % 256];
 			}
 		}
 
-		for(i = 0 ; i < width ; i++)
-		{
-			for(j = 1 ; j < height ; j++)
-			{
-				average = (image1[(j - 1) * width + i] + image1[j * width + (i - 1) % width] + image1[j * width + (i + 1) % width]) / 3;
-				if(average != 0)
-					image2[(j - 1) * width + i] = (average - 1);
-				else
-					image2[(j - 1) * width + i] = 0;
-			}
-		}
 		mini_update(image2);
 		image1 = image2;
 
 		//loop--;
 	}
 	
+}
+
+void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
+{
+	int i, j;
+	uint loop = timer;
+
+	for (i = 0 ; i < width; ++i)
+	{
+		for (j = 0; j < height; ++j)
+		{
+			image1[j * width + i] = colorRGB(0, 0, 0); 
+		}
+	}
+
+	while(loop)
+	{
+		for (i = 0 ; i < width; ++i)
+		{
+			for (j = 0; j < height; ++j)
+			{
+				image1[j * width + i] = ((int)((sin(i) + 1) * 8192)) % 256;
+			}
+		}
+
+		for (i = 0 ; i < width; ++i)
+		{
+			for (j = 0; j < height; ++j)
+			{
+				image2[j * width + i] = palette[image1[j * width + i]]; 
+			}
+		}
+
+		usleep(10);
+		mini_update(image2);
+		loop--;
+	}
 }

@@ -1,5 +1,5 @@
 demo: main.o processing.o libgmini.o
-	gcc -Wall -O3 main.o processing.o libgmini.o -o demo -lXext -lX11
+	gcc -Wall -O3 main.o processing.o libgmini.o -o demo -lXext -lX11 -lm
 
 main.o: main.c
 	gcc -Wall main.c -c -lXext
