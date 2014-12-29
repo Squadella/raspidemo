@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, int height)
+void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, int height, int thick)
 {
 	//Initialisations
 	Pixel start, end;
@@ -18,36 +18,45 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 	switch (letter)
 	{
 		case 'A':
-			//Drawing the left part of A
-			start.x=center.x-(4*resize);
-			start.y=center.y+(5*resize);
-			end.x=center.x;
-			end.y=center.y-(6*resize);
-			drawLine(start, end, image, width, max);
-
-			//Drawing the right part of A
-			start.x=center.x+(4*resize);
-			drawLine(start, end, image, width, max);
-
-			//Drawing the middle bar of A
-			start.x=center.x-(2*resize);
-			start.y=center.y+(1*resize);
-			index=(width*start.y)+start.x;
-			//Place the point at the right place (cause by resizing)
-			while(image[index]!=center.color && start.x>=0)
+			for (i=0; i<thick; i++)
 			{
-				start.x--;
-				index--;
+				//Drawing the left part of A
+				start.y=center.y+(5*resize);
+				end.y=center.y-(6*resize);
+				start.x=center.x-(4*resize)+i;
+				end.x=center.x+i;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+
+				//Drawing the right part of A
+				start.x=center.x+(4*resize)+i;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+
+				//Drawing the middle bar of A
+				start.x=center.x-(2*resize);
+				start.y=center.y+(1*resize)+i;
+				index=(width*start.y)+start.x;
+				//Place the point at the right place (cause by resizing)
+				while(image[index]!=center.color && start.x>=0)
+				{
+					start.x--;
+					index--;
+				}
+				end.x=center.x+(2*resize);
+				end.y=center.y+(1*resize)+i;
+				index=(width*end.y)+end.x;
+				while(image[index]!=center.color && end.x>0)
+				{
+					end.x++;
+					index++;
+				}
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 			}
-			end.x=center.x+(2*resize);
-			end.y=center.y+(1*resize);
-			index=(width*end.y)+end.x;
-			while(image[index]!=center.color && end.x>0)
-			{
-				end.x++;
-				index++;
-			}
-			drawLine(start, end, image, width, max);
 			break;
 
 		case 'D':
@@ -56,7 +65,9 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			start.y=center.y+(6*resize);
 			end.x=center.x-(4*resize);
 			end.y=center.y-(5*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the circular part inferior of D
 			drawQuarterCircle(center, 5*resize, image, height, width, 4);
@@ -81,7 +92,9 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 				end.x++;
 				index++;
 			}
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 			start.x=center.x-(4*resize);
 			start.y=center.y-(5*resize);
 			end.x=(center.x-(4*resize))+1;
@@ -92,14 +105,18 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 				end.x++;
 				index++;
 			}
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing line between the two quarters
 			start.x=center.x+(5*resize);
 			start.y=center.y;
 			end.x=center.x+(5*resize);
 			end.y=center.y+resize;
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 			break;
 
 		case 'E':
@@ -108,22 +125,30 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			start.y=center.y-(5*resize);
 			end.x=center.x-(4*resize);
 			end.y=center.y+(6*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the superior vertical line
 			end.x=center.x+(3*resize);
 			end.y=center.y-(5*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the middle vertical line
 			start.y=start.y+(5*resize);
 			end.y=end.y+(5*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the bottom line
 			start.y=start.y+(6*resize);
 			end.y=end.y+(6*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 			break;
 
 		case 'M':
@@ -132,21 +157,29 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			start.y=center.y-(5*resize);
 			end.x=center.x-(5*resize);
 			end.y=center.y+(6*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the right vertical line
 			start.x+=10*resize;
 			end.x+=10*resize;
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the right center of M
 			end.x=center.x;
 			end.y=center.y+(4*resize);
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing the left center of M
 			start.x-=10*resize;
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 			break;
 
 		case 'O':
@@ -165,12 +198,16 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			start.y=center.y;
 			end.x=center.x+(5*resize);
 			end.y=center.y+resize;
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 
 			//Drawing a line between the two half circles in the left
 			start.x-=10*resize;
 			end.x-=10*resize;
-			drawLine(start, end, image, width, max);
+			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+					drawLine(start, end, image, width, max);
 			break;
 
 		default:
@@ -193,7 +230,10 @@ void drawQuarterCircle(const Pixel center, int radius, int *image, int height, i
 			temp.x = center.x-pixel.x;
 			temp.y = center.y+pixel.y;
 			temp.color=center.color;
-			drawPixel(temp, image, width, max);
+			if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+			{
+				drawPixel(temp, image, width, max);
+			}
 			radius = err;
 			if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
 			if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
@@ -206,7 +246,10 @@ void drawQuarterCircle(const Pixel center, int radius, int *image, int height, i
 			temp.x = center.x-pixel.y;
 			temp.y = center.y-pixel.x;
 			temp.color=center.color;
-			drawPixel(temp, image, width, max);
+			if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+			{
+				drawPixel(temp, image, width, max);
+			}
 			radius = err;
 			if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
 			if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
@@ -219,7 +262,10 @@ void drawQuarterCircle(const Pixel center, int radius, int *image, int height, i
 			temp.x = center.x+pixel.x;
 			temp.y = center.y-pixel.y;
 			temp.color=center.color;
-			drawPixel(temp, image, width, max);
+			if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+			{
+				drawPixel(temp, image, width, max);
+			}
 			radius = err;
 			if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
 			if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
@@ -232,7 +278,10 @@ void drawQuarterCircle(const Pixel center, int radius, int *image, int height, i
 			temp.x = center.x+pixel.y;
 			temp.y = center.y+pixel.x;
 			temp.color=center.color;
-			drawPixel(temp, image, width, max);
+			if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
+			{
+				drawPixel(temp, image, width, max);
+			}
 			radius = err;
 			if (radius <= pixel.y) err += ++(pixel.y)*2+1;           //e_xy+e_y < 0
 			if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step

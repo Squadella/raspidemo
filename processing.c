@@ -130,6 +130,57 @@ void replaceColor(int color1, int color2, int *image, int max)
 	}
 }
 
+void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width)
+{
+	int ix, iy;
+	if(y==-1)
+	{
+		if(direction)
+		{
+			for(ix=x; ix<width; ix++)
+			{
+				for(iy=0; iy<height; iy++)
+				{
+					image1[iy*height+ix]=image2[iy*height+ix];
+				}
+			}
+		}
+		else
+		{
+			for(ix=0; ix<x; ix++)
+			{
+				for(iy=0; iy<height; iy++)
+				{
+					image1[iy*height+ix]=image2[iy*height+ix];
+				}
+			}
+		}
+	}
+	else
+	{
+		if (direction)
+		{
+			for(iy=y; iy<height; iy++)
+			{
+				for(ix=0; ix<width; ix++)
+				{
+					image1[iy*height+ix]=image2[iy*height+ix];
+				}
+			}
+		}
+		else
+		{
+			for(iy=0; iy<0; iy++)
+			{
+				for(ix=0; ix<width; ix++)
+				{
+					image1[iy*height+ix]=image2[iy*height+ix];
+				}
+			}
+		}
+	}
+}
+
 void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
@@ -164,30 +215,6 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 			err=err+dx;
 			(start.y)=(start.y)+sy;
 		}
-	}
-}
-
-void drawCircle2(Pixel center, int radius, int *image, int width, int max)
-{
-	//Initialisations
-	Pixel start, end;
-	start.color=center.color;
-	end.color=center.color;
-	int y, x;
-	
-	for (y = -radius; y < radius; y++)
-	{
-		x = (int)(sqrt((float)(radius*radius - y * y)));
-		printf("%d\n", x);
-		start.x=center.x-x;
-		end.x=center.x-x;
-		start.y=center.y+y;
-		end.y=center.y-y;
-		//printf("%d, %d, %d, %d\n", start.x, start.y, end.x, end.y);
-		drawLine(start, end, image, width, max);
-		start.x=center.x+x;
-		end.x=center.x+x;
-		drawLine(start, end, image, width, max);
 	}
 }
 
@@ -395,9 +422,9 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	uint average;
 	uint loop = timer;
 
-	for (i = 0 ; i < width; ++i)
+	for (i = 0 ; i < width; i++)
 	{
-		for (j = 0; j < height; ++j)
+		for (j = 0; j < height; j++)
 		{
 			image1[j * width + i] = colorRGB(0, 0, 0); 
 		}
@@ -407,8 +434,7 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	{	
 		for(i = 0 ; i < width ; i+= width / 500)
 			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
-
-		for (i = 0 ; i < width ; ++i)
+		for (i = 0 ; i < width-1 ; i++)
 		{
 			for (j = height-2 ; j > 1 ; --j)
 			{
@@ -433,7 +459,6 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 				image2[j * width + i] = palette[image1[j * width + i]]; 
 			}
 		}
-
 		usleep(10);
 		mini_update(image2);
 		loop--;
@@ -449,10 +474,10 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
 
 	while(loop != 0)
 	{
-		for(i = 0 ; i < width ; i++)
+		for(i = 0 ; i < width-1 ; i++)
 			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
 
-		for (i = 0 ; i < width ; ++i)
+		for (i = 0 ; i < width-1 ; ++i)
 		{
 			for (j = 1 ; j < (height - 1) ; ++j)
 			{
@@ -464,7 +489,7 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
 		mini_update(image2);
 		image1 = image2;
 
-		//loop--;
+		loop--;
 	}
 	
 }

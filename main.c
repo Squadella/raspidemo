@@ -31,32 +31,36 @@ int main() {
 	int width, height/*, nbrLine, space*/, i, j, resize;
 	Pixel pixel3;
 	//Dynamic allocation of the variables to avoid segfault
-	int *image2 = malloc(sizeof(uint)*MAXSIZE);
-	int *image1 = malloc(sizeof(uint)*MAXSIZE);
+	int *image2 = malloc(sizeof(int)*MAXSIZE);
+	int *image1 = malloc(sizeof(int)*MAXSIZE);
+	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
+	uint *palette = malloc(sizeof(uint)*256);
 	width = 800;
 	height = 600;
 	int max=(width)*(height);
 	init_image(image1);
 	init_image(image2);
-	uint palette[256];
+	init_image(imageTmp);
+	RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
+	open_ppm(palette, "fire2.ppm");
 
 	//Opening the image window
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 
 	//The intro of the demo
-	//Fonction drawLulz();
-	//Affichage de demo en stockant le résultat de drawlulz dans image2
-	mini_update(image1);
+	mini_update(image2);
 	pixel3.x=100;
-	pixel3.y=height;
+	pixel3.y=height/2;
 	resize=10;
-	pixel3.color=0;
-	for(i=1; i<height; i++)
+	pixel3.color=colorRGB(255, 255, 255);
+	drawAlphabet('A', resize, image1, pixel3, width, height, 5);
+	/*
+	for(i=1; i<height-20; i++)
 	{
 		for(j=resize*6; j<width; j+=71*resize)
 		{
-			pixel3.color=colorRGB(i,i/3,i/2);
+			pixel3.color=colorRGB(0, 0, 255);
 			drawAlphabet('D', resize, image1, pixel3, width, max);
 			pixel3.x+=10*resize;
 			drawAlphabet('E', resize, image1, pixel3, width, max);
@@ -75,22 +79,15 @@ int main() {
 		usleep(100);
 		replaceImage(image1, image2, max);
 	}
-	
-
+	drawFire(image1, image2, palette, max, height, width, 100);*/
+	//catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 	//Pixel pixel, pixel1, pixel3;
 
 	//Debug file
 	/*FILE* out;
 	out=fopen("out.txt", "w");*/
 
-	//pixel.color=colorRGB(0, 2, 255);
-	//int r, g, b, i;
-
-	/*RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
-	initGradientPalette(palette, start, end);*/
-	open_ppm(palette, "fire2.ppm");
-	
-	drawPlasma(image1, image2, palette, max, height, width, 1000);
+	//drawPlasma(image1, image2, palette, max, height, width, 1000);
 /*
 	// Drawing descending lines with Bresenham
 	nbrLine=10;
@@ -218,6 +215,7 @@ int main() {
 
 	free(image1);
 	free(image2);
+	free(palette);
 	//fclose(out);
 	mini_close();
 	return 0;
