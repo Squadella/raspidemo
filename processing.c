@@ -274,15 +274,17 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 	} while (pixel.x < 0);
 }
 
-void starField(int *image, int max, int color)
+void starField(int *image, int max, int color, int prop)
 {
 
 	int i;
+	int reduction=0;
 	for (i=0; i<max ;i++)
 	{
-		if(!(rand()%100))
+		if(!(rand()%prop))
 		{
-			*(image+i)=color;
+			reduction=(rand()%128)+50;
+			*(image+i)=color-colorRGB(reduction, reduction, reduction);
 		}
 	}
 }
@@ -394,6 +396,72 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 					drawPixel(pixel, image, width, max);	
 				}
 			}
+		}
+	}
+}
+
+void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
+{
+	//Initialisations
+	int widthTemp, heightTemp, colorTmp;
+	Pixel pixel;
+	pixel.color=0;
+
+	//Going to the middle from the top
+	for(heightTemp=0; heightTemp<=height/2; heightTemp++)
+	{
+		for(widthTemp=0; widthTemp<=width; widthTemp++)
+		{
+			//Getting the color of the old pixel
+			colorTmp=image[(heightTemp*width)+widthTemp];
+			//Suppressing the old pixel
+			pixel.x=widthTemp;
+			pixel.y=heightTemp;
+			pixel.color=colorBG;
+			drawPixel(pixel, image, width, max);
+			//Creating a new pixel at the good position
+			pixel.color=colorTmp;
+			if(widthTemp<=(width/2))
+			{
+				pixel.x-=1;
+				pixel.y-=1;
+				drawPixel(pixel, image, width, max);	
+			}
+			else if(widthTemp>(width/2))
+			{
+				pixel.x+=1;
+				pixel.y-=1;
+				drawPixel(pixel, image, width, max);
+			}	
+		}
+	}
+	//Going to the middle from the bottom
+	for (heightTemp=height; heightTemp>height/2; heightTemp--)
+	{
+		for(widthTemp=0; widthTemp<=width; widthTemp++)
+		{
+			//Getting the color of the old pixel
+			colorTmp=image[(heightTemp*width)+widthTemp];
+			//Suppressing the old pixel
+			pixel.x=widthTemp;
+			pixel.y=heightTemp;
+			pixel.color=colorBG;
+			drawPixel(pixel, image, width, max);
+			pixel.color=colorTmp;
+
+			//Creating a new pixel at the good position
+			if(widthTemp>(width/2))
+			{
+				pixel.x=widthTemp+1;
+				pixel.y=heightTemp+1;
+				drawPixel(pixel, image, width, max);
+			}
+			else if(widthTemp<(width/2))
+			{
+				pixel.x=widthTemp-1;
+				pixel.y=heightTemp+1;
+				drawPixel(pixel, image, width, max);	
+			}	
 		}
 	}
 }
