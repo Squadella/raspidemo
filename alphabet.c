@@ -13,7 +13,7 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 	Pixel start, end;
 	start.color=center.color;
 	end.color=center.color;
-	int max=width*height, index, i;
+	int max=width*height, index, i, j;
 
 	switch (letter)
 	{
@@ -60,154 +60,165 @@ void drawAlphabet(char letter, int resize, int *image, Pixel center, int width, 
 			break;
 
 		case 'D':
-			//Drawing the vertical bar of D
-			start.x=center.x-(4*resize);
-			start.y=center.y+(6*resize);
-			end.x=center.x-(4*resize);
-			end.y=center.y-(5*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+			for(j=0; j<thick; j++)
+			{
+				//Drawing the vertical bar of D
+				start.x=center.x-(4*resize)+j;
+				start.y=center.y+(6*resize);
+				end.x=center.x-(4*resize)+j;
+				end.y=center.y-(5*resize);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the circular part inferior of D
-			drawQuarterCircle(center, 5*resize, image, height, width, 4);
-			for(i=0; i<resize; i++)
-			{
-				center.y++;
-			}
-			drawQuarterCircle(center, 5*resize, image, height, width, 1);
+				//Drawing the circular part inferior of D
+				start.x=center.x;
+				start.y=center.y;
+				drawQuarterCircle(start, 5*resize-j, image, height, width, 4);
+				for(i=0; i<resize; i++)
+				{
+					start.y++;
+				}
+				drawQuarterCircle(start, 5*resize-j, image, height, width, 1);
 
-			//Drawing line between circle and the D line
-			for(i=0; i<resize; i++)
-			{
-				center.y--;
-			}
-			start.x=center.x-(4*resize);
-			start.y=center.y+(6*resize);
-			end.x=(center.x-(4*resize))+1;
-			end.y=center.y+(6*resize);
-			index=(width*end.y)+end.x;
-			while(image[index]!=center.color && end.x<width)
-			{
-				end.x++;
-				index++;
-			}
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
-			start.x=center.x-(4*resize);
-			start.y=center.y-(5*resize);
-			end.x=(center.x-(4*resize))+1;
-			end.y=center.y-(5*resize);
-			index=(width*end.y)+end.x;
-			while(image[index]!=center.color && end.x<width)
-			{
-				end.x++;
-				index++;
-			}
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing line between circle and the D line
+				start.x=center.x-(4*resize)+j;
+				start.y=center.y+(6*resize)-j;
+				end.x=(center.x-(4*resize))+1+j;
+				end.y=center.y+(6*resize)-j;
+				index=(width*end.y)+end.x;
+				while(image[index]!=center.color && end.x<width)
+				{
+					end.x++;
+					index++;
+				}
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+				start.x=center.x-(4*resize)+j;
+				start.y=center.y-(5*resize)+j;
+				end.x=(center.x-(4*resize))+1+j;
+				end.y=center.y-(5*resize)+j;
+				index=(width*end.y)+end.x;
+				while(image[index]!=center.color && end.x<width)
+				{
+					end.x++;
+					index++;
+				}
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing line between the two quarters
-			start.x=center.x+(5*resize);
-			start.y=center.y;
-			end.x=center.x+(5*resize);
-			end.y=center.y+resize;
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing line between the two quarters
+				start.x=center.x+(5*resize)-j;
+				start.y=center.y;
+				end.x=center.x+(5*resize)-j;
+				end.y=center.y+resize;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+			}
 			break;
 
 		case 'E':
-			//Drawing the vertical line of E
-			start.x=center.x-(4*resize);
-			start.y=center.y-(5*resize);
-			end.x=center.x-(4*resize);
-			end.y=center.y+(6*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+			for(j=0; j<thick; j++)
+			{
+				//Drawing the vertical line of E
+				start.x=center.x-(4*resize)-j;
+				start.y=center.y-(5*resize);
+				end.x=center.x-(4*resize)-j;
+				end.y=center.y+(6*resize);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the superior vertical line
-			end.x=center.x+(3*resize);
-			end.y=center.y-(5*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the superior vertical line
+				start.y+=j;
+				end.x=center.x+(3*resize);
+				end.y=center.y-(5*resize)+j;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the middle vertical line
-			start.y=start.y+(5*resize);
-			end.y=end.y+(5*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the middle vertical line
+				start.y=start.y+(5*resize);
+				end.y=end.y+(5*resize);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the bottom line
-			start.y=start.y+(6*resize);
-			end.y=end.y+(6*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the bottom line
+				start.y=start.y+(6*resize)-2*j;
+				end.y=end.y+(6*resize)-2*j;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+			}
 			break;
 
 		case 'M':
-			//Drawing the left vertial line
-			start.x=center.x-(5*resize);
-			start.y=center.y-(5*resize);
-			end.x=center.x-(5*resize);
-			end.y=center.y+(6*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+			for(j=0; j<thick; j++)
+			{
+				//Drawing the left vertial line
+				start.x=center.x-(5*resize)+j;
+				start.y=center.y-(5*resize);
+				end.x=center.x-(5*resize)+j;
+				end.y=center.y+(6*resize);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the right vertical line
-			start.x+=10*resize;
-			end.x+=10*resize;
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the right vertical line
+				start.x+=10*resize;
+				end.x+=10*resize;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the right center of M
-			end.x=center.x;
-			end.y=center.y+(4*resize);
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the right center of M
+				end.x=center.x+j;
+				end.y=center.y+(4*resize);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing the left center of M
-			start.x-=10*resize;
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing the left center of M
+				start.x-=10*resize;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+			}
 			break;
 
 		case 'O':
-			//Drawing the top half circle
-			drawQuarterCircle(center, 5*resize, image, height, width, 3);
-			drawQuarterCircle(center, 5*resize, image, height, width, 4);
+			for(j=0; j<thick; j++)
+			{
+				//Drawing the top half circle
+				drawQuarterCircle(center, 5*resize-j, image, height, width, 3);
+				drawQuarterCircle(center, 5*resize-j, image, height, width, 4);
 
-			//Drawing the bottom half circle
-			start.y=center.y+resize;
-			start.x=center.x;
-			drawQuarterCircle(start, 5*resize, image, height, width, 1);
-			drawQuarterCircle(start, 5*resize, image, height, width, 2);
+				//Drawing the bottom half circle
+				start.y=center.y+resize;
+				start.x=center.x;
+				drawQuarterCircle(start, 5*resize-j, image, height, width, 1);
+				drawQuarterCircle(start, 5*resize-j, image, height, width, 2);
 
-			//Drawing a line between the two half circles in the right
-			start.x=center.x+(5*resize);
-			start.y=center.y;
-			end.x=center.x+(5*resize);
-			end.y=center.y+resize;
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing a line between the two half circles in the right
+				start.x=center.x+(5*resize)-j;
+				start.y=center.y;
+				end.x=center.x+(5*resize)-j;
+				end.y=center.y+resize;
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
 
-			//Drawing a line between the two half circles in the left
-			start.x-=10*resize;
-			end.x-=10*resize;
-			if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
-				if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
-					drawLine(start, end, image, width, max);
+				//Drawing a line between the two half circles in the left
+				start.x-=(10*resize)-(2*j);
+				end.x-=(10*resize)-(2*j);
+				if (end.x>=0 && end.y<=height && end.x<=width && end.y>=0)
+					if (start.x>=0 && start.y<=height && start.x<=width && start.y>=0)
+						drawLine(start, end, image, width, max);
+			}
 			break;
 
 		default:

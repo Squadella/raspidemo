@@ -51,23 +51,22 @@ int main() {
 	//The intro of the demo
 	mini_update(image2);
 	pixel3.x=100;
-	pixel3.y=height/2;
+	pixel3.y=height;
 	resize=10;
 	pixel3.color=colorRGB(255, 255, 255);
-	drawAlphabet('A', resize, image1, pixel3, width, height, 5);
-	/*
+	
 	for(i=1; i<height-20; i++)
 	{
 		for(j=resize*6; j<width; j+=71*resize)
 		{
 			pixel3.color=colorRGB(0, 0, 255);
-			drawAlphabet('D', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('E', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('M', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('O', resize, image1, pixel3, width, max);
+			drawAlphabet('D', resize, image1, pixel3, width, height, (i%10)+1);
+			pixel3.x+=12*resize;
+			drawAlphabet('E', resize, image1, pixel3, width, height, (i%10)+1);
+			pixel3.x+=12*resize;
+			drawAlphabet('M', resize, image1, pixel3, width, height, (i%10)+1);
+			pixel3.x+=12*resize;
+			drawAlphabet('O', resize, image1, pixel3, width, height, (i%10)+1);
 			pixel3.x=j;
 		}
 		pixel3.y--;
@@ -79,7 +78,7 @@ int main() {
 		usleep(100);
 		replaceImage(image1, image2, max);
 	}
-	drawFire(image1, image2, palette, max, height, width, 100);*/
+	drawFire(image1, image2, palette, max, height, width, 100000);
 	//catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 	//Pixel pixel, pixel1, pixel3;
 
