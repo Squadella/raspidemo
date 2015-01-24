@@ -70,9 +70,18 @@ int main()
 		replaceImage(image1, image2, max);
 	}
 	*/
+
+	fillImage(image2, colorRGB(255, 255, 255), width, max);
 	pixel3.x=width/2;
 	pixel3.y=height/2;
-	drawCircle(pixel3, 450, image1, height, width);
+	pixel3.color=colorRGB(255, 255, 255);
+	drawAlphabet('D', 10, image1, pixel3, width, max, 2);
+	mini_update(image1);
+	mini_update(image2);
+	sleep(2);
+	catImage(image1, image2, 0, height/2, 1, height, width);
+	mini_update(image1);
+	printf("cock\n");
 
 	while(0==0)
 		mini_update(image1);

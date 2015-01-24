@@ -48,7 +48,7 @@ int main() {
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 
-	//The intro of the demo
+	//The intro of the demo, the word demo is displayed
 	mini_update(image2);
 	pixel3.x=100;
 	pixel3.y=height;
@@ -77,19 +77,24 @@ int main() {
 		usleep(100);
 		replaceImage(image1, image2, max);
 	}
+	//Draw a bit of fire
 	drawFire(image1, image2, palette, max, height, width, 500);
 
+	//Emptying the image and drawing a starfield
 	fillImage(image1, colorRGB(0, 0, 0), width, max);
 	starField(image1, max, colorRGB(255, 255, 255), 200);
 	mini_update(image1);
 	sleep(1);
 	
+	//Moving the starfield into the corner
 	for (i=0; i<width/2; i++)
 	{
 		movingAllToCorner(image1, max, colorRGB(0, 0, 0), height, width);
 		usleep(1000);
 		mini_update(image1);
 	}
+
+	
 	//catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 	//Pixel pixel, pixel1, pixel3;
 

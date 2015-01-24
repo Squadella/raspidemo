@@ -141,7 +141,7 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 			{
 				for(iy=0; iy<height; iy++)
 				{
-					image1[iy*height+ix]=image2[iy*height+ix];
+					image1[iy*width+ix]=image2[iy*width+ix];
 				}
 			}
 		}
@@ -151,7 +151,7 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 			{
 				for(iy=0; iy<height; iy++)
 				{
-					image1[iy*height+ix]=image2[iy*height+ix];
+					image1[iy*width+ix]=image2[iy*width+ix];
 				}
 			}
 		}
@@ -164,23 +164,38 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 			{
 				for(ix=0; ix<width; ix++)
 				{
-					image1[iy*height+ix]=image2[iy*height+ix];
+					image1[iy*width+ix]=image2[iy*width+ix];
 				}
 			}
 		}
 		else
 		{
-			for(iy=0; iy<0; iy++)
+			for(iy=0; iy<y; iy++)
 			{
 				for(ix=0; ix<width; ix++)
 				{
-					image1[iy*height+ix]=image2[iy*height+ix];
+					image1[iy*width+ix]=image2[iy*width+ix];
 				}
 			}
 		}
 	}
 }
-
+/*
+void catImageColor(int *image1, int *image2, int color, int height, int width)
+{
+	int ix, iy; 
+	for(ix=0; ix<width; ix++)
+	{
+		for(iy=0; iy<height; iy++)
+		{
+			if (image2[(iy*width)+ix]==color)
+			{
+				
+			}
+		}
+	}
+}
+*/
 void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
