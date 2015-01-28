@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #define MAXSIZE 1000*1000
 
@@ -15,18 +16,12 @@
 void init_image(int *image) 
 {
 	int i;
+
 	for(i=0; i<MAXSIZE; i++)
 		*(image+i) = colorRGB(0, 0, 0);
 }
 
-/*
-Things to do and test:
--do we keep a black image to reset the window?
--implement double-buffering
--creating PGM effects*/
-
 int main() {
-	//Initialisation of all the variables
 	srand(time(NULL));
 	int width, height/*, nbrLine, space*/, i, j, resize;
 	Pixel pixel3;
