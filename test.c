@@ -22,7 +22,7 @@ int main()
 {
 	//Initialisation of all the variables
 	srand(time(NULL));
-	int width, height/*, nbrLine, space*/, i, j, resize;
+	int width, height;
 	//Dynamic allocation of the variables to avoid segfault
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
@@ -32,56 +32,14 @@ int main()
 	init_image(image1);
 	init_image(image2);
 
-	//uint palette[256];
-	Pixel pixel3;
+	uint palette[256];
 
 	//Opening the image window
 	mini_open("foobar", width, height);
 	printf("press ESC to quit\n");
 
-	//Starting drawing!
-	/*
-	//The word demo is asceding the windows and become smaller
-	pixel3.x=100;
-	pixel3.y=height;
-	resize=10;
-	fillImage(image2, colorRGB(0, 0, 0), width, max);
-	for(i=1; i<height; i++)
-	{
-		for(j=resize*6; j<width; j+=71*resize)
-		{
-			pixel3.color=colorRGB(i,i/3,i/2);
-			drawAlphabet('D', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('E', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('M', resize, image1, pixel3, width, max);
-			pixel3.x+=10*resize;
-			drawAlphabet('O', resize, image1, pixel3, width, max);
-			pixel3.x=j;
-		}
-		pixel3.y--;
-		if (i%(height/10)==0)
-		{
-			resize--;
-		}
-		mini_update(image1);
-		usleep(100);
-		replaceImage(image1, image2, max);
-	}
-	*/
-
-	fillImage(image2, colorRGB(255, 255, 255), width, max);
-	pixel3.x=width/2;
-	pixel3.y=height/2;
-	pixel3.color=colorRGB(255, 255, 255);
-	drawAlphabet('D', 10, image1, pixel3, width, max, 2);
-	mini_update(image1);
-	mini_update(image2);
-	sleep(2);
-	catImage(image1, image2, 0, height/2, 1, height, width);
-	mini_update(image1);
-	printf("cock\n");
+	open_ppm(palette, "fire.ppm");
+	drawFire(image1, image2, palette, max, height, width, 2000);
 
 	while(0==0)
 		mini_update(image1);
