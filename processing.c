@@ -549,34 +549,6 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	
 }
 
-void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
-{
-	int i, j;
-	int average;
-	int loop = height;
-
-	while(loop != 0)
-	{
-		for(i = 0 ; i < width-1 ; i++)
-			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
-
-		for (i = 0 ; i < width-1 ; ++i)
-		{
-			for (j = 1 ; j < (height - 1) ; ++j)
-			{
-				average = (image1[(j - 1) * width + ((i - 1) % width)] + image1[(j - 1) * width + (i % width)] + image1[(j - 1) * width + ((i + 1) % width)]) / 3;
-				image2[j * width + i] = palette[(average - 1) % 256];
-			}
-		}
-
-		mini_update(image2);
-		image1 = image2;
-
-		loop--;
-	}
-	
-}
-
 void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
 {
 	int i, j;

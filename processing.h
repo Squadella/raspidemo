@@ -46,7 +46,5 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 //Fire effect
 void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
 
-void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
-
 void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
 #endif
