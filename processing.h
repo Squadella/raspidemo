@@ -16,7 +16,7 @@ typedef struct RGBTriplet
 	unsigned char blue;
 }RGBTriplet;
 
-void open_ppm(uint image[], char* file);
+void open_ppm(int image[], char* file);
 //Change the state of one pixel in the image table
 void drawPixel(Pixel pixel, int *image, int width, int max);
 //Change the state of one pixel in the image table with the given index
@@ -41,6 +41,12 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
 //Move all the point ignoring the color
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width);
+//
+int getToRightX(int val, int lenght, int width, int offset);
+//Apply a trnasformation on image1 with the image2
+void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght);
+//Make the lens effect on the screen
+void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
 //Creates a gradient color palette
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
 //Fire effect

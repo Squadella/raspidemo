@@ -26,8 +26,8 @@ int main()
 	//Dynamic allocation of the variables to avoid segfault
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
-	width = 800;
-	height = 600;
+	width = 722;
+	height = 541;
 	int max=(width)*(height);
 	init_image(image1);
 	init_image(image2);
@@ -71,17 +71,18 @@ int main()
 	}
 	*/
 
-	fillImage(image2, colorRGB(255, 255, 255), width, max);
-	pixel3.x=width/2;
-	pixel3.y=height/2;
+	open_ppm(image1, "l");
+	pixel3.x=200;
+	pixel3.y=200;
 	pixel3.color=colorRGB(255, 255, 255);
-	drawAlphabet('D', 10, image1, pixel3, width, max, 2);
-	mini_update(image1);
 	mini_update(image2);
 	sleep(2);
-	catImage(image1, image2, 0, height/2, 1, height, width);
+	//drawAlphabet('D', 10, image1, pixel3, width, max, 2);
 	mini_update(image1);
-	printf("cock\n");
+	sleep(5);
+	lens(100, 40, image1, image2, max, width, height, pixel3);
+	mini_update(image1);
+	printf("fin trait\n");
 
 	while(0==0)
 		mini_update(image1);

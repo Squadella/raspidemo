@@ -7,7 +7,7 @@
 #include <math.h>
 
 //Open a ppm file and print it in the window
-void open_ppm(uint image[], char* file)
+void open_ppm(int image[], char* file)
 {
 
 	// initialising the file
@@ -78,6 +78,7 @@ void open_ppm(uint image[], char* file)
 		image[i]=colorRGB(red,blue,green);
 	}
 	fclose(img);
+	mini_update(image);
 }
 
 // Draw a pixel with the given color
@@ -240,10 +241,6 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
-	/*if(radius*2>height || radius*2>width)
-	{
-		return;
-	}*/
 	do
 	{
 		//setPixel(xm-x, ym+y); I. Quadrant
@@ -479,6 +476,73 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			}	
 		}
 	}
+}
+
+int getToRightX(int val, int lenght, int width, int offset)
+{
+	int ytemp=0;
+	int finalval;
+	while(val>=lenght)
+	{
+		val=val-lenght;
+		ytemp++;
+	}
+	finalval=(ytemp*(width))+val+offset;
+	return finalval;
+}
+
+void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght)
+{
+	int x, y, offset, val, ytemp=0;
+	offset=((start.y)*width+start.x);
+	for (y=0; y<lenght; y++)
+	{
+		for (x=0; x<lenght; x++)
+		{
+			val=transArray[((y*lenght)+x)];
+			val=getToRightX(val, lenght, width, offset);
+			image1[offset+((y*width)+x)]=image2[val];
+		}
+		printf("\n");
+	}
+}
+
+void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start)
+{
+	int x, y, x2, y2, temp, temp2, a, b;
+	int s=((radius*radius)-(magFact*magFact));
+	replaceImage(image2, image1, max);
+	int lensTrans[((radius*2)*(radius*2))+1];
+	for(x=0; x<((radius*2)*(radius*2))+1; x++)
+	{
+		lensTrans[x]=0;
+	}
+	for (y=-radius; y<=0; y++)
+	{
+		y2=y*y;
+		temp=(y+radius)*(radius*2);
+		temp2=(-y+radius)*(radius*2);
+		for (x=-radius; x<=0; x++)
+		{
+			x2=x*x;
+			if (x2+y2>=s)
+			{
+				a=x;
+				b=y;
+			}
+			else
+			{
+				double z=sqrt((radius*radius)-x2-y2);
+				a=(int)(x*(magFact/z));
+				b=(int)(y*(magFact/z));
+			}
+			lensTrans[temp2+x-radius]=((-b + radius) * (radius*2) - (-a + radius)); //bottom left
+			lensTrans[(temp2+(-x+radius))-(radius*2)]=((-b+radius)*(radius*2)+(-a+radius))-(radius*2); //bottom right
+			lensTrans[(y+radius)*(radius*2)+(x+radius)]=(b+radius)*(radius*2)+(a+radius); // top left
+			lensTrans[(temp-(x+radius))+(radius*2)]=(b+radius)*(radius*2)-(a+radius)+(radius*2); //top right
+		}
+	}
+	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
 
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
