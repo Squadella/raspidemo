@@ -41,12 +41,14 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
 //Move all the point ignoring the color
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width);
-//
+//Create the good index for applying transform
 int getToRightX(int val, int lenght, int width, int offset);
 //Apply a trnasformation on image1 with the image2
-void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght);
+void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height);
 //Make the lens effect on the screen
 void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
+//Transform the given image
+void planeTransform (int height, int width, int *image1, int *image2, int mode);
 //Creates a gradient color palette
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
 //Fire effect

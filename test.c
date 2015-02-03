@@ -26,8 +26,10 @@ int main()
 	//Dynamic allocation of the variables to avoid segfault
 	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	int *image2 = malloc(sizeof(int)*MAXSIZE);
-	width = 722;
-	height = 541;
+	//width = 800;
+	//height = 600;
+	width = 800;
+	height = 600;
 	int max=(width)*(height);
 	init_image(image1);
 	init_image(image2);
@@ -71,16 +73,20 @@ int main()
 	}
 	*/
 
-	open_ppm(image1, "l");
+	open_ppm(image1, "p");
+	//open_ppm(image2, "p");
+	fillImage(image2, colorRGB(0, 0, 255), width, max);
+	starField(image2, max, colorRGB(255, 255, 255), 10);
 	pixel3.x=200;
 	pixel3.y=200;
 	pixel3.color=colorRGB(255, 255, 255);
 	mini_update(image2);
+	printf("lol\n");
 	sleep(2);
 	//drawAlphabet('D', 10, image1, pixel3, width, max, 2);
 	mini_update(image1);
-	sleep(5);
-	lens(100, 40, image1, image2, max, width, height, pixel3);
+	planeTransform (height, width, image1, image2, 9);
+	//lens(100, 45, image1, image2, max, width, height, pixel3);
 	mini_update(image1);
 	printf("fin trait\n");
 

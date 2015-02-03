@@ -493,7 +493,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 
 void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght)
 {
-	int x, y, offset, val, ytemp=0;
+	int x, y, offset, val;
 	offset=((start.y)*width+start.x);
 	for (y=0; y<lenght; y++)
 	{
@@ -543,6 +543,124 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
 		}
 	}
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
+}
+
+void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height)
+{
+	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
+	for (timeShift= 0; timeShift<10000; timeShift++)
+	{	
+		for (pixelcount=0; pixelcount<(width*height); pixelcount++)
+		{
+			offset=(pixelcount << 1)+pixelcount;
+			u=mLUT[offset]+timeShift;
+			v=mLUT[offset+1]+timeShift;
+			adjustBright=mLUT[offset+2];
+			color=image2[(width*v & (height-1))+(u & (width-1))];
+			if (adjustBright!=0)
+			{
+				invertRGB(color, &r, &g, &b);
+				r+=adjustBright;
+				if (r<0)
+					r=0;
+				if (r>255)
+					r=255;
+				g+=adjustBright;
+				if (g<0)
+					g=0;
+				if (g>255)
+					g=255;
+				b+=adjustBright;
+				if (b<0)
+					b=0;
+				if (b>255)
+					b=255;
+				color=colorRGB(r,g,b);
+			}
+			image1[pixelcount]=color;
+		}
+		if(timeShift%5==0)
+			mini_update(image1);
+	}
+}
+
+void planeTransform (int height, int width, int *image1, int *image2, int mode)
+{
+	int k=0, j, i;
+	double u,v,bright=0, y, x, d, a, r;
+	int mLUT[((height*width)*3)+1];
+	for (j=0; j<height; j++)
+	{
+		y= -1.0 + 2.0*((double)j/((double)height));
+		for (i=0; i<width; i++)
+		{
+			x=-1.0+2.0*((double)i/((double)width));
+			d=sqrt(x*x+y*y);
+			a=atan2(x,y);
+			r=d;
+			switch (mode)
+			{
+				case 1: //steroegraphic projection
+				u=(cos(a))/d;
+				v=(sin(a))/d;
+				bright=-10*(2/((6*r)+(3*x)));
+				break;
+
+				case 2: //The amazing rotating tunnel of wonder!
+				v=2/(6*r+3*x);
+				u=(a*3)/M_PI;
+				bright=15*(-v);
+				break;
+
+				case 3: //Spiral effect
+				v=sin(a+cos(3*r))/(pow(r,0.2));
+				u=cos(a+cos(3*r))/(pow(r,0.2));
+				bright=1;
+				break;
+
+				case 4: //Wavy in star shape
+				v=(-0.4/r)+(0.1*sin(8*a));
+ 		    	u=0.5+(0.5*a/M_PI);
+   		    	bright=0;
+   		    	break;
+				
+				case 5: //Hyper space travel
+				u=(0.02*y+0.03)*cos(a*3)/r;
+				v=(0.02*y+0.03)*sin(a*3)/r;
+				bright=0;
+				break;
+
+				case 6: //5 points distord
+				u = 1/(r+0.5+0.5*sin(5*a));
+				v = a*3/M_PI;
+				bright = 0;
+				break;
+
+				case 7: //accumulating layer
+				u = 0.1*x/(0.11+r*0.5);
+				v = 0.1*y/(0.11+r*0.5);
+				bright=0;
+				break;
+
+				case 8: //circle spreading
+				u = 0.5*(a)/M_PI;
+				v = sin(2*r);
+				bright = 0;
+				break;
+
+				case 9:
+				v = pow(r,0.1);
+				u = (1*a/M_PI)+r;
+				bright=0;
+				break;
+			}
+			
+			mLUT[k++]=((int)(width*u))&(width-1);
+			mLUT[k++]=((int)(height*v))&(height-1);
+			mLUT[k++]=((int)bright);
+		}
+	}
+	applyPlaneTransform (mLUT, image1, image2, width, height);
 }
 
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
