@@ -85,16 +85,16 @@ void open_ppm(int image[], char* file)
 void drawPixel(Pixel pixel)
 {
 	unsigned int index=(pixel.y)*finfo.line_length+(pixel.x);
-	*(image+index)=(pixel.color);
+	*((char*)(fbp+index))=(pixel.color);
 }
 
-void drawPixelIndex(int index, int color, int max, int *image)
+void drawPixelIndex(int index, int color)
 {
-	if(index>=max)
+	if(index>=finfo.line_length)
 	{
 		return;
 	}
-	*(image+index)=color;
+	*((char*)(fbp+index))=color;
 }
 
 void fillImage(int *image, int color, int width, int max)
@@ -102,7 +102,7 @@ void fillImage(int *image, int color, int width, int max)
 	int i;
 	for(i=0; i<max; i++)
 	{
-		drawPixelIndex(i, color, max, image);
+		drawPixelIndex(i, color);
 	}
 }
 
@@ -122,7 +122,7 @@ void replaceColor(int color1, int color2, int *image, int max)
 	{
 		if(*(image+index)==color1)
 		{
-			drawPixelIndex(index, color2, max, image);
+			drawPixelIndex(index, color2);
 		}
 	}
 }
@@ -213,7 +213,7 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 	int e2=0;
 	while(1)
 	{
-		drawPixel(start, image, width, max);
+		drawPixel(start);
 		if((start.x)==(end.x) && (start.y)==(end.y))
 			break;
 		e2=2*err;
@@ -245,7 +245,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp, image, width, max);
+			drawPixel(temp);
 		}
 
 		//setPixel(xm-y, ym-x);   II. Quadrant
@@ -254,7 +254,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp, image, width, max);
+			drawPixel(temp);
 		}
 
 		//setPixel(xm+x, ym-y);  III. Quadrant
@@ -263,7 +263,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp, image, width, max);
+			drawPixel(temp);
 		}
 
 		//setPixel(xm+y, ym+x);   IV. Quadrant
@@ -272,7 +272,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp, image, width, max);
+			drawPixel(temp);
 		}
 
 		radius = err;
@@ -356,7 +356,7 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
-				drawPixel(pixel, image, width, max);
+				drawPixel(pixel);
 				pixel.color=color;
 
 				//Creating a new pixel at the good position
@@ -364,13 +364,13 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 				{
 					pixel.x-=1;
 					pixel.y-=1;
-					drawPixel(pixel, image, width, max);	
+					drawPixel(pixel);	
 				}
 				else if(widthTemp>(width/2))
 				{
 					pixel.x+=1;
 					pixel.y-=1;
-					drawPixel(pixel, image, width, max);
+					drawPixel(pixel);
 				}	
 			}
 		}
@@ -387,7 +387,7 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
-				drawPixel(pixel, image, width, max);
+				drawPixel(pixel);
 				pixel.color=color;
 				
 				//Creating a new pixel at the good position
@@ -395,13 +395,13 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 				{
 					pixel.x=widthTemp+1;
 					pixel.y=heightTemp+1;
-					drawPixel(pixel, image, width, max);
+					drawPixel(pixel);
 				}
 				else if(widthTemp<(width/2))
 				{
 					pixel.x=widthTemp-1;
 					pixel.y=heightTemp+1;
-					drawPixel(pixel, image, width, max);	
+					drawPixel(pixel);	
 				}
 			}
 		}
@@ -426,20 +426,20 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			pixel.x=widthTemp;
 			pixel.y=heightTemp;
 			pixel.color=colorBG;
-			drawPixel(pixel, image, width, max);
+			drawPixel(pixel);
 			//Creating a new pixel at the good position
 			pixel.color=colorTmp;
 			if(widthTemp<=(width/2))
 			{
 				pixel.x-=1;
 				pixel.y-=1;
-				drawPixel(pixel, image, width, max);	
+				drawPixel(pixel);	
 			}
 			else if(widthTemp>(width/2))
 			{
 				pixel.x+=1;
 				pixel.y-=1;
-				drawPixel(pixel, image, width, max);
+				drawPixel(pixel);
 			}	
 		}
 	}
@@ -454,7 +454,7 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			pixel.x=widthTemp;
 			pixel.y=heightTemp;
 			pixel.color=colorBG;
-			drawPixel(pixel, image, width, max);
+			drawPixel(pixel);
 			pixel.color=colorTmp;
 
 			//Creating a new pixel at the good position
@@ -462,13 +462,13 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			{
 				pixel.x=widthTemp+1;
 				pixel.y=heightTemp+1;
-				drawPixel(pixel, image, width, max);
+				drawPixel(pixel);
 			}
 			else if(widthTemp<(width/2))
 			{
 				pixel.x=widthTemp-1;
 				pixel.y=heightTemp+1;
-				drawPixel(pixel, image, width, max);	
+				drawPixel(pixel);	
 			}	
 		}
 	}
