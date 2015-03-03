@@ -8,31 +8,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <fcntl.h>
+#include <linux/fb.h>
+#include <sys/mman.h>
 
-#define MAXSIZE 1000*1000
+// 'global' variables to store screen info
+char *fbp = 0;
+struct fb_var_screeninfo vinfo;
+struct fb_fix_screeninfo finfo;
 
-
-void init_image(int *image) 
+int main()
 {
-	int i;
-	for(i=0; i<MAXSIZE; i++)
-		*(image+i) = colorRGB(0, 0, 0);
-}
-
-/*
-Things to do and test:
--do we keep a black image to reset the window?
--implement double-buffering
--creating PGM effects*/
-
-int main() {
 	//Initialisation of all the variables
+	long int screensize=0;
+	int fbfd=0;
+
+	//Opening framebuffer
+	fbfd=open("/dev/fb0", O_RDWR);
+	if (!fbfd)
+	{
+		printf("Error: cannot open framebuffer device.\n");
+		printf("Try to run the executable file with root privileges.\n");
+		return(-1);
+	}
+
+	//Get fixed sreen information
+	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo))
+	{
+		printf("Error reading fixed information of the screen.\n");
+    }
+
+    // Get variable screen information
+	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo))
+	{
+		printf("Error reading variable information.\n");
+	}
+
+	// map framebuffer to user memory
+	screensize = finfo.smem_len;
+	fbp = (char*)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+	if ((int)fbp == -1)
+	{
+		printf("Failed to mmap the framebuffer.\n");
+	}
+
 	srand(time(NULL));
 	int width, height/*, nbrLine, space*/, i, j, resize;
 	Pixel pixel3;
 	//Dynamic allocation of the variables to avoid segfault
-	int *image2 = malloc(sizeof(int)*MAXSIZE);
-	int *image1 = malloc(sizeof(int)*MAXSIZE);
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
 	uint *palette = malloc(sizeof(uint)*256);
 	width = 800;

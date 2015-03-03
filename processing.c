@@ -82,13 +82,9 @@ void open_ppm(int image[], char* file)
 }
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, int *image, int width, int max)
+void drawPixel(Pixel pixel)
 {
-	int index=(pixel.y)*width+(pixel.x);
-	if (index>=max || index<0)
-	{
-		return;
-	}
+	unsigned int index=(pixel.y)*finfo.line_length+(pixel.x);
 	*(image+index)=(pixel.color);
 }
 
