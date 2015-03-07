@@ -1,7 +1,7 @@
 //Our libraries
 #include "libgmini.h"
 #include "processing.h"
-#include "alphabet.h"
+//#include "alphabet.h"
 
 //Other libraries
 #include <unistd.h>
@@ -11,6 +11,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <linux/fb.h>
+#include <sys/ioctl.h>
 #include <sys/mman.h>
 
 // 'global' variables to store screen info
@@ -32,31 +33,46 @@ int main()
 		printf("Try to run the executable file with root privileges.\n");
 		return(-1);
 	}
+	printf("lol le fb est ouvert\n");
 
 	//Get fixed sreen information
 	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo))
 	{
 		printf("Error reading fixed information of the screen.\n");
+		return(-1);
     }
 
     // Get variable screen information
 	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo))
 	{
 		printf("Error reading variable information.\n");
+		return(-1);
 	}
 
 	// map framebuffer to user memory
 	screensize = finfo.smem_len;
+	printf("sc%ld\n", screensize);
 	fbp = (char*)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+	printf("%lu", sizeof(fbp));
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
+		return(-1);
 	}
 
-	srand(time(NULL));
-	int width, height/*, nbrLine, space*/, i, j, resize;
-	Pixel pixel3;
+
+	Pixel pixel;
+
+	pixel.x=10;
+	pixel.y=10;
+	pixel.color=255;
+
+	drawPixel(pixel, fbp, screensize);
+	printf("sorti de la fct dans le main\n");
+	sleep(10);
+	printf("porte du mdr\n");
 	//Dynamic allocation of the variables to avoid segfault
+	/*
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
 	uint *palette = malloc(sizeof(uint)*256);
 	width = 800;
@@ -123,11 +139,11 @@ int main()
 	//Pixel pixel, pixel1, pixel3;
 
 	//Debug file
-	/*FILE* out;
-	out=fopen("out.txt", "w");*/
+	FILE* out;
+	out=fopen("out.txt", "w");
 
 	//drawPlasma(image1, image2, palette, max, height, width, 1000);
-/*
+
 	// Drawing descending lines with Bresenham
 	nbrLine=10;
 	space=width/nbrLine;
@@ -249,13 +265,13 @@ int main()
 
 	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
 	//Keeping the window open
-	while(0==0)
-		mini_update(image1);
+	//while(0==0)
+	//	mini_update(image1);
 
-	free(image1);
-	free(image2);
-	free(palette);
+	//free(image1);
+	//free(image2);
+	//free(palette);
 	//fclose(out);
-	mini_close();
+	//mini_close();
 	return 0;
 }

@@ -7,15 +7,13 @@
 #include <math.h>
 
 //Open a ppm file and print it in the window
+/*
 void open_ppm(int image[], char* file)
 {
 
 	// initialising the file
 	FILE *img;
 	int returnTest;
-	/*const char fileName[25];
-	printf("Enter the name of the file you want to open:");
-	scanf("loup.ppm", fileName);*/
 	img=fopen(file, "r");
 
 	if (img==NULL) //if the program is unable to open the fil exit the function
@@ -79,15 +77,20 @@ void open_ppm(int image[], char* file)
 	}
 	fclose(img);
 	mini_update(image);
-}
+}*/
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel)
+void drawPixel(Pixel pixel, char fbp[], long int screensize)
 {
-	unsigned int index=(pixel.y)*finfo.line_length+(pixel.x);
-	*((char*)(fbp+index))=(pixel.color);
+	printf("je trace le pix\n");
+	unsigned int index=(pixel.y)*screensize+(pixel.x);
+	printf("je sais faire ça\n");
+	//*((char*)(fbp+index))=pixel.color;
+	fbp[index]=pixel.color;
+	printf("diern fin de la fct\n");
+	fflush(stdin);
 }
-
+/*
 void drawPixelIndex(int index, int color)
 {
 	if(index>=finfo.line_length)
@@ -193,6 +196,7 @@ void catImageColor(int *image1, int *image2, int color, int height, int width)
 	}
 }
 */
+/*
 void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
@@ -791,3 +795,4 @@ void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height
 		loop--;
 	}
 }
+*/
