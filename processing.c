@@ -80,35 +80,33 @@ void open_ppm(int image[], char* file)
 }*/
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, char fbp[], long int screensize)
+void drawPixel(Pixel pixel, char fbp[], long int width, long int max)
 {
-	printf("je trace le pix\n");
-	unsigned int index=(pixel.y)*screensize+(pixel.x);
-	printf("je sais faire ça\n");
-	//*((char*)(fbp+index))=pixel.color;
-	fbp[index]=pixel.color;
-	printf("diern fin de la fct\n");
-	fflush(stdin);
+	unsigned int index=(pixel.y)*width+(pixel.x);
+	if (index<max)
+	{
+		fbp[index]=pixel.color;
+	}
 }
-/*
-void drawPixelIndex(int index, int color)
+
+void drawPixelIndex(int index, char fbp[], int color, long int max)
 {
-	if(index>=finfo.line_length)
+	if(index>=max)
 	{
 		return;
 	}
-	*((char*)(fbp+index))=color;
+	fbp[index]=color;
 }
 
-void fillImage(int *image, int color, int width, int max)
+void fillImage(char fbp[], int color, int width, int max)
 {
 	int i;
 	for(i=0; i<max; i++)
 	{
-		drawPixelIndex(i, color);
+		drawPixelIndex(i, fbp, color, max);
 	}
 }
-
+/*
 void replaceImage(int *image1, int *image2, int max)
 {
 	int i;

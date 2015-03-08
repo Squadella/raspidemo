@@ -18,11 +18,11 @@ typedef struct RGBTriplet
 
 void open_ppm(int image[], char* file);
 //Change the state of one pixel in the image table
-void drawPixel(Pixel pixel, char* fbp, long int screensize);
+void drawPixel(Pixel pixel, char fbp[], long int width, long int max);
 //Change the state of one pixel in the image table with the given index
-void drawPixelIndex(int index, int color);
+void drawPixelIndex(int index, char fbp[], int color, long int max);
 //Fill the image with the given color
-void fillImage(int *image, int color, int width, int max);
+void fillImage(char fbp[], int color, int width, int max);
 //Replace the printed image by another
 void replaceImage(int *image1, int *image2, int max);
 //Concatenate image2 into image1 by choosing a x or y
