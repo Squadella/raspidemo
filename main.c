@@ -15,7 +15,7 @@
 #include <sys/mman.h>
 
 // 'global' variables to store screen info
-int *fbp = 0;
+char *fbp = 0;
 struct fb_var_screeninfo vinfo;
 struct fb_fix_screeninfo finfo;
 struct fb_bitfield fbinf;
@@ -63,12 +63,14 @@ int main()
 		return(-1);
 	}
 	
-	int i;
-	for (i = 0; i < 2000000000; i++)
-	{
-		fillImage(fbp, i, lineSize, bufferSize);
-		usleep(200);
-	}
+	RGBTriplet color;
+	color.r=203;
+	color.g=238;
+	color.b=232;
+	fillImage(fbp, color, lineSize, bufferSize);
+	sleep(2);
+	open_ppm(fbp, "4", depth);
+	sleep(2);
 	//Dynamic allocation of the variables to avoid segfault
 	/*
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);

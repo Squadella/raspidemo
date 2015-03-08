@@ -7,8 +7,8 @@
 #include <math.h>
 
 //Open a ppm file and print it in the window
-/*
-void open_ppm(int image[], char* file)
+
+void open_ppm(char image[], char* file, int depth)
 {
 
 	// initialising the file
@@ -27,9 +27,7 @@ void open_ppm(int image[], char* file)
 	uint width=0;
 	uint size=0;
 	uint i=0;
-	uint red=0;
-	uint blue=0;
-	uint green=0;
+	RGBTriplet color;
 	//getting the specification of the file
 	returnTest=fscanf(img, "%*[^\n]\n");
 	if (returnTest!=1)
@@ -55,29 +53,28 @@ void open_ppm(int image[], char* file)
 	//writing the table with the new values
 	for (i=0;i<size; i++)
 	{
-		if(fscanf(img, "%u", &green)!=1)
+		if(fscanf(img, "%hhu", &color.b)!=1)
 		{
 			printf("Reading red error at index %u!\n", i);
 			fclose(img);
 			return;
 		}
-		if(fscanf(img, "%u", &red)!=1)
+		if(fscanf(img, "%hhu", &color.r)!=1)
 		{
 			printf("Reading green error at index %u!\n",i);
 			fclose(img);
 			return;
 		}
-		if(fscanf(img, "%u", &blue)!=1)
+		if(fscanf(img, "%hhu", &color.g)!=1)
 		{
 			printf("Reading blue error at index %u!\n", i);
 			fclose(img);
 			return;
 		}
-		image[i]=colorRGB(red,blue,green);
+		drawPixelIndex((i*4), image, color, size*4);
 	}
 	fclose(img);
-	mini_update(image);
-}*/
+}
 
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, char fbp[], long int width, long int max)
@@ -85,23 +82,27 @@ void drawPixel(Pixel pixel, char fbp[], long int width, long int max)
 	unsigned int index=(pixel.y)*width+(pixel.x);
 	if (index<max)
 	{
-		fbp[index]=pixel.color;
+		fbp[index]=pixel.color.r;
+		fbp[index+1]=pixel.color.g;
+		fbp[index+2]=pixel.color.b;
 	}
 }
 
-void drawPixelIndex(int index, char fbp[], int color, long int max)
+void drawPixelIndex(int index, char fbp[], RGBTriplet color, long int max)
 {
 	if(index>=max)
 	{
 		return;
 	}
-	fbp[index]=color;
+	fbp[index]=color.b;
+	fbp[index+1]=color.g;
+	fbp[index+2]=color.r;
 }
 
-void fillImage(char fbp[], int color, int width, int max)
+void fillImage(char fbp[], RGBTriplet color, int width, int max)
 {
 	int i;
-	for(i=0; i<max; i++)
+	for(i=0; i<max; i=i+4)
 	{
 		drawPixelIndex(i, fbp, color, max);
 	}

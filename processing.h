@@ -3,26 +3,27 @@
 
 typedef unsigned int uint;
 //Define the 3 charateritics of a pixel
-typedef struct Pixel{
-	int x;
-	int y;
-	int color;
-}Pixel;
 
 typedef struct RGBTriplet
 {
-	unsigned char red;
-	unsigned char green;
-	unsigned char blue;
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
 }RGBTriplet;
 
-void open_ppm(int image[], char* file);
+typedef struct Pixel{
+	int x;
+	int y;
+	RGBTriplet color;
+}Pixel;
+
+void open_ppm(char image[], char* file, int depth);
 //Change the state of one pixel in the image table
 void drawPixel(Pixel pixel, char fbp[], long int width, long int max);
 //Change the state of one pixel in the image table with the given index
-void drawPixelIndex(int index, char fbp[], int color, long int max);
+void drawPixelIndex(int index, char fbp[], RGBTriplet color, long int max);
 //Fill the image with the given color
-void fillImage(char fbp[], int color, int width, int max);
+void fillImage(char fbp[], RGBTriplet color, int width, int max);
 //Replace the printed image by another
 void replaceImage(int *image1, int *image2, int max);
 //Concatenate image2 into image1 by choosing a x or y
