@@ -66,7 +66,7 @@ int main()
 	int i;
 	for (i = 0; i < 2000000000; i++)
 	{
-		fillImage(fbp, i, width, bufferSize);
+		fillImage(fbp, i, lineSize, bufferSize);
 		usleep(200);
 	}
 	//Dynamic allocation of the variables to avoid segfault
