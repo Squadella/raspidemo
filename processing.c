@@ -77,34 +77,34 @@ void open_ppm(char image[], char* file, int depth)
 }
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, char fbp[], long int width, long int max)
+void drawPixel(Pixel pixel, char image[], long int width, long int max)
 {
 	unsigned int index=(pixel.y)*width+(pixel.x);
 	if (index<max)
 	{
-		fbp[index]=pixel.color.r;
-		fbp[index+1]=pixel.color.g;
-		fbp[index+2]=pixel.color.b;
+		image[index]=pixel.color.r;
+		image[index+1]=pixel.color.g;
+		image[index+2]=pixel.color.b;
 	}
 }
 
-void drawPixelIndex(int index, char fbp[], RGBTriplet color, long int max)
+void drawPixelIndex(int index, char image[], RGBTriplet color, long int maxb)
 {
-	if(index>=max)
+	if(index>=maxb)
 	{
 		return;
 	}
-	fbp[index]=color.b;
-	fbp[index+1]=color.g;
-	fbp[index+2]=color.r;
+	image[index]=color.b;
+	image[index+1]=color.g;
+	image[index+2]=color.r;
 }
 
-void fillImage(char fbp[], RGBTriplet color, int width, int max)
+void fillImage(char image[], RGBTriplet color, int width, int maxb)
 {
 	int i;
-	for(i=0; i<max; i=i+4)
+	for(i=0; i<maxb; i=i+4)
 	{
-		drawPixelIndex(i, fbp, color, max);
+		drawPixelIndex(i, image, color, maxb);
 	}
 }
 /*
@@ -116,19 +116,27 @@ void replaceImage(int *image1, int *image2, int max)
 		image1[i]=image2[i];
 	}
 }
+*/
 
-void replaceColor(int color1, int color2, int *image, int max)
+void replaceColor(RGBTriplet color1, RGBTriplet color2, char image[], int maxb)
 {
 	int index;
-	for(index=0; index<max; index++)
+	for(index=0; index<maxb; index=index+4)
 	{
-		if(*(image+index)==color1)
+		if((unsigned char)(image[index])==color1.b)
 		{
-			drawPixelIndex(index, color2);
+			if ((unsigned char)(image[index+1])==color1.g)
+			{
+				if ((unsigned char)(image[index+2])==color1.r)
+				{
+					drawPixelIndex(index, image, color2, maxb);
+				}
+			}
 		}
 	}
 }
 
+/*
 void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width)
 {
 	int ix, iy;
@@ -179,7 +187,7 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 		}
 	}
 }
-/*
+
 void catImageColor(int *image1, int *image2, int color, int height, int width)
 {
 	int ix, iy; 
@@ -195,8 +203,9 @@ void catImageColor(int *image1, int *image2, int color, int height, int width)
 	}
 }
 */
-/*
-void drawLine(Pixel start, Pixel end, int *image, int width, int max)
+
+
+void drawLine(Pixel start, Pixel end, char image[], long int width, long int maxb)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -216,7 +225,7 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 	int e2=0;
 	while(1)
 	{
-		drawPixel(start);
+		drawPixel(start, image, width, maxb);
 		if((start.x)==(end.x) && (start.y)==(end.y))
 			break;
 		e2=2*err;
@@ -233,10 +242,11 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 	}
 }
 
-void drawCircle(const Pixel center, int radius, int *image, int height, int width)
+
+void drawCircle(const Pixel center, int radius, char image[], long int height, long int width)
 {
 	Pixel pixel, temp;
-	int max=height*width;
+	int max=height*width*8;
 	int err = 2-2*radius;
 	pixel.x = -radius;
 	pixel.y = 0;
@@ -248,7 +258,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if (temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp);
+			drawPixel(temp, image, width, max);
 		}
 
 		//setPixel(xm-y, ym-x);   II. Quadrant
@@ -257,7 +267,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp);
+			drawPixel(temp, image, width, max);
 		}
 
 		//setPixel(xm+x, ym-y);  III. Quadrant
@@ -266,7 +276,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp);
+			drawPixel(temp, image, width, max);
 		}
 
 		//setPixel(xm+y, ym+x);   IV. Quadrant
@@ -275,7 +285,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 		temp.color=center.color;
 		if(temp.x>=0 && temp.y<=height && temp.x<=width && temp.y>=0)
 		{
-			drawPixel(temp);
+			drawPixel(temp, image, width, max);
 		}
 
 		radius = err;
@@ -284,7 +294,7 @@ void drawCircle(const Pixel center, int radius, int *image, int height, int widt
 
 	} while (pixel.x < 0);
 }
-
+/*
 void starField(int *image, int max, int color, int prop)
 {
 

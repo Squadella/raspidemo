@@ -29,11 +29,11 @@ void replaceImage(int *image1, int *image2, int max);
 //Concatenate image2 into image1 by choosing a x or y
 void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 //Replace color1 with color2 on the entire image
-void replaceColor(int color1, int color2, int *image, int max);
+void replaceColor(RGBTriplet color1, RGBTriplet color2, char image[], int maxb);
 //Draw a line in the given image
-void drawLine(Pixel start, Pixel end, int *image, int width, int max);
+void drawLine(Pixel start, Pixel end, char image[], long int width, long int maxb);
 //Draw a circle 
-void drawCircle(const Pixel center, int radius, int *image, int height, int width);
+void drawCircle(const Pixel center, int radius, char image[], long int height, long int width);
 //Draw a starfiel on the given image with the given color
 void starField(int *image, int max, int color, int prop);
 //Create a beam of light with the given color and given position with a blank fading inside

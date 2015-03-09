@@ -23,7 +23,7 @@ struct fb_bitfield fbinf;
 int main()
 {
 	//Initialisation of all the variables
-	int lineSize, bufferSize;
+	long int lineSize, bufferSize, heightSize;
 	int fbfd=0;
 
 	//Opening framebuffer
@@ -52,6 +52,7 @@ int main()
 	//Calculate the size of the framebuffer
 	int depth=vinfo.bits_per_pixel;
 	lineSize=vinfo.xres*depth/8;
+	heightSize=vinfo.yres*depth/8;
 	bufferSize=lineSize*vinfo.yres;
 	
 	// map framebuffer to user memory
@@ -63,14 +64,36 @@ int main()
 		return(-1);
 	}
 	
-	RGBTriplet color;
+	//Initialisation for drawing
+	Pixel pixel, pixel2;
+	pixel.x=0;
+	pixel.y=0;
+	pixel.color.r=0;
+	pixel.color.g=0;
+	pixel.color.b=0;
+	pixel2.x=600;
+	pixel2.y=400;
+	pixel2.color.r=0;
+	pixel2.color.g=0;
+	pixel2.color.b=0;
+	RGBTriplet color, color2;
 	color.r=203;
 	color.g=238;
 	color.b=232;
+	color2.r=255;
+	color2.g=0;
+	color2.b=255;
+
+
 	fillImage(fbp, color, lineSize, bufferSize);
+	sleep(2);
+	replaceColor(color, color2, fbp, bufferSize);
 	sleep(2);
 	open_ppm(fbp, "4", depth);
 	sleep(2);
+	drawLine(pixel, pixel2, fbp, lineSize, bufferSize);
+	sleep(2);
+	drawCircle(pixel2, 10, fbp, heightSize, lineSize);
 	//Dynamic allocation of the variables to avoid segfault
 	/*
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
