@@ -21,7 +21,7 @@ void open_ppm(char image[], char* file, int depth)
 		printf("Unable to open file!\n");
 		return;
 	}
-	
+
 	//If the file is opened
 	uint height=0;
 	uint width=0;
@@ -79,12 +79,12 @@ void open_ppm(char image[], char* file, int depth)
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, char image[], long int width, long int max)
 {
-	unsigned int index=(pixel.y)*width+(pixel.x);
+	unsigned int index=(pixel.y)*width+((pixel.x)*4);
 	if (index<max)
 	{
-		image[index]=pixel.color.r;
+		image[index]=pixel.color.b;
 		image[index+1]=pixel.color.g;
-		image[index+2]=pixel.color.b;
+		image[index+2]=pixel.color.r;
 	}
 }
 
@@ -107,16 +107,27 @@ void fillImage(char image[], RGBTriplet color, int width, int maxb)
 		drawPixelIndex(i, image, color, maxb);
 	}
 }
-/*
-void replaceImage(int *image1, int *image2, int max)
+
+void replaceImage(char image1[], char image2[], long int maxb)
 {
-	int i;
-	for(i=0; i<max; i++)
+	long int i;
+	for(i=0; i<maxb; i++)
 	{
 		image1[i]=image2[i];
 	}
 }
-*/
+
+void fadeToBlack(char image[], long int maxb)
+{
+	long int i;
+	for (i = 0; i < maxb; i++)
+	{
+		if (image[i]>0)
+		{
+			image[i]=image[i]-1;
+		}
+	}
+}
 
 void replaceColor(RGBTriplet color1, RGBTriplet color2, char image[], int maxb)
 {
@@ -190,14 +201,14 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 
 void catImageColor(int *image1, int *image2, int color, int height, int width)
 {
-	int ix, iy; 
+	int ix, iy;
 	for(ix=0; ix<width; ix++)
 	{
 		for(iy=0; iy<height; iy++)
 		{
 			if (image2[(iy*width)+ix]==color)
 			{
-				
+
 			}
 		}
 	}
@@ -294,26 +305,29 @@ void drawCircle(const Pixel center, int radius, char image[], long int height, l
 
 	} while (pixel.x < 0);
 }
-/*
-void starField(int *image, int max, int color, int prop)
+
+void starField(char image[], long int maxb, RGBTriplet color, int prop)
 {
 
 	int i;
 	int reduction=0;
-	for (i=0; i<max ;i++)
+	for (i=0; i<maxb ;i=i+4)
 	{
 		if(!(rand()%prop))
 		{
 			reduction=(rand()%128)+50;
-			*(image+i)=color-colorRGB(reduction, reduction, reduction);
+			color.r=color.r-reduction;
+			color.g=color.g-reduction;
+			color.b=color.b-reduction;
+			drawPixelIndex(i, image, color, maxb);
 		}
 	}
 }
 
 //Function doesn't work now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
+void beamOfLight(Pixel start, Pixel end, int heightBeam, char image[], long int width, long int maxb, int speed)
 {
-	int i, r=0, g=0, b=0;
+	int i;
 
 	//Anti-"CoreDump"!
 	if(heightBeam<2)
@@ -322,8 +336,10 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 	}
 
 	//Sets the color incrementation period
-	invertRGB(start.color, &r, &g, &b);
-	int stepcolor=colorRGB((255-r)/(heightBeam/2), (255-g)/(heightBeam/2), (255-b)/(heightBeam/2));
+	RGBTriplet stepcolor;
+	stepcolor.r=(255-start.color.r)/(heightBeam/2);
+	stepcolor.g=(255-start.color.g)/(heightBeam/2);
+	stepcolor.b=(255-start.color.b)/(heightBeam/2);
 
 	//Initializes the symetrical pixels
 	Pixel pixelSymStart;
@@ -337,25 +353,29 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 
 	for(i=0; i<=(heightBeam/2); i++)
 	{
-		drawLine(start, end, image, width, max);
-		drawLine(pixelSymStart, pixelSymEnd, image, width, max);
+		drawLine(start, end, image, width, maxb);
+		drawLine(pixelSymStart, pixelSymEnd, image, width, maxb);
 		start.y++;
 		end.y++;
 		pixelSymStart.y--;
 		pixelSymEnd.y--;
-		start.color+=stepcolor;
-		pixelSymStart.color+=stepcolor;
+		start.color.r+=stepcolor.r;
+		start.color.g+=stepcolor.g;
+		start.color.b+=stepcolor.b;
+		pixelSymStart.color.r+=stepcolor.r;
+		pixelSymStart.color.g+=stepcolor.g;
+		pixelSymStart.color.b+=stepcolor.b;
 	}
-	usleep(speed);
-	mini_update(image);
 }
-
-void movingToCorner(int *image, int max, int color, int colorBG, int height, int width)
+/*
+void movingToCorner(char image[], long int max, RGBTriplet color, RGBTriplet colorBG, long int height, long int width)
 {
 	//Initialisations
-	int widthTemp, heightTemp;
+	long int widthTemp, heightTemp;
 	Pixel pixel;
-	pixel.color=color;
+	pixel.color.r=color.r;
+	pixel.color.g=color.g;
+	pixel.color.b=color.b;
 
 	//Going to the middle from the top
 	for(heightTemp=0; heightTemp<=height/2; heightTemp++)
@@ -363,28 +383,31 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
 			//If the pixel found is the good color
-			if(*(image+(widthTemp+(heightTemp*width)))==color)
+			if(image[(widthTemp+(heightTemp*width))]==color.b && image[(widthTemp+(heightTemp*width))+1]==color.g && image[(widthTemp+(heightTemp*width))+2]==color.b)
 			{
 				//Suppressing the old pixel
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
-				drawPixel(pixel);
-				pixel.color=color;
+				drawPixel(pixel, image, width, max);
+
+				pixel.color.r=color.r;
+				pixel.color.g=color.g;
+				pixel.color.b=color.b;
 
 				//Creating a new pixel at the good position
 				if(widthTemp<=(width/2))
 				{
 					pixel.x-=1;
 					pixel.y-=1;
-					drawPixel(pixel);	
+					drawPixel(pixel, image, width, max);
 				}
 				else if(widthTemp>(width/2))
 				{
 					pixel.x+=1;
 					pixel.y-=1;
-					drawPixel(pixel);
-				}	
+					drawPixel(pixel, image, width, max);
+				}
 			}
 		}
 	}
@@ -394,33 +417,33 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 		for(widthTemp=0; widthTemp<=width; widthTemp++)
 		{
 			//If the pixel found is the good color
-			if(*(image+(widthTemp+(heightTemp*width)))==color)
+			if(image[(widthTemp+(heightTemp*width))]==color.b && image[(widthTemp+(heightTemp*width))]==color.g && image[(widthTemp+(heightTemp*width))]==color.r)
 			{
 				//Suppressing the old pixel
 				pixel.x=widthTemp;
 				pixel.y=heightTemp;
 				pixel.color=colorBG;
-				drawPixel(pixel);
+				drawPixel(pixel, image, width, max);
 				pixel.color=color;
-				
+
 				//Creating a new pixel at the good position
 				if(widthTemp>(width/2))
 				{
 					pixel.x=widthTemp+1;
 					pixel.y=heightTemp+1;
-					drawPixel(pixel);
+					drawPixel(pixel, image, width, max);
 				}
 				else if(widthTemp<(width/2))
 				{
 					pixel.x=widthTemp-1;
 					pixel.y=heightTemp+1;
-					drawPixel(pixel);	
+					drawPixel(pixel, image, width, max);
 				}
 			}
 		}
 	}
 }
-
+/*
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 {
 	//Initialisations
@@ -446,14 +469,14 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			{
 				pixel.x-=1;
 				pixel.y-=1;
-				drawPixel(pixel);	
+				drawPixel(pixel);
 			}
 			else if(widthTemp>(width/2))
 			{
 				pixel.x+=1;
 				pixel.y-=1;
 				drawPixel(pixel);
-			}	
+			}
 		}
 	}
 	//Going to the middle from the bottom
@@ -481,16 +504,17 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 			{
 				pixel.x=widthTemp-1;
 				pixel.y=heightTemp+1;
-				drawPixel(pixel);	
-			}	
+				drawPixel(pixel);
+			}
 		}
 	}
 }
-
-int getToRightX(int val, int lenght, int width, int offset)
+*/
+/*
+int getToRightX(long int val, long int lenght, long int width, long int offset)
 {
-	int ytemp=0;
-	int finalval;
+	long int ytemp=0;
+	long int finalval;
 	while(val>=lenght)
 	{
 		val=val-lenght;
@@ -500,19 +524,18 @@ int getToRightX(int val, int lenght, int width, int offset)
 	return finalval;
 }
 
-void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght)
+void applyTransform(int transArray[], char image1[], char image2[], long int width, long int height, Pixel start, int lenght)
 {
-	int x, y, offset, val;
-	offset=((start.y)*width+start.x);
+	long int x, y, offset, val;
+	offset=((start.y)*width+((start.x)*4));
 	for (y=0; y<lenght; y++)
 	{
 		for (x=0; x<lenght; x++)
 		{
 			val=transArray[((y*lenght)+x)];
 			val=getToRightX(val, lenght, width, offset);
-			image1[offset+((y*width)+x)]=image2[val];
+			image1[offset+((y*width)+(x*4))]=image2[val];
 		}
-		printf("\n");
 	}
 }
 
@@ -553,12 +576,12 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
 	}
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
-
+/*
 void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
 	for (timeShift= 0; timeShift<10000; timeShift++)
-	{	
+	{
 		for (pixelcount=0; pixelcount<(width*height); pixelcount++)
 		{
 			offset=(pixelcount << 1)+pixelcount;
@@ -632,7 +655,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
  		    	u=0.5+(0.5*a/M_PI);
    		    	bright=0;
    		    	break;
-				
+
 				case 5: //Hyper space travel
 				u=(0.02*y+0.03)*cos(a*3)/r;
 				v=(0.02*y+0.03)*sin(a*3)/r;
@@ -663,7 +686,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
 				bright=0;
 				break;
 			}
-			
+
 			mLUT[k++]=((int)(width*u))&(width-1);
 			mLUT[k++]=((int)(height*v))&(height-1);
 			mLUT[k++]=((int)bright);
@@ -681,7 +704,7 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 	unsigned char blue;
 
 	for(i = 0 ; i < 256 ; i++)
-	{	
+	{
 		n = (double)i / (double)255;
 		red = (double)startColor.red * (1.0 - n) + (double)endColor.red * n;
 		green = (double)startColor.green * (1.0 - n) + (double)endColor.green * n;
@@ -700,12 +723,12 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 	{
 		for (j = 0; j < height; j++)
 		{
-			image1[j * width + i] = colorRGB(0, 0, 0); 
+			image1[j * width + i] = colorRGB(0, 0, 0);
 		}
 	}
 
 	while(loop != 0)
-	{	
+	{
 		for(i = 0 ; i < width ; i+= width / 500)
 			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
 		for (i = 0 ; i < width-1 ; i++)
@@ -730,14 +753,14 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		{
 			for (j = 0; j < height; ++j)
 			{
-				image2[j * width + i] = palette[image1[j * width + i]]; 
+				image2[j * width + i] = palette[image1[j * width + i]];
 			}
 		}
 		usleep(10);
 		mini_update(image2);
 		loop--;
 	}
-	
+
 }
 
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
@@ -765,7 +788,7 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
 
 		loop--;
 	}
-	
+
 }
 
 void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
@@ -777,7 +800,7 @@ void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height
 	{
 		for (j = 0; j < height; ++j)
 		{
-			image1[j * width + i] = colorRGB(0, 0, 0); 
+			image1[j * width + i] = colorRGB(0, 0, 0);
 		}
 	}
 
@@ -795,7 +818,7 @@ void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height
 		{
 			for (j = 0; j < height; ++j)
 			{
-				image2[j * width + i] = palette[image1[j * width + i]]; 
+				image2[j * width + i] = palette[image1[j * width + i]];
 			}
 		}
 

@@ -25,6 +25,7 @@ int main()
 	//Initialisation of all the variables
 	long int lineSize, bufferSize, heightSize;
 	int fbfd=0;
+	srand(time(NULL));
 
 	//Opening framebuffer
 	fbfd=open("/dev/fb0", O_RDWR);
@@ -54,46 +55,83 @@ int main()
 	lineSize=vinfo.xres*depth/8;
 	heightSize=vinfo.yres*depth/8;
 	bufferSize=lineSize*vinfo.yres;
-	
+
 	// map framebuffer to user memory
 	fbp = (char*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
-	
+
 		return(-1);
 	}
-	
-	//Initialisation for drawing
-	Pixel pixel, pixel2;
-	pixel.x=0;
-	pixel.y=0;
-	pixel.color.r=0;
-	pixel.color.g=0;
-	pixel.color.b=0;
-	pixel2.x=600;
-	pixel2.y=400;
-	pixel2.color.r=0;
-	pixel2.color.g=0;
-	pixel2.color.b=0;
-	RGBTriplet color, color2;
-	color.r=203;
-	color.g=238;
-	color.b=232;
-	color2.r=255;
-	color2.g=0;
-	color2.b=255;
+	while(1==1)
+	{
+		//Initialisation for drawing
+		Pixel pixel, pixel2;
+		RGBTriplet color, color2;
+		int i;
+		int random=rand()%25;
+		color.r=0;
+		color.g=0;
+		color.b=0;
+		fillImage(fbp, color, lineSize, bufferSize);
+		pixel.x=0;
+		pixel.y=0;
+		pixel.color.r=0;
+		pixel.color.g=0;
+		pixel.color.b=0;
+		pixel2.x=600;
+		pixel2.y=400;
+		pixel2.color.r=0;
+		pixel2.color.g=0;
+		pixel2.color.b=0;
+		color.r=203;
+		color.g=238;
+		color.b=232;
+		color2.r=255;
+		color2.g=0;
+		color2.b=255;
 
 
-	fillImage(fbp, color, lineSize, bufferSize);
-	sleep(2);
-	replaceColor(color, color2, fbp, bufferSize);
-	sleep(2);
-	open_ppm(fbp, "4", depth);
-	sleep(2);
-	drawLine(pixel, pixel2, fbp, lineSize, bufferSize);
-	sleep(2);
-	drawCircle(pixel2, 10, fbp, heightSize, lineSize);
+		fillImage(fbp, color, lineSize, bufferSize);
+		sleep(1);
+		replaceColor(color, color2, fbp, bufferSize);
+		sleep(2);
+		open_ppm(fbp, "4", depth);
+		sleep(1);
+		color.r=0;
+		color.g=0;
+		color.b=0;
+		fillImage(fbp, color, lineSize, bufferSize);
+		drawCircle(pixel2, 10, fbp, heightSize, lineSize);
+		sleep(2);
+		color.r=0;
+		color.g=0;
+		color.b=0;
+		fillImage(fbp, color, lineSize, bufferSize);
+		color.r=255;
+		color.g=255;
+		color.b=255;
+		starField(fbp, bufferSize, color, 100);
+		pixel.color.r=255;
+		pixel.color.g=0;
+		pixel.color.b=0;
+		for(i=random; i>0; i--)
+		{
+			pixel.x=rand()%vinfo.xres;
+			pixel.y=rand()%vinfo.yres;
+			pixel2.x=rand()%vinfo.xres;
+			pixel2.y=rand()%vinfo.yres;
+			beamOfLight(pixel, pixel2, 30, fbp, lineSize, bufferSize, 0);
+			sleep(1);
+		}
+		pixel.color.r=0;
+		pixel.color.g=0;
+		pixel.color.b=255;
+		beamOfLight(pixel, pixel2, 30, fbp, lineSize, bufferSize, 0);
+		sleep(2);
+	}
+	//movingToCorner(fbp, bufferSize, color, color2, heightSize, lineSize);
 	//Dynamic allocation of the variables to avoid segfault
 	/*
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
@@ -148,7 +186,7 @@ int main()
 	starField(image1, max, colorRGB(255, 255, 255), 200);
 	mini_update(image1);
 	sleep(1);
-	
+
 	//Moving the starfield into the corner
 	for (i=0; i<width/2; i++)
 	{
@@ -157,7 +195,7 @@ int main()
 		mini_update(image1);
 	}
 
-	
+
 	//catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 	//Pixel pixel, pixel1, pixel3;
 
@@ -204,7 +242,7 @@ int main()
 	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
 	mini_update(image1);
 	sleep(1);*/
-	
+
 	//Random laser on a changing color background
 	/*
 	for(i=0; i<256; i++)
