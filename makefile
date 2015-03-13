@@ -1,22 +1,13 @@
-all: test demo
-
-test: test.o processing.o libgmini.o alphabet.o
-	gcc -Wall -O3 test.o processing.o libgmini.o alphabet.o -o tdemo -lXext -lX11 -lm
+all: demo
 
 demo: main.o processing.o
-	gcc -Wall -O3 main.o processing.o -o demo -lXext -lX11 -lm
-
-test.o: test.c
-	gcc -Wall test.c -c -lXext
+	gcc -Wall -O3 main.o processing.o -o demo -lm
 
 main.o: main.c
 	gcc -Wall main.c -c -lXext
 
 #alphabet.o: alphabet.c
 #	gcc -Wall alphabet.c -c
-
-libgmini.o: libgmini.c
-	gcc -Wall libgmini.c -c -lXext
 
 .PHONY: clean
 

@@ -1,5 +1,4 @@
 //Our libraries
-//#include "libgmini.h"
 #include "processing.h"
 //#include "alphabet.h"
 
