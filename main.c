@@ -1,5 +1,5 @@
 //Our libraries
-#include "libgmini.h"
+//#include "libgmini.h"
 #include "processing.h"
 //#include "alphabet.h"
 
@@ -15,13 +15,16 @@
 #include <sys/mman.h>
 
 // 'global' variables to store screen info
-char *fbp = 0;
+int *fbp = 0;
 struct fb_var_screeninfo vinfo;
 struct fb_fix_screeninfo finfo;
 struct fb_bitfield fbinf;
 
 int main()
 {
+printf("%s\n", "YOLO");
+fflush(stdout);
+
 	//Initialisation of all the variables
 	long int lineSize, bufferSize, heightSize;
 	int fbfd=0;
@@ -50,14 +53,18 @@ int main()
 		return(-1);
 	}
 
+	printf("%s\n", "sdkgsjughufygkudygkusygqkuyrgfqkuyrvgfqkuyc");
+
 	//Calculate the size of the framebuffer
 	int depth=vinfo.bits_per_pixel;
 	lineSize=vinfo.xres*depth/8;
 	heightSize=vinfo.yres*depth/8;
 	bufferSize=lineSize*vinfo.yres;
 
+	printf("%s\n", "Salut!");
+
 	// map framebuffer to user memory
-	fbp = (char*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
@@ -66,6 +73,7 @@ int main()
 	}
 	while(1)
 	{
+		printf("%s\n", "COUCOU");
 		//Initialisation for drawing
 		Pixel pixel, pixel2;
 		RGBTriplet color, color2;

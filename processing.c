@@ -8,7 +8,7 @@
 
 //Open a ppm file and print it in the window
 
-void open_ppm(char image[], char* file, int depth)
+void open_ppm(int image[], char* file, int depth)
 {
 
 	// initialising the file
@@ -71,44 +71,44 @@ void open_ppm(char image[], char* file, int depth)
 			fclose(img);
 			return;
 		}
-		drawPixelIndex((i*4), image, color, size*4);
+		drawPixelIndex(i, image, color, size);
 	}
 	fclose(img);
 }
 
+int colorRGB(int r, int g, int b) {
+	return( r<<16 | g<<8 | b );
+}
+
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, char image[], long int width, long int max)
+void drawPixel(Pixel pixel, int image[], long int width, long int max)
 {
-	unsigned int index=(pixel.y)*width+((pixel.x)*4);
+	unsigned int index=(pixel.y)*width+((pixel.x));
 	if (index<max)
 	{
-		image[index]=pixel.color.b;
-		image[index+1]=pixel.color.g;
-		image[index+2]=pixel.color.r;
+		image[index]=colorRGB(pixel.color.r, pixel.color.g, pixel.color.b);
 	}
 }
 
-void drawPixelIndex(int index, char image[], RGBTriplet color, long int maxb)
+void drawPixelIndex(int index, int image[], RGBTriplet color, long int maxb)
 {
 	if(index>=maxb)
 	{
 		return;
 	}
-	image[index]=color.b;
-	image[index+1]=color.g;
-	image[index+2]=color.r;
+	image[index]=colorRGB(color.r, color.g, color.b);
 }
 
-void fillImage(char image[], RGBTriplet color, int width, int maxb)
+void fillImage(int image[], RGBTriplet color, int width, int maxb)
 {
 	int i;
-	for(i=0; i<maxb; i=i+4)
+	for(i = 0; i < maxb; i = i+1)
 	{
 		drawPixelIndex(i, image, color, maxb);
 	}
 }
 
-void replaceImage(char image1[], char image2[], long int maxb)
+void replaceImage(int image1[], int image2[], long int maxb)
 {
 	long int i;
 	for(i=0; i<maxb; i++)
@@ -117,7 +117,7 @@ void replaceImage(char image1[], char image2[], long int maxb)
 	}
 }
 
-void fadeToBlack(char image[], long int maxb)
+void fadeToBlack(int image[], long int maxb)
 {
 	long int i;
 	for (i = 0; i < maxb; i++)
@@ -129,10 +129,10 @@ void fadeToBlack(char image[], long int maxb)
 	}
 }
 
-void replaceColor(RGBTriplet color1, RGBTriplet color2, char image[], int maxb)
+void replaceColor(RGBTriplet color1, RGBTriplet color2, int image[], int maxb)
 {
 	int index;
-	for(index=0; index<maxb; index=index+4)
+	for(index = 0; index < maxb; index = index+1)
 	{
 		if((unsigned char)(image[index])==color1.b)
 		{
@@ -216,7 +216,7 @@ void catImageColor(int *image1, int *image2, int color, int height, int width)
 */
 
 
-void drawLine(Pixel start, Pixel end, char image[], long int width, long int maxb)
+void drawLine(Pixel start, Pixel end, int image[], long int width, long int maxb)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -254,7 +254,7 @@ void drawLine(Pixel start, Pixel end, char image[], long int width, long int max
 }
 
 
-void drawCircle(const Pixel center, int radius, char image[], long int height, long int width)
+void drawCircle(const Pixel center, int radius, int image[], long int height, long int width)
 {
 	Pixel pixel, temp;
 	int max=height*width*8;
@@ -306,12 +306,12 @@ void drawCircle(const Pixel center, int radius, char image[], long int height, l
 	} while (pixel.x < 0);
 }
 
-void starField(char image[], long int maxb, RGBTriplet color, int prop)
+void starField(int image[], long int maxb, RGBTriplet color, int prop)
 {
 
 	int i;
 	int reduction=0;
-	for (i=0; i<maxb ;i=i+4)
+	for (i=0; i<maxb ; i++)
 	{
 		if(!(rand()%prop))
 		{
@@ -325,7 +325,7 @@ void starField(char image[], long int maxb, RGBTriplet color, int prop)
 }
 
 //Function doesn't work now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, int heightBeam, char image[], long int width, long int maxb, int speed)
+void beamOfLight(Pixel start, Pixel end, int heightBeam, int image[], long int width, long int maxb, int speed)
 {
 	int i;
 
@@ -713,7 +713,7 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 	}
 }
 
-void drawFire(char fbp[], int *image, uint palette[256], int height, int width, uint timer)
+void drawFire(int fbp[], int *image, uint palette[256], int height, int width, uint timer)
 {
 	int i, j;
 	uint average;
