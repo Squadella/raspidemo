@@ -86,7 +86,7 @@ void drawPixel(Pixel pixel, int image[], long int width, long int max)
 	unsigned int index=(pixel.y)*width+((pixel.x));
 	if (index<max)
 	{
-		image[index]=colorRGB(pixel.color.r, pixel.color.g, pixel.color.b);
+		image[index]=pixel.color;
 	}
 }
 
@@ -102,7 +102,7 @@ void drawPixelIndex(int index, int image[], RGBTriplet color, long int maxb)
 void fillImage(int image[], RGBTriplet color, int width, int maxb)
 {
 	int i;
-	for(i = 0; i < maxb; i = i+1)
+	for(i = 0; i < maxb/4; i = i+1)
 	{
 		drawPixelIndex(i, image, color, maxb);
 	}
@@ -128,7 +128,7 @@ void fadeToBlack(int image[], long int maxb)
 		}
 	}
 }
-
+/*
 void replaceColor(RGBTriplet color1, RGBTriplet color2, int image[], int maxb)
 {
 	int index;
@@ -146,7 +146,7 @@ void replaceColor(RGBTriplet color1, RGBTriplet color2, int image[], int maxb)
 		}
 	}
 }
-
+*/
 /*
 void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width)
 {
@@ -215,7 +215,7 @@ void catImageColor(int *image1, int *image2, int color, int height, int width)
 }
 */
 
-
+/*
 void drawLine(Pixel start, Pixel end, int image[], long int width, long int maxb)
 {
 	int dx = abs((end.x)-(start.x));
@@ -694,7 +694,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
 	}
 	applyPlaneTransform (mLUT, image1, image2, width, height);
 }*/
-
+/*
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
 {
 	int i;
@@ -729,7 +729,7 @@ void drawFire(int fbp[], int *image, uint palette[256], int height, int width, u
 	}
 
 	while(loop)
-	{	
+	{
 		for(i = 0 ; i < width ; i+= width / 500)
 			image[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
 		for (i = 0 ; i < width-1 ; i++)

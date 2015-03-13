@@ -57,9 +57,9 @@ fflush(stdout);
 
 	//Calculate the size of the framebuffer
 	int depth=vinfo.bits_per_pixel;
-	lineSize=vinfo.xres*depth/8;
-	heightSize=vinfo.yres*depth/8;
-	bufferSize=lineSize*vinfo.yres;
+	lineSize=vinfo.xres*depth;
+	heightSize=vinfo.yres*depth;
+	bufferSize=lineSize*vinfo.yres/8;
 
 	printf("%s\n", "Salut!");
 
@@ -85,14 +85,10 @@ fflush(stdout);
 		fillImage(fbp, color, lineSize, bufferSize);
 		pixel.x=0;
 		pixel.y=0;
-		pixel.color.r=0;
-		pixel.color.g=0;
-		pixel.color.b=0;
+		pixel.color=colorRGB(255, 255, 255);
 		pixel2.x=600;
 		pixel2.y=400;
-		pixel2.color.r=0;
-		pixel2.color.g=0;
-		pixel2.color.b=0;
+		pixel2.color=colorRGB(255, 255, 255);
 		color.r=203;
 		color.g=238;
 		color.b=232;
@@ -102,9 +98,10 @@ fflush(stdout);
 
 		fillImage(fbp, color, lineSize, bufferSize);
 		sleep(1);
-		replaceColor(color, color2, fbp, bufferSize);
+		//replaceColor(color, color2, fbp, bufferSize);
 		sleep(2);
-		open_ppm(fbp, "loup2.ppm", depth);
+	}
+		/*open_ppm(fbp, "loup2.ppm", depth);
 		sleep(1);
 		color.r=0;
 		color.g=0;
@@ -120,9 +117,7 @@ fflush(stdout);
 		color.g=255;
 		color.b=255;
 		starField(fbp, bufferSize, color, 100);
-		pixel.color.r=255;
-		pixel.color.g=0;
-		pixel.color.b=0;
+		pixel.color=0;
 		for(i=random; i>0; i--)
 		{
 			pixel.x=rand()%vinfo.xres;
@@ -132,9 +127,7 @@ fflush(stdout);
 			beamOfLight(pixel, pixel2, 30, fbp, lineSize, bufferSize, 0);
 			sleep(1);
 		}
-		pixel.color.r=0;
-		pixel.color.g=0;
-		pixel.color.b=255;
+		pixel.color=0;
 		beamOfLight(pixel, pixel2, 30, fbp, lineSize, bufferSize, 0);
 		sleep(2);
 	}

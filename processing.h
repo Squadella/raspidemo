@@ -14,7 +14,7 @@ typedef struct RGBTriplet
 typedef struct Pixel{
 	int x;
 	int y;
-	RGBTriplet color;
+	int color;
 }Pixel;
 
 int colorRGB(int r, int g, int b);
