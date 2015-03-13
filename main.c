@@ -92,16 +92,11 @@ int main()
 		color2.g=0;
 		color2.b=255;
 
-	uint *palette = malloc(sizeof(uint)*256);
-	open_ppm(palette, "fire2.ppm");
-
-	char* fbpCopy = malloc(bufferSize);
-	int* image = malloc(sizeof(int) * vinfo.xres * vinfo.yres);
 		fillImage(fbp, color, lineSize, bufferSize);
 		sleep(1);
 		replaceColor(color, color2, fbp, bufferSize);
 		sleep(2);
-		open_ppm(fbp, "4", depth);
+		open_ppm(fbp, "loup2.ppm", depth);
 		sleep(1);
 		color.r=0;
 		color.g=0;

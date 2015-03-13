@@ -443,7 +443,7 @@ void movingToCorner(char image[], long int max, RGBTriplet color, RGBTriplet col
 		}
 	}
 }
-/*
+
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 {
 	//Initialisations
@@ -576,7 +576,7 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
 	}
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
-/*
+
 void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
