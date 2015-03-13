@@ -79,12 +79,12 @@ void open_ppm(char image[], char* file, int depth)
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, char image[], long int width, long int max)
 {
-	unsigned int index=(pixel.y)*width+(pixel.x);
+	unsigned int index=(pixel.y)*width+((pixel.x)*4);
 	if (index<max)
 	{
-		image[index]=pixel.color.r;
+		image[index]=pixel.color.b;
 		image[index+1]=pixel.color.g;
-		image[index+2]=pixel.color.b;
+		image[index+2]=pixel.color.r;
 	}
 }
 
@@ -670,7 +670,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
 		}
 	}
 	applyPlaneTransform (mLUT, image1, image2, width, height);
-}
+}*/
 
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
 {
@@ -683,45 +683,46 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 	for(i = 0 ; i < 256 ; i++)
 	{	
 		n = (double)i / (double)255;
-		red = (double)startColor.red * (1.0 - n) + (double)endColor.red * n;
-		green = (double)startColor.green * (1.0 - n) + (double)endColor.green * n;
-		blue = (double)startColor.blue * (1.0 - n) + (double)endColor.blue * n;
+		red = (double)startColor.r * (1.0 - n) + (double)endColor.r * n;
+		green = (double)startColor.g * (1.0 - n) + (double)endColor.g * n;
+		blue = (double)startColor.b * (1.0 - n) + (double)endColor.b * n;
 		palette[i] = (red<<16 | green<<8 | blue);
 	}
 }
 
-void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
+void drawFire(char fbp[], int *image, uint palette[256], int height, int width, uint timer)
 {
 	int i, j;
 	uint average;
 	uint loop = timer;
+	unsigned int index = 0;
 
 	for (i = 0 ; i < width; i++)
 	{
 		for (j = 0; j < height; j++)
 		{
-			image1[j * width + i] = colorRGB(0, 0, 0); 
+			image[j * width + i] = 0;
 		}
 	}
 
-	while(loop != 0)
+	while(loop)
 	{	
 		for(i = 0 ; i < width ; i+= width / 500)
-			image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
+			image[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
 		for (i = 0 ; i < width-1 ; i++)
 		{
 			for (j = height-2 ; j > 1 ; --j)
 			{
 				if(i > 0 || i < width-1)
 				{
-					average = (image1[(j + 1) * width + (i - 1)] + image1[(j + 1) * width + i] + image1[(j + 1) * width + (i + 1)]) / 3;
+					average = (image[(j + 1) * width + (i - 1)] + image[(j + 1) * width + i] + image[(j + 1) * width + (i + 1)]) / 3;
 					if(average > 0)
-						image1[j * width + i] = average - 1;
+						image[j * width + i] = average - 1;
 					else
-						image1[j * width + i] = 0;
+						image[j * width + i] = 0;
 				}
 				else
-					image1[j * width + i] = 0;
+					image[j * width + i] = 0;
 
 			}
 		}
@@ -730,16 +731,20 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		{
 			for (j = 0; j < height; ++j)
 			{
-				image2[j * width + i] = palette[image1[j * width + i]]; 
+				index = j * width + (i * 4);
+
+				//fbp[index] = palette[image[j * width + i]];
+
 			}
 		}
 		usleep(10);
-		mini_update(image2);
 		loop--;
 	}
 	
 }
 
+
+/*
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
 {
 	int i, j;

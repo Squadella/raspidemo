@@ -65,7 +65,7 @@ int main()
 	}
 	
 	//Initialisation for drawing
-	Pixel pixel, pixel2;
+	Pixel pixel, pixel2, pixel3;
 	pixel.x=0;
 	pixel.y=0;
 	pixel.color.r=0;
@@ -76,6 +76,8 @@ int main()
 	pixel2.color.r=0;
 	pixel2.color.g=0;
 	pixel2.color.b=0;
+	pixel3.x=1200;
+	pixel3.y= 800;
 	RGBTriplet color, color2;
 	color.r=203;
 	color.g=238;
@@ -83,17 +85,45 @@ int main()
 	color2.r=255;
 	color2.g=0;
 	color2.b=255;
+	pixel3.color=color;
+	int i;
 
+	uint *palette = malloc(sizeof(uint)*256);
+	open_ppm(palette, "fire2.ppm");
+
+	char* fbpCopy = malloc(bufferSize);
+	int* image = malloc(sizeof(int) * vinfo.xres * vinfo.yres);
 
 	fillImage(fbp, color, lineSize, bufferSize);
 	sleep(2);
+
+	for(i = 0; i < bufferSize; i++)
+	{
+		
+		fbpCopy[i] = fbp[i];
+	}
+
 	replaceColor(color, color2, fbp, bufferSize);
 	sleep(2);
-	open_ppm(fbp, "4", depth);
-	sleep(2);
+	//open_ppm(fbp, "4", depth);
+	//sleep(2);
 	drawLine(pixel, pixel2, fbp, lineSize, bufferSize);
 	sleep(2);
-	drawCircle(pixel2, 10, fbp, heightSize, lineSize);
+	drawCircle(pixel2, 100, fbp, heightSize, lineSize);
+	sleep(2);
+
+	replaceColor(color, color2, fbp, bufferSize);
+	drawCircle(pixel3, 200, fbp, heightSize, lineSize);
+	sleep(2);
+
+	for(i = 0; i < bufferSize; i++)
+	{
+		fbp[i] = fbpCopy[i];
+	}
+	sleep(2);
+
+	drawFire(fbp, image, palette, vinfo.xres, vinfo.yres, 1000);
+
 	//Dynamic allocation of the variables to avoid segfault
 	/*
 	int *imageTmp = malloc(sizeof(int)*MAXSIZE);
@@ -296,5 +326,7 @@ int main()
 	//free(palette);
 	//fclose(out);
 	//mini_close();
+
+	free(fbpCopy);
 	return 0;
 }
