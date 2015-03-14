@@ -619,6 +619,10 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
       mLUT[k++]=((int)bright);
     }
   }
+  for(i=0; i<((height*width)*3)+1; i++)
+  {
+    printf("%d\n", mLUT[i]);
+  }
   applyPlaneTransform (mLUT, image1, image2, width, height);
 }
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
