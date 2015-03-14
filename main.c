@@ -25,7 +25,7 @@ printf("%s\n", "YOLO");
 fflush(stdout);
 
 	//Initialisation of all the variables
-	long int lineSize, bufferSize, heightSize;
+	long int lineSize, bufferSize, heightSize, maxi, height, width;
 	int fbfd=0;
 	srand(time(NULL));
 
@@ -59,11 +59,15 @@ fflush(stdout);
 	lineSize=vinfo.xres*depth;
 	heightSize=vinfo.yres*depth;
 	bufferSize=lineSize*vinfo.yres/8;
+	maxi=bufferSize/4;
+	height=vinfo.yres;
+	width=vinfo.xres;
 
 	printf("%s\n", "Salut!");
 
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+	int *fbp2=malloc(bufferSize * sizeof(int));
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
@@ -72,50 +76,48 @@ fflush(stdout);
 	}
 	while(1)
 	{
-		printf("%s\n", "COUCOU");
 		//Initialisation for drawing
 		Pixel pixel, pixel2;
-		RGBTriplet color, color2;
+		int color, color2;
 		int i;
 		int random=rand()%25;
-		color.r=0;
-		color.g=0;
-		color.b=0;
-		fillImage(fbp, color, lineSize, bufferSize);
+		color=0;
+		fillImage(fbp, color, lineSize, maxi);
 		pixel.x=0;
 		pixel.y=0;
 		pixel.color=colorRGB(255, 255, 255);
-		pixel2.x=600;
-		pixel2.y=400;
-		pixel2.color=colorRGB(255, 255, 255);
-		color.r=203;
-		color.g=238;
-		color.b=232;
-		color2.r=255;
-		color2.g=0;
-		color2.b=255;
+		pixel2.x=300;
+		pixel2.y=300;
+		pixel2.color=colorRGB(0, 0, 0);
+		color2=colorRGB(255, 255, 255);
 
-		fillImage(fbp, color, lineSize, bufferSize);
+		fillImage(fbp, color, lineSize, maxi);
 		sleep(1);
-		//replaceColor(color, color2, fbp, bufferSize);
+		replaceColor(color, color2, fbp, maxi);
 		sleep(2);
+		open_ppm(fbp, "4");
+		sleep(1);
+		color=colorRGB(255, 255, 255);
+		fillImage(fbp, color, lineSize, maxi);
+
+		//drawCircle(pixel2, 100, fbp, width, height, maxi);
+		sleep(2);
+		color=0;
+		fillImage(fbp, color, lineSize, maxi);
+		color=colorRGB(255,255,255);
+		starField(fbp, maxi, color, 100);
+		sleep(1);
+		pixel.color=colorRGB(0,255,0);
+		beamOfLight(pixel, pixel2, 42, fbp, width, maxi, 0);
+		sleep(2);
+		color2=0;
+		for(i=0; i<width; i++)
+			movingAllToCorner(fbp, maxi, color2, height, width);
+
+		starField(fbp, maxi, color, 100);
+		planeTransform (height, width, fbp, fbp2, 3);
 	}
-		/*open_ppm(fbp, "loup2.ppm", depth);
-		sleep(1);
-		color.r=0;
-		color.g=0;
-		color.b=0;
-		fillImage(fbp, color, lineSize, bufferSize);
-		drawCircle(pixel2, 10, fbp, heightSize, lineSize);
-		sleep(2);
-		color.r=0;
-		color.g=0;
-		color.b=0;
-		fillImage(fbp, color, lineSize, bufferSize);
-		color.r=255;
-		color.g=255;
-		color.b=255;
-		starField(fbp, bufferSize, color, 100);
+	/*
 		pixel.color=0;
 		for(i=random; i>0; i--)
 		{
