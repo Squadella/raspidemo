@@ -526,7 +526,7 @@ void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int he
       u=mLUT[offset]+timeShift;
       v=mLUT[offset+1]+timeShift;
       adjustBright=mLUT[offset+2];
-      color=image2[(width*v & (height-1))+(u & (width-1))];
+      color=image2[(width*(v & (height-1)))+(u & (width-1))];
       if (adjustBright!=0)
       {
         invertRGB(color, &r, &g, &b);

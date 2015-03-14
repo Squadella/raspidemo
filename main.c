@@ -114,7 +114,7 @@ fflush(stdout);
 		for(i=0; i<width; i++)
 			movingAllToCorner(fbp, maxi, color2, height, width);
 
-		starField(fbp, maxi, color, 100);
+			open_ppm(fbp2, "4");
 		planeTransform (height, width, fbp, fbp2, 3);
 	}
 	/*
