@@ -29,7 +29,7 @@ void fillImage(int *image, int color, int width, int max);
 //Replace the printed image by another
 void replaceImage(int *image1, int *image2, long int max);
 //Fade to black
-void fadeToBlack(int image[], long int maxb);
+void fadeToBlack(int* fbp, long int maxi);
 //Concatenate image2 into image1 by choosing a x or y
 void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
 //Replace color1 with color2 on the entire image
@@ -53,7 +53,7 @@ void applyTransform(int transArray[], int *image1, int *image2, int width, int h
 //Make the lens effect on the screen
 void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
 //Transform the given image
-void planeTransform (int height, int width, int *image1, int *image2, int mode);
+void planeTransform (int height, int width, int *image1, int *image2, int mode, int time);
 //Creates a gradient color palette
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
 //Fire effect
