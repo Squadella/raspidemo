@@ -86,6 +86,7 @@ void open_ppm(int image[], char* file)
   }
   fclose(img);
 }
+
 // Draw a pixel with the given color
 void drawPixel(Pixel pixel, int *image, int width, long int max)
 {
@@ -96,6 +97,7 @@ void drawPixel(Pixel pixel, int *image, int width, long int max)
   }
   *(image+index)=(pixel.color);
 }
+
 void drawPixelIndex(int index, int color, long int max, int *image)
 {
   if(index>=max)
@@ -104,6 +106,7 @@ void drawPixelIndex(int index, int color, long int max, int *image)
   }
   *(image+index)=color;
 }
+
 void fillImage(int *image, int color, int width, int max)
 {
   int i;
@@ -112,6 +115,7 @@ void fillImage(int *image, int color, int width, int max)
     drawPixelIndex(i, color, max, image);
   }
 }
+
 void replaceImage(int *image1, int *image2, long int max)
 {
   int i;
@@ -120,6 +124,7 @@ void replaceImage(int *image1, int *image2, long int max)
     image1[i]=image2[i];
   }
 }
+
 void replaceColor(int color1, int color2, int *image, long int max)
 {
   int index;
@@ -131,6 +136,7 @@ void replaceColor(int color1, int color2, int *image, long int max)
     }
   }
 }
+
 void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width)
 {
   int ix, iy;
@@ -181,21 +187,7 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
     }
   }
 }
-/*
-void catImageColor(int *image1, int *image2, int color, int height, int width)
-{
-int ix, iy;
-for(ix=0; ix<width; ix++)
-{
-for(iy=0; iy<height; iy++)
-{
-if (image2[(iy*width)+ix]==color)
-{
-}
-}
-}
-}
-*/
+
 void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 {
   int dx = abs((end.x)-(start.x));
@@ -230,6 +222,7 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
     }
   }
 }
+
 void drawCircle(const Pixel center, int radius, int *image, long int height, long int width, long int max)
 {
   Pixel pixel, temp;
@@ -275,6 +268,7 @@ void drawCircle(const Pixel center, int radius, int *image, long int height, lon
     if (radius > pixel.x || err > pixel.y) err += ++(pixel.x)*2+1; //e_xy+e_x > 0 or no 2nd y-step
   } while (pixel.x < 0);
 }
+
 void starField(int *image, int max, int color, int prop)
 {
   int i;
@@ -288,6 +282,7 @@ void starField(int *image, int max, int color, int prop)
     }
   }
 }
+
 //Function doesn't work now have to find a way to make color going blank whatever the color you choose
 void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
 {
@@ -321,6 +316,7 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
     pixelSymStart.color+=stepcolor;
   }
 }
+
 void movingToCorner(int *image, int max, int color, int colorBG, int height, int width)
 {
   //Initialisations
@@ -388,6 +384,7 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
     }
   }
 }
+
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
 {
   //Initialisations
@@ -451,6 +448,80 @@ void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
     }
   }
 }
+
+void squareOpening(int image[], int image2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2)
+{
+	int i, j;
+	if(((*widthTemp)*height)+(*heightTemp)>=0 && ((*widthTemp)*height)+(heightTemp)<max && heightTemp>=0 && heightTemp<height)
+		image[((*widthTemp)*height)+(*heightTemp)]=image2[((*widthTemp)*height)+(*heightTemp)];
+	if (height<width)
+	{
+			(*widthTemp)--;
+			(*widthTemp2)++;
+			if(*heightTemp>0)
+				(*heightTemp)--;
+			if((*heightTemp2)<height)
+				(*heightTemp2)++;
+			j=*heightTemp;
+			for(i=*widthTemp; i!=*widthTemp2; i++)
+			{
+				if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
+					image[(i*height)+(j)]=image2[(i*height)+(j)];
+			}
+			j=*heightTemp2;
+			for(i=*widthTemp; i!=*widthTemp2; i++)
+			{
+				if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
+					image[(i*height)+(j)]=image2[(i*height)+(j)];
+			}
+			j=*widthTemp;
+			for(i=*heightTemp; i!=*heightTemp2; i++)
+			{
+				if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
+					image[(j*height)+(i)]=image2[(j*height)+(i)];
+			}
+			j=*widthTemp2;
+			for(i=*heightTemp; i!=*heightTemp2; i++)
+			{
+				if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
+					image[(j*height)+(i)]=image2[(j*height)+(i)];
+			}
+	}
+	else
+	{
+			if(*widthTemp>0)
+				widthTemp--;
+			if(*widthTemp2<width)
+				widthTemp2++;
+			(*heightTemp)--;
+			(*heightTemp2)++;
+			j=*heightTemp;
+			for(i=*widthTemp; i!=*widthTemp2; i++)
+			{
+				if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
+					image[(i*height)+(j)]=image2[(i*height)+(j)];
+			}
+			j=*heightTemp2;
+			for(i=*widthTemp; i!=*widthTemp2; i++)
+			{
+				if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
+					image[(i*height)+(j)]=image2[(i*height)+(j)];
+			}
+			j=*widthTemp;
+			for(i=*heightTemp; i!=*heightTemp2; i++)
+			{
+				if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
+					image[(j*height)+(i)]=image2[(j*height)+(i)];
+			}
+			j=*widthTemp2;
+			for(i=*heightTemp; i!=*heightTemp2; i++)
+			{
+				if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
+					image[(j*height)+(i)]=image2[(j*height)+(i)];
+			}
+		}
+}
+
 int getToRightX(int val, int lenght, int width, int offset)
 {
   int ytemp=0;
@@ -478,6 +549,7 @@ void applyTransform(int transArray[], int *image1, int *image2, int width, int h
     printf("\n");
   }
 }
+
 void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start)
 {
   int x, y, x2, y2, temp, temp2, a, b;
@@ -515,10 +587,11 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
   }
   applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
+
 void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height)
 {
   int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
-  for (timeShift= 0; timeShift<10000; timeShift++)
+  for (timeShift= 0; timeShift<100; timeShift++)
   {
     for (pixelcount=0; pixelcount<(width*height); pixelcount++)
     {
@@ -552,6 +625,7 @@ void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int he
     if(timeShift%5==0);
   }
 }
+
 void planeTransform (int height, int width, int *image1, int *image2, int mode)
 {
   int k=0, j, i;
@@ -621,6 +695,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode)
   }
   applyPlaneTransform (mLUT, image1, image2, width, height);
 }
+
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
 {
   int i;
@@ -637,6 +712,7 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
     palette[i] = (red<<16 | green<<8 | blue);
   }
 }
+
 void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
 {
   int i, j;
@@ -680,6 +756,7 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
     loop--;
   }
 }
+
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
 {
   int i, j;
@@ -701,6 +778,7 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
     loop--;
   }
 }
+
 void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
 {
   int i, j;

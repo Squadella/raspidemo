@@ -46,6 +46,8 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
 //Move all the point ignoring the color
 void movingAllToCorner(int *image, int max, int colorBG, int height, int width);
+//Change image with a square opening
+void squareOpening(int image[], int image2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2);
 //Create the good index for applying transform
 int getToRightX(int val, int lenght, int width, int offset);
 //Apply a trnasformation on image1 with the image2

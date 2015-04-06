@@ -21,9 +21,6 @@ struct fb_bitfield fbinf;
 
 int main()
 {
-printf("%s\n", "YOLO");
-fflush(stdout);
-
 	//Initialisation of all the variables
 	long int lineSize, bufferSize, heightSize, maxi, height, width;
 	int fbfd=0;
@@ -52,8 +49,6 @@ fflush(stdout);
 		return(-1);
 	}
 
-	printf("%s\n", "sdkgsjughufygkudygkusygqkuyrgfqkuyrvgfqkuyc");
-
 	//Calculate the size of the framebuffer
 	int depth=vinfo.bits_per_pixel;
 	lineSize=vinfo.xres*depth;
@@ -62,8 +57,6 @@ fflush(stdout);
 	maxi=bufferSize/4;
 	height=vinfo.yres;
 	width=vinfo.xres;
-
-	printf("%s\n", "Salut!");
 
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
@@ -116,6 +109,23 @@ fflush(stdout);
 
 			open_ppm(fbp2, "4");
 		planeTransform (height, width, fbp, fbp2, 3);
+		int widthTemp=width/2, widthTemp2=width/2, heightTemp=height/2, heightTemp2=height/2;
+		if(height>width)
+			for (i=0; i<height; i++)
+			{
+				squareOpening(fbp, fbp2, maxi, width, height, &widthTemp, &widthTemp2, &heightTemp, &heightTemp2);
+				usleep(5000);
+			}
+		else
+		{
+			for (i=0; i<width; i++)
+			{
+				squareOpening(fbp, fbp2, maxi, width, height, &widthTemp, &widthTemp2, &heightTemp, &heightTemp2);
+				usleep(5000);
+			}
+		}
+
+		sleep(10);
 	}
 	/*
 		pixel.color=0;
