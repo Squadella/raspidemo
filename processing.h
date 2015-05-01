@@ -19,7 +19,10 @@ typedef struct Pixel{
 }Pixel;
 
 ///Function for concatenate the three color of a pixel into
-int colorRGB(int r, int g, int b);
+int colorRGB(int r/**<The red part of the pixel.*/,
+			 int g/**<The green part of the pixel.*/,
+			 int b/**<The blue part of the pixel.*/);
+
 ///Function for getting the 3 color components of a given color.
 void invertRGB(int color, int *red, int *green, int *blue);
 ///Function for loading a .ppm file inside the framebuffer.
@@ -58,14 +61,16 @@ int getToRightX(int val, int lenght, int width, int offset);
 void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght);
 ///Apply a lens transform the image2 and put it in image1.
 void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
+///Apply a plane transform with a transform array, mLUT, to image2 and save it into image1.
+void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height);
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
 void planeTransform (int height, int width, int *image1, int *image2, int mode);
 ///Creates a gradient color palette.
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
-///Fire effect loaded into image1.
+///Load fire effect into image1.
 void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
 ///Unknow effect, use with caution, there is HUGE memory leak with this function.
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
-///Plasma effect loaded into image1.
+///Load plasma effect into image1.
 void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer);
 #endif
