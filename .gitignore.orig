@@ -1,0 +1,27 @@
+<<<<<<< HEAD
+*.o
+demo
+out.txt
+demo.sublime-*
+tdemo
+core
+l
+s
+p
+4
+loup4.ppm
+=======
+*.o
+demo
+out.txt
+demo.sublime-*
+tdemo
+core
+l
+s
+p
+4
+loup4.ppm
+raspidemoDoc.dox
+doc/*
+>>>>>>> 4949c848b94ebb2a320070ff8d676bad68c7826f

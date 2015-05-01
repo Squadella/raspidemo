@@ -61,6 +61,8 @@ int main()
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	int *fbp2=malloc(bufferSize * sizeof(int));
+	int *palette = malloc(sizeof(int)*256);
+	open_ppm(palette, "fire2.ppm");
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
@@ -90,10 +92,11 @@ int main()
         pixel3.color = 0;
 
 		fillImage(fbp, color, lineSize, maxi);
+		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
 		sleep(1);
 		replaceColor(color, color2, fbp, maxi);
 		sleep(2);
-		open_ppm(fbp, "diern.ppm");
+		open_ppm(fbp, "4");
 		sleep(1);
         fadeToBlack(fbp, maxi);
 		color=colorRGB(255, 255, 255);
@@ -183,9 +186,6 @@ init_image(imageTmp);
 RGBTriplet start = {0, 0, 0}, end = {255, 0, 0};
 open_ppm(palette, "fire2.ppm");
 
-//Opening the image window
-mini_open("foobar", width, height);
-printf("press ESC to quit\n");
 
 //The intro of the demo, the word demo is displayed
 mini_update(image2);
@@ -219,158 +219,140 @@ replaceImage(image1, image2, max);
 //Draw a bit of fire
 drawFire(image1, image2, palette, max, height, width, 500);
 
-//Emptying the image and drawing a starfield
-fillImage(image1, colorRGB(0, 0, 0), width, max);
-starField(image1, max, colorRGB(255, 255, 255), 200);
-mini_update(image1);
-sleep(1);
+	//Debug file
+	FILE* out;
+	out=fopen("out.txt", "w");
 
-//Moving the starfield into the corner
-for (i=0; i<width/2; i++)
-{
-movingAllToCorner(image1, max, colorRGB(0, 0, 0), height, width);
-usleep(1000);
-mini_update(image1);
-}
+	//drawPlasma(image1, image2, palette, max, height, width, 1000);
 
-
-//catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
-//Pixel pixel, pixel1, pixel3;
-
-//Debug file
-FILE* out;
-out=fopen("out.txt", "w");
-
-//drawPlasma(image1, image2, palette, max, height, width, 1000);
-
-// Drawing descending lines with Bresenham
-nbrLine=10;
-space=width/nbrLine;
-y1=0;
-pixel1.color=colorRGB(0,2,255);
-for (y=0; y<height; y+=3)
-{
-    for (x=0; x<width; x+=space)
-    {
-        pixel.x=x;
-        pixel.y=y1;
-        pixel1.y=y;
-        pixel1.x=x;
-        drawLine(pixel, pixel1, image1, width, max);
-    }
-    //changeImage(image1, image2);
-    mini_update(p_image);
-    y1=y;
-}
+	// Drawing descending lines with Bresenham
+	nbrLine=10;
+	space=width/nbrLine;
+	y1=0;
+	pixel1.color=colorRGB(0,2,255);
+	for (y=0; y<height; y+=3)
+	{
+		for (x=0; x<width; x+=space)
+		{
+			pixel.x=x;
+			pixel.y=y1;
+			pixel1.y=y;
+			pixel1.x=x;
+			drawLine(pixel, pixel1, image1, width, max);
+		}
+		//changeImage(image1, image2);
+		mini_update(p_image);
+		y1=y;
+	}
 */
-//Drawing a blank star field
-//starField(image1, max, colorRGB(255, 255, 255));
+	//Drawing a blank star field
+	//starField(image1, max, colorRGB(255, 255, 255));
 
-//Drawing a light beam
-/*pixel.x=100;
-  pixel.y=rand()%height;
-  pixel.color=colorRGB(0, 200, 0);
-  pixel1.x=width-100;
-  pixel1.y=(rand()%height)+1;
-  pixel1.color=colorRGB(77, 210, 207);
-  pixel3.x=width/2;
-  pixel3.y=height/2;
-  pixel3.color=colorRGB(255,0,0);
-  drawCircle(pixel3, 120, image1, height, width);
-  beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
-  mini_update(image1);
-  sleep(1);*/
+	//Drawing a light beam
+	/*pixel.x=100;
+	pixel.y=rand()%height;
+	pixel.color=colorRGB(0, 200, 0);
+	pixel1.x=width-100;
+	pixel1.y=(rand()%height)+1;
+	pixel1.color=colorRGB(77, 210, 207);
+	pixel3.x=width/2;
+	pixel3.y=height/2;
+	pixel3.color=colorRGB(255,0,0);
+	drawCircle(pixel3, 120, image1, height, width);
+	beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
+	mini_update(image1);
+	sleep(1);*/
 
-//Random laser on a changing color background
-/*
-   for(i=0; i<256; i++)
-   {
-   pixel.x=0;
-   pixel.y=rand()%(height);
-   pixel1.x=width;
-   pixel1.y=(rand()%(height))+1;
-   fillImage(image1, colorRGB(i,i/3,i/2), width, max);
-   beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
-   mini_update(image1);
-   usleep(100000);
-   }
-   */
+	//Random laser on a changing color background
+	/*
+	for(i=0; i<256; i++)
+	{
+		pixel.x=0;
+		pixel.y=rand()%(height);
+		pixel1.x=width;
+		pixel1.y=(rand()%(height))+1;
+		fillImage(image1, colorRGB(i,i/3,i/2), width, max);
+		beamOfLight(pixel, pixel1, rand()%150, image1, width, max, 10000);
+		mini_update(image1);
+	usleep(100000);
+	}
+	*/
 
-//Rainbow background
-/*int red=255, green=0, blue=0;
-  for (space=0; space<10; space++)
-  {
-  for(i=0; i<255; i++)
-  {
-  blue++;
-//printf("%d %d %d\n", red, green, blue);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-mini_update(image1);
-usleep(1000);
-}
-for(i=255; i>0; i--)
-{
-red--;
-//printf("%d %d %d\n", red, green, blue);
-mini_update(image1);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-usleep(1000);
-}
-for(i=0; i<255; i++)
-{
-green++;
-//printf("%d %d %d\n", red, green, blue);
-mini_update(image1);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-usleep(1000);
-}
-for(i=255; i>0; i--)
-{
-blue--;
-//printf("%d %d %d\n", red, green, blue);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-mini_update(image1);
-usleep(1000);
-}
-for(i=0; i<255; i++)
-{
-red++;
-//printf("%d %d %d\n", red, green, blue);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-mini_update(image1);
-usleep(1000);
-}
-for(i=255; i>0; i--)
-{
-green--;
-//printf("%d %d %d\n", red, green, blue);
-fillImage(image1, colorRGB(red,green,blue), width, max);
-mini_update(image1);
-usleep(1000);
-}
-}*/
-/*
-   fillImage(image1, colorRGB(0,0,0), width, max);
-   starField(image1, max, colorRGB(0,0,0));
-   drawPixel(pixel, image1, width, max);
-   mini_update(image1);
-//sleep(10);
-for (i=0; i<100; i++)
-{
-movingToCorner(image1, max, colorRGB(0,0,0), colorRGB(i,i/3,i/2), height, width);
-mini_update(image1);
-usleep(10000);
-}
+	//Rainbow background
+	/*int red=255, green=0, blue=0;
+	for (space=0; space<10; space++)
+	{
+		for(i=0; i<255; i++)
+		{
+			blue++;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			red--;
+			//printf("%d %d %d\n", red, green, blue);
+			mini_update(image1);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			usleep(1000);
+		}
+		for(i=0; i<255; i++)
+		{
+			green++;
+			//printf("%d %d %d\n", red, green, blue);
+			mini_update(image1);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			blue--;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=0; i<255; i++)
+		{
+			red++;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+		for(i=255; i>0; i--)
+		{
+			green--;
+			//printf("%d %d %d\n", red, green, blue);
+			fillImage(image1, colorRGB(red,green,blue), width, max);
+			mini_update(image1);
+			usleep(1000);
+		}
+	}*/
+	/*
+	fillImage(image1, colorRGB(0,0,0), width, max);
+	starField(image1, max, colorRGB(0,0,0));
+	drawPixel(pixel, image1, width, max);
+	mini_update(image1);
+	//sleep(10);
+	for (i=0; i<100; i++)
+	{
+		movingToCorner(image1, max, colorRGB(0,0,0), colorRGB(i,i/3,i/2), height, width);
+		mini_update(image1);
+		usleep(10000);
+	}
 
-replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
-//Keeping the window open
-//while(0==0)
-//	mini_update(image1);
+	replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
+	//Keeping the window open
+	//while(0==0)
+	//	mini_update(image1);
 
-//free(image1);
-//free(image2);
-//free(palette);
-//fclose(out);
-//mini_close();
-return 0;
+	//free(image1);
+	//free(image2);
+	//free(palette);
+	//fclose(out);
+	//mini_close();
+	return 0;
 }
