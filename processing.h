@@ -63,5 +63,5 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
 
-void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
+void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer);
 #endif

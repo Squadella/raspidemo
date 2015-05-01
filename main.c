@@ -61,6 +61,8 @@ int main()
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	int *fbp2=malloc(bufferSize * sizeof(int));
+	int *palette = malloc(sizeof(int)*256);
+	open_ppm(palette, "fire2.ppm");
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
@@ -85,6 +87,7 @@ int main()
 		color2=colorRGB(255, 255, 255);
 
 		fillImage(fbp, color, lineSize, maxi);
+		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
 		sleep(1);
 		replaceColor(color, color2, fbp, maxi);
 		sleep(2);

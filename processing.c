@@ -779,29 +779,25 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
   }
 }
 
-void drawPlasma(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
+void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer)
 {
-  int i, j;
-  uint loop = timer;
-  for (i = 0 ; i < width; ++i)
+	int i, j;
+	int loop = timer;
+	fillImage(image1, 0, width, max);
+	//printf("%d\n", max);
+	while(loop)
   {
-    for (j = 0; j < height; ++j)
+    for (i = 0 ; i < width; i++)
     {
-      image1[j * width + i] = colorRGB(0, 0, 0);
-    }
-  }
-  while(loop)
-  {
-    for (i = 0 ; i < width; ++i)
-    {
-      for (j = 0; j < height; ++j)
+      for (j = 0; j < height; j++)
       {
-        image1[j * width + i] = ((int)((sin(i) + 1) * 8192)) % 256;
+		//printf("%d\n", j * width + i);
+        image1[j * width + i] = abs((int)(64 + 63 * sin( loop/(37+15*cos(j*74)) ) * cos( i/(31+11*sin(57))) )% 256);
       }
     }
-    for (i = 0 ; i < width; ++i)
+    for (i = 0 ; i < width; i++)
     {
-      for (j = 0; j < height; ++j)
+      for (j = 0; j < height; j++)
       {
         image2[j * width + i] = palette[image1[j * width + i]];
       }
