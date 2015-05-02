@@ -62,7 +62,7 @@ int main()
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	int *fbp2=malloc(bufferSize * sizeof(int));
 	int *palette = malloc(sizeof(int)*256);
-	open_ppm(palette, "fire2.ppm");
+	open_ppm(palette, "toast.ppm");
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
@@ -90,9 +90,7 @@ int main()
 		pixel3.y = 0;
 		pixel3.color = 0;
 		fillImage(fbp, color2, lineSize, maxi);
-		savePalette(fbp, palette, maxi, height, width);
 		drawPalette(fbp, palette, maxi, height, width);
-		sleep(10);
 		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
 		sleep(1);
 		replaceColor(color, color2, fbp, maxi);
@@ -129,7 +127,7 @@ int main()
 		rgb1.r = 222;
 		rgb1.g = 112;
 		rgb1.b = 15;
-		initGradientPalette(pal, rgb1, rgb2);
+		/*initGradientPalette(pal, rgb1, rgb2);
 
 		for(i = 0; i < width; i++)
 		{
@@ -143,7 +141,7 @@ int main()
 			usleep(300);
 		}
 		sleep(2);
-
+*/
 		replaceImage(fbp2, fbp, maxi);
 		planeTransform (height, width, fbp, fbp2, 8, 256);
 		color2=0;
@@ -158,6 +156,9 @@ int main()
 
 
 	}
+
+	return 0;
+}
 	/*
 	pixel.color=0;
 	for(i=random; i>0; i--)
@@ -355,5 +356,3 @@ replaceColor(colorRGB(0,0,0), colorRGB(0,255,0), image1, max);*/
 //free(palette);
 //fclose(out);
 //mini_close();
-return 0;
-}

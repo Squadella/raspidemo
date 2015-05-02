@@ -784,14 +784,13 @@ void drawPlasma(int *image1, int *image2, int palette[], int max, int height, in
 	int i, j;
 	int loop = timer;
 	fillImage(image1, 0, width, max);
-	//printf("%d\n", max);
 	while(loop)
 	{
 		for (i = 0 ; i < width; i++)
 		{
 			for (j = 0; j < height; j++)
 			{
-				image1[j * width + i] = abs((int)(64 + 63 * sin( loop/(37+15*cos(j*74)) ) * cos( i/(31+11*sin(57))) )% 256);
+				image1[j * width + i] = abs((int)(64 +(loop + 63 * sin( cos( i/(31*(j+1)) ))*cos(j*i+42)))% 256);
 			}
 		}
 		for (i = 0 ; i < width; i++)
