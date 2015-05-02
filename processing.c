@@ -754,6 +754,18 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
 	}
 }
 
+void drawPalette(int image[], int palette[], int max, int height, int width)
+{
+	int i, j;
+	for(i=0; i<height; i++)
+	{
+		for(j=0; j<width; j++)
+		{
+			image[i*width+j]=palette[(i*width+j)%256];
+		}
+	}
+}
+
 void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer)
 {
 	int i, j;

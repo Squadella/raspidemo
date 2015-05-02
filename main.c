@@ -92,6 +92,8 @@ int main()
 		pixel3.color = 0;
 
 		fillImage(fbp, color, lineSize, maxi);
+		drawPalette(fbp, palette, maxi, height, width);
+		sleep(10);
 		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
 		sleep(1);
 		replaceColor(color, color2, fbp, maxi);
