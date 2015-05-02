@@ -62,7 +62,7 @@ int main()
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	int *fbp2=malloc(bufferSize * sizeof(int));
 	int *palette = malloc(sizeof(int)*256);
-	open_ppm(palette, "toast.ppm");
+	open_ppm(palette, "toast2.ppm");
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
