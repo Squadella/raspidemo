@@ -66,6 +66,7 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
 ///Unknow effect, use with caution, there is HUGE memory leak with this function.
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
+void savePalette(int image[], int palette[], int max, int height, int width)
 void drawPalette(int image[], int palette[], int max, int height, int width);
 ///Plasma effect loaded into image1.
 void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer);

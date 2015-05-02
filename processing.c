@@ -22,9 +22,6 @@ void open_ppm(int image[], char* file)
 	// initialising the file
 	FILE *img;
 	int returnTest;
-	/*const char fileName[25];
-	printf("Enter the name of the file you want to open:");
-	scanf("loup.ppm", fileName);*/
 	img=fopen(file, "r");
 	if (img==NULL) //if the program is unable to open the fil exit the function
 	{
@@ -753,6 +750,22 @@ void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, 
 		loop--;
 	}
 }
+
+void savePalette(int image[], int palette[], int max, int height, int width)
+{
+	int i, j;
+	FILE *img;
+	img=fopen("diern", "w");
+	for(i=0; i<height; i++)
+	{
+		for(j=0; j<width; j++)
+		{
+			fprintf(img,"%d", palette[(i*width+j)%256]);
+		}
+	}
+	fclose(img);
+}
+
 
 void drawPalette(int image[], int palette[], int max, int height, int width)
 {

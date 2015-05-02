@@ -76,7 +76,6 @@ int main()
 		RGBTriplet rgb1, rgb2;
 		int color, color2;
 		int i, j;
-		uint pal[256];
 		int random=(rand()%25) + 1;
 		color=0;
 		fillImage(fbp, color, lineSize, maxi);
@@ -90,8 +89,8 @@ int main()
 		pixel3.x = 0;
 		pixel3.y = 0;
 		pixel3.color = 0;
-
-		fillImage(fbp, color, lineSize, maxi);
+		fillImage(fbp, color2, lineSize, maxi);
+		savePalette(fbp, palette, maxi, height, width);
 		drawPalette(fbp, palette, maxi, height, width);
 		sleep(10);
 		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
