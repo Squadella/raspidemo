@@ -138,36 +138,75 @@ int getToRightX(int val/**<The index value.*/,
 				int offset/**<The offset for the start of the transform array in the image*/);
 
 ///Genrate the image1 by transformating image2 with a transform matrix.
-void applyTransform(int transArray[]/**<*/,
-					int *image1/**<*/,
-					int *image2/**<*/,
-					int width/**<*/,
-					int height/**<*/,
-					Pixel start/**<*/,
-					int lenght/**<*/);
+void applyTransform(int transArray[]/**<The transform array.*/,
+					int *image1/**<The current image.*/,
+					int *image2/**<The source image.*/,
+					int width/**<The width of the images.*/,
+					int height/**<The height of the images.*/,
+					Pixel start/**<The start pixel of the transform.*/,
+					int lenght/**<The lenght of the rtansform.*/);
 
 ///Apply a lens transform the image2 and put it in image1.
-void lens(int radius/**<*/,
-		  int magFact/**<*/,
-		  int *image1/**<*/,
-		  int *image2/**<*/,
-		  int max/**<*/,
-		  int width/**<*/,
-		  int height/**<*/,
-		  Pixel start/**<*/);
+void lens(int radius/**<The radius of the lens.*/,
+		  int magFact/**<The magnifying factor.*/,
+		  int *image1/**<The current image.*/,
+		  int *image2/**<The source image.*/,
+		  int max/**<The max index of the image array.*/,
+		  int width/**<The width of the screen.*/,
+		  int height/**<The height of the screen.*/,
+		  Pixel start/**<The start pixel of the transform.*/);
 
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
-void planeTransform (int height, int width, int *image1, int *image2, int mode, int time);
+void planeTransform (int height/**<The height of the screen.*/,
+					 int width/**<The width of the screen.*/,
+					 int *image1/**<The displayed image.*/,
+					 int *image2/**<The source image.*/,
+					 int mode/**<The different type of plane transform can take nummber from 1 to 9.*/,
+					 int time/**<The duration of the effect.*/);
+
 ///Creates a gradient color palette.
-void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
+void initGradientPalette(uint palette[256]/**<The palette that will be created.*/,
+	 					 RGBTriplet startColor/**<The R G B color of start.*/,
+						 RGBTriplet endColor/**<The R G B color of end.*/);
+
 ///Fire effect loaded into image1.
-void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
+void drawFire(int *image1/**<The displayed image.*/,
+	 		  int *image2/**<A temp image.*/,
+			  uint palette[256]/**<The palette for coloration of the pixels.*/,
+			  int max/**<The max index of the image array.*/,
+			  int height/**<The height of the screen.*/,
+			  int width/**<The width of the screen.*/,
+			  uint timer/**<The duration of the effect.*/);
+
 ///Unknow effect, use with caution, there is HUGE memory leak with this function.
-void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
+void drawLulz(int *image1/**<The displayed image.*/,
+	 		  int *image2/**<A temp image.*/,
+			  uint palette[256]/**<The palette for coloration of the pixels.*/,
+			  int max/**<The max index of the image array.*/,
+			  int height/**<The height of the screen.*/,
+			  int width/**<The width of the screen.*/);
+
 ///Save all the data of a palette in a file.
-void savePalette(int image[], int palette[], int max, int height, int width);
+void savePalette(int image[]/**<The displayed image.*/,
+	 			 int palette[]/**<The palette that will be saved.*/,
+	 			 int max/**<The max index of the image array.*/,
+				 int height/**<The height of the screen.*/,
+				 int width/**<The width of the screen.*/);
+
 ///Put the palette multiple time in image.
-void drawPalette(int image[], int palette[], int max, int height, int width);
+void drawPalette(int image[]/**<The displayed image.*/,
+	 			 int palette[]/**<The palette that will be displayed multiple times.*/,
+	 			 int max/**<The max index of the image array.*/,
+				 int height/**<The height of the screen.*/,
+				 int width/**<The width of the screen.*/);
+
 ///Plasma effect loaded into image1.
-void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer);
+void drawPlasma(int *image1/**<The temp image.*/,
+	 			int *image2/**<The displayed image.*/,
+	 			int palette[]/**<The palette for coloration.*/,
+	 			int max/**<The max index of the image array.*/,
+	 			int height/**<The height of the screen.*/,
+	 			int width/**<The width of the screen.*/,
+	 			int timer/**<The duration of the effect.*/);
+
 #endif
