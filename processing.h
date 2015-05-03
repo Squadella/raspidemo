@@ -19,45 +19,143 @@ typedef struct Pixel{
 }Pixel;
 
 ///Function for concatenate the three color of a pixel into
-int colorRGB(int r, int g, int b);
+int colorRGB(int r/**<The red part of the pixel.*/,
+			 int g/**<The green part of the pixel.*/,
+			 int b/**<The blue part of the pixel.*/);
+
 ///Function for getting the 3 color components of a given color.
-void invertRGB(int color, int *red, int *green, int *blue);
+void invertRGB(int color/**<The color given by a pixel.*/,
+	 		   int *red/**<The resulting red color after shiting the int.*/,
+			   int *green/**<The resulting green color after shiting the int.*/,
+			   int *blue/**<The resulting blue color after shiting the int.*/);
+
 ///Function for loading a .ppm file inside the framebuffer.
-void open_ppm(int image[], char* file);
+void open_ppm(int image[]/**<The array where the image will be saved.*/,
+			  char* file/**<The name of the image file.*/);
+
 ///Change the state of one pixel in the framebuffer.
-void drawPixel(Pixel pixel, int *image, int width, long int max);
+void drawPixel(Pixel pixel/**<The information about the pixel.*/,
+	 		   int *image/**<The array where the programm will place the pixel.*/,
+			   int width/**<The width of the screen.*/,
+			   long int max/**<The max index of the image array.*/);
+
 ///Change the state of one pixel in the framebuffer with the given index.
-void drawPixelIndex(int index, int color, long int max, int *image);
-///Fill the framebuffer with the given color.
-void fillImage(int *image, int color, int width, int max);
+void drawPixelIndex(int index/**<The index in the array we want to change*/,
+	 				int color/**<The color we want to use for the new pixel.*/,
+					long int max/**<The max index of the image array.*/,
+					int *image/**<The array where the programm will place the pixel.*/);
+
+///Fill the image array with the given color.
+void fillImage(int *image/**<The array where the programm will fill with the given color.*/,
+			   int color/**<Color of the filling.*/,
+			   int width/**<The width of the screen.*/,
+			   int max/**<The max index of the image array.*/);
+
 ///Copy a image table into the framebuffer.
-void replaceImage(int *image1, int *image2, long int max);
+void replaceImage(int *image1/**<The current image.*/,
+	 			  int *image2/**<The image we want to insert.*/,
+				  long int max/**<The max index of the image array.*/);
+
 ///Shift all the pixel inside the framebuffer to black.
-void fadeToBlack(int image[], long int maxb);
+void fadeToBlack(int image[]/**<The current image.*/,
+	 			 long int maxi/**<The max index of the image array.*/);
+
 ///Concatenate image2 into image1 by choosing a x or y.
-void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width);
+void catImage(int *image1/**<The current image.*/,
+	 		  int *image2/**<The image we want to insert.*/,
+			  int x/**<Set the limit of the separation of the two in the x axis (ignored if set to -1).*/,
+			  int y/**<Set the limit of the separation of the two in the y axis (ignored if set to -1).*/,
+			  int direction/**<Set the delimitation the if y = -1 go to the rigth if true and if the x=-1 go up if false.*/,
+			  int height/**<The height of the screen.*/,
+			  int width/**<The width of the screen.*/);
+
 ///Replace color1 with color2 on the entire framebuffer.
-void replaceColor(int color1, int color2, int *image, long int max);
-///Draw a line in the given image.
-void drawLine(Pixel start, Pixel end, int *image, int width, int max);
+void replaceColor(int color1/**<The color that will be replaced.*/,
+	 			  int color2/**<The color to put in found areas.*/,
+				  int *image/**<The current image.*/,
+				  long int max/**<The max index of the image array.*/);
+
+///Draw a line in the given image with Bresenham's algorithm.
+void drawLine(Pixel start/**<The first pixel of the line.*/,
+	 		  Pixel end/**<The last pixel of the line*/,
+			  int *image/**<The current image.*/,
+			  int width/**<The height of the screen.*/,
+			  int max/**<The max index of the image array.*/);
+
 ///Draw a circle in the given image.
-void drawCircle(const Pixel center, int radius, int *image, long int height, long int width, long int maxi);
+void drawCircle(const Pixel center/**<The center pixel of the circle.*/,
+				int radius/**<The radius of the circle.*/,
+				int *image/**<The current image.*/,
+				long int height/**<The height of the screen.*/,
+				long int width/**<The width of the screen.*/,
+				long int maxi/**<The max index of the image array.*/);
+
 ///Draw a starfiel on the given image with the given color.
-void starField(int *image, int max, int color, int prop);
+void starField(int *image/**<The image where the starfield will be drawn.*/,
+			   int max/**<The max index of the image array.*/,
+			   int color/**<The color of the stars.*/,
+			   int prop/**<The chance of apparition of a star.*/);
+
 ///Create a beam of light with the given color and given position with a blank fading in the middle.
-void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed);
+void beamOfLight(Pixel start/**<The start pixel of the middle of the beam.*/,
+	 			 Pixel end/**<The end pixel of the middle of the beam.*/,
+				 int heightBeam/**<The size of the beam in height.*/,
+				 int *image/**<The image where the starfield will be drawn.*/,
+				 int width/**<The width of the screen.*/,
+				 int max/**<The max index of the image array.*/,
+				 int speed/**<The spee of appariton of the beam.*/);
+
 ///Move all the point of the given color to the edges of the screen.
-void movingToCorner(int *image, int max, int color, int colorBG, int height, int width);
+void movingToCorner(int *image/**<The current image.*/,
+					int max/**<The max index of the image array.*/,
+					int color/**<The color that will be moved.*/,
+					int colorBG/**<The color of replacement when a piwel moves.*/,
+					int height/**<The height of the screen.*/,
+					int width/**<The width of the screen.*/);
+
 ///Move all the points ignoring the color.
-void movingAllToCorner(int *image, int max, int colorBG, int height, int width);
+void movingAllToCorner(int *image/**<The current image.*/,
+					   int max/**<The max index of the image array.*/,
+					   int colorBG/**<The color of replacement when a piwel moves.*/,
+					   int height/**<The height of the screen.*/,
+					   int width/**<The width of the screen.*/);
+
 ///Make image2 appear in square in the middle of the screen.
-void squareOpening(int image[], int image2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2);
+void squareOpening(int image[]/**<The current image.*/,
+				   int image2[]/**<The image we want to print.*/,
+				   int max/**<The max index of the image array.*/,
+				   int width/**<The width of the screen.*/,
+				   int height/**<The height of the screen.*/,
+				   int *widthTemp/**<Temp values for calling function multiples times (set to 0 when called).*/,
+				   int *widthTemp2/**<Temp values for calling function multiples times (set to 0 when called).*/,
+				   int *heightTemp/**<Temp values for calling function multiples times (set to 0 when called).*/,
+				   int *heightTemp2/**<Temp values for calling function multiples times (set to 0 when called).*/);
+
 ///Create the good index for applying a transform matrix.
-int getToRightX(int val, int lenght, int width, int offset);
+int getToRightX(int val/**<The index value.*/,
+	 			int lenght/**<The lenght of the transformation array.*/,
+				int width/**<The width of the image*/,
+				int offset/**<The offset for the start of the transform array in the image*/);
+
 ///Genrate the image1 by transformating image2 with a transform matrix.
-void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght);
+void applyTransform(int transArray[]/**<*/,
+					int *image1/**<*/,
+					int *image2/**<*/,
+					int width/**<*/,
+					int height/**<*/,
+					Pixel start/**<*/,
+					int lenght/**<*/);
+
 ///Apply a lens transform the image2 and put it in image1.
-void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
+void lens(int radius/**<*/,
+		  int magFact/**<*/,
+		  int *image1/**<*/,
+		  int *image2/**<*/,
+		  int max/**<*/,
+		  int width/**<*/,
+		  int height/**<*/,
+		  Pixel start/**<*/);
+
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
 void planeTransform (int height, int width, int *image1, int *image2, int mode, int time);
 ///Creates a gradient color palette.
@@ -66,7 +164,9 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer);
 ///Unknow effect, use with caution, there is HUGE memory leak with this function.
 void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width);
+///Save all the data of a palette in a file.
 void savePalette(int image[], int palette[], int max, int height, int width);
+///Put the palette multiple time in image.
 void drawPalette(int image[], int palette[], int max, int height, int width);
 ///Plasma effect loaded into image1.
 void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer);
