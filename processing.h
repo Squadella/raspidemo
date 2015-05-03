@@ -57,7 +57,7 @@ void replaceImage(int *image1/**<The current image.*/,
 				  long int max/**<The max index of the image array.*/);
 
 ///Shift all the pixel inside the framebuffer to black.
-void fadeToBlack(int image[]/**<The current image.*/,
+void fadeToBlack(int fbp[]/**<The current image.*/,
 	 			 long int maxi/**<The max index of the image array.*/);
 
 ///Concatenate image2 into image1 by choosing a x or y.
@@ -155,6 +155,14 @@ void lens(int radius/**<The radius of the lens.*/,
 		  int width/**<The width of the screen.*/,
 		  int height/**<The height of the screen.*/,
 		  Pixel start/**<The start pixel of the transform.*/);
+
+///Applying a plane trasform with the given transformation array.
+void applyPlaneTransform (int mLUT[]/**<The transformation array.*/,
+	 					  int *image1/**<The current image.*/,
+	 					  int *image2/**<The source image.*/,
+						  int width/**<The width of the screen.*/,
+						  int height/**<The height of the screen.*/,
+	 					  int time/**<The duration of the effect.*/);
 
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
 void planeTransform (int height/**<The height of the screen.*/,

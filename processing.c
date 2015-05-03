@@ -185,7 +185,7 @@ void catImage(int *image1, int *image2, int x, int y, int direction, int height,
 	}
 }
 
-void fadeToBlack(int* fbp, long int maxi)
+void fadeToBlack(int fbp[], long int maxi)
 {
 	int i = 0, j = 0;
 	int r, g, b;
