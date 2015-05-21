@@ -68,8 +68,8 @@ int main(int argc, char* argv[])
 
     // Change variable info - force 8 bit and resolution
     vinfo.bits_per_pixel = 8;
-    vinfo.xres = 32;
-    vinfo.yres = 16;
+    vinfo.xres = 160;
+    vinfo.yres = 120;
     vinfo.xres_virtual = vinfo.xres;
     vinfo.yres_virtual = vinfo.yres;
     if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
