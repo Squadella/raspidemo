@@ -50,6 +50,7 @@ int main()
 	}
 
 	//Calculate the size of the framebuffer
+	/*
 	int depth=vinfo.bits_per_pixel;
 	lineSize=vinfo.xres*depth;
 	heightSize=vinfo.yres*depth;
@@ -57,6 +58,9 @@ int main()
 	maxi=bufferSize/4;
 	height=vinfo.yres;
 	width=vinfo.xres;
+	*/
+	bufferSize=finfo.smem_len;
+	vinfo.bits_per_pixel=32;
 
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
