@@ -70,9 +70,10 @@ int main()
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 
-	memset(fbp, colorRGB(255, 255, 255), vinfo.xres * vinfo.yres);
+	memset(fbp, 1, vinfo.xres * vinfo.yres);
 	int *fbp2=malloc(bufferSize * sizeof(int));
 	int *palette = malloc(sizeof(int)*256);
+	sleep(3);
 	open_ppm(palette, "toast2.ppm");
 	if ((int)fbp == -1)
 	{
