@@ -68,7 +68,7 @@ int main()
 	vinfo.bits_per_pixel=32;
 	bufferSize=finfo.smem_len;
 	printf("%d\n", bufferSize);
-	bufferSize=((vinfo.xres*vinfo.yres*vinfo.bits_per_pixel)>>3)/4;
+	bufferSize=((vinfo.xres*vinfo.yres*vinfo.bits_per_pixel)>>3);
 	printf("%d\n", bufferSize);
 	vinfo.xres_virtual = vinfo.xres;
     vinfo.yres_virtual = vinfo.yres;
