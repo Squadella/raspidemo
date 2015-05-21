@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
 
     // Change variable info - force 8 bit and resolution
-    vinfo.bits_per_pixel = 8;
+    vinfo.bits_per_pixel = 24;
     vinfo.xres = 160;
     vinfo.yres = 120;
     vinfo.xres_virtual = vinfo.xres;
