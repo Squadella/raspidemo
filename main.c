@@ -61,7 +61,7 @@ int main()
 	*/
 	vinfo.yres/=4;
 	vinfo.xres/=4;
-	height=finfo.yres;
+	height=finfo.line_length;
 	width=finfo.xres;
 	vinfo.bits_per_pixel=32;
 	bufferSize=finfo.smem_len;
