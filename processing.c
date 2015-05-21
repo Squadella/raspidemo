@@ -85,17 +85,24 @@ void open_ppm(int image[], char* file)
 }
 
 // Draw a pixel with the given color
-void drawPixel(Pixel pixel, int *image, int width, long int max)
+
+void drawPixel(Pixel pixel, char *image, int width, long int max)
 {
-	int index=(pixel.y)*width+(pixel.x);
+	int index=(pixel.y) * width + (pixel.x) * 3;
 	if (index>=max || index<0)
 	{
 		return;
 	}
-	*(image+index)=(pixel.color);
+	int r, g, b;
+
+	invertRGB(pixel.color, &r, &g, &b);
+
+	*((char*)(image + index)) = b;
+	*((char*)(image + index + 1)) = g;
+	*((char*)(image + index + 2)) = r;
 }
 
-void drawPixelIndex(int index, int color, long int max, int *image)
+void drawPixelIndex(int index, int color, long int max, char *image)
 {
 	if(index>=max)
 	{
@@ -104,7 +111,7 @@ void drawPixelIndex(int index, int color, long int max, int *image)
 	*(image+index)=color;
 }
 
-void fillImage(int *image, int color, int width, int max)
+void fillImage(char *image, int color, int width, int max)
 {
 	int i;
 	for(i=0; i<max; i++)
@@ -113,7 +120,7 @@ void fillImage(int *image, int color, int width, int max)
 	}
 }
 
-void replaceImage(int *image1, int *image2, long int max)
+void replaceImage(char *image1, char *image2, long int max)
 {
 	int i;
 	for(i=0; i<max; i++)
@@ -122,7 +129,7 @@ void replaceImage(int *image1, int *image2, long int max)
 	}
 }
 
-void replaceColor(int color1, int color2, int *image, long int max)
+void replaceColor(int color1, int color2, char *image, long int max)
 {
 	int index;
 	for(index=0; index<max; index++)
@@ -134,7 +141,7 @@ void replaceColor(int color1, int color2, int *image, long int max)
 	}
 }
 
-void catImage(int *image1, int *image2, int x, int y, int direction, int height, int width)
+void catImage(char *image1, char *image2, int x, int y, int direction, int height, int width)
 {
 	int ix, iy;
 	if(y==-1)
@@ -222,7 +229,7 @@ void fadeToBlack(int fbp[], long int maxi)
 	}
 }
 /*
-void catImageColor(int *image1, int *image2, int color, int height, int width)
+void catImageColor(char *image1, char *image2, int color, int height, int width)
 {
 int ix, iy;
 for(ix=0; ix<width; ix++)
@@ -236,7 +243,7 @@ if (image2[(iy*width)+ix]==color)
 }
 }
 */
-void drawLine(Pixel start, Pixel end, int *image, int width, int max)
+void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
 	int sx;
@@ -271,7 +278,7 @@ void drawLine(Pixel start, Pixel end, int *image, int width, int max)
 	}
 }
 
-void drawCircle(const Pixel center, int radius, int *image, long int height, long int width, long int max)
+void drawCircle(const Pixel center, int radius, char *image, long int height, long int width, long int max)
 {
 	Pixel pixel, temp;
 	int err = 2-2*radius;
@@ -317,7 +324,7 @@ void drawCircle(const Pixel center, int radius, int *image, long int height, lon
 	} while (pixel.x < 0);
 }
 
-void starField(int *image, int max, int color, int prop)
+void starField(char *image, int max, int color, int prop)
 {
 	int i;
 	int reduction=0;
@@ -332,7 +339,7 @@ void starField(int *image, int max, int color, int prop)
 }
 
 //Function doesn't work now have to find a way to make color going blank whatever the color you choose
-void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, int max, int speed)
+void beamOfLight(Pixel start, Pixel end, int heightBeam, char *image, int width, int max, int speed)
 {
 	int i, r=0, g=0, b=0;
 	//Anti-"CoreDump"!
@@ -365,7 +372,7 @@ void beamOfLight(Pixel start, Pixel end, int heightBeam, int *image, int width, 
 	}
 }
 
-void movingToCorner(int *image, int max, int color, int colorBG, int height, int width)
+void movingToCorner(char *image, int max, int color, int colorBG, int height, int width)
 {
 	//Initialisations
 	int widthTemp, heightTemp;
@@ -433,7 +440,7 @@ void movingToCorner(int *image, int max, int color, int colorBG, int height, int
 	}
 }
 
-void movingAllToCorner(int *image, int max, int colorBG, int height, int width)
+void movingAllToCorner(char *image, int max, int colorBG, int height, int width)
 {
 	//Initialisations
 	int widthTemp, heightTemp, colorTmp;
@@ -509,7 +516,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 	finalval=(ytemp*(width))+val+offset;
 	return finalval;
 }
-void applyTransform(int transArray[], int *image1, int *image2, int width, int height, Pixel start, int lenght)
+void applyTransform(int transArray[], char *image1, char *image2, int width, int height, Pixel start, int lenght)
 {
 	int x, y, offset, val;
 	offset=((start.y)*width+start.x);
@@ -525,7 +532,7 @@ void applyTransform(int transArray[], int *image1, int *image2, int width, int h
 	}
 }
 
-void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start)
+void lens(int radius, int magFact, char *image1, char *image2, int max, int width, int height, Pixel start)
 {
 	int x, y, x2, y2, temp, temp2, a, b;
 	int s=((radius*radius)-(magFact*magFact));
@@ -563,7 +570,7 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
 
-void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height, int time)
+void applyPlaneTransform (int mLUT[],char *image1, char *image2, int width, int height, int time)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
 	for (timeShift= 0; timeShift<time; timeShift++)
@@ -600,7 +607,7 @@ void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int he
 	}
 }
 
-void planeTransform (int height, int width, int *image1, int *image2, int mode, int time)
+void planeTransform (int height, int width, char *image1, char *image2, int mode, int time)
 {
 	int k=0, j, i;
 	double u,v,bright=0, y, x, d, a, r;
@@ -686,7 +693,7 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 		palette[i] = (red<<16 | green<<8 | blue);
 	}
 }
-void drawFire(int *image1, int *image2, uint palette[256], int max, int height, int width, uint timer)
+void drawFire(char *image1, char *image2, uint palette[256], int max, int height, int width, uint timer)
 {
 	int i, j;
 	uint average;
@@ -729,7 +736,7 @@ void drawFire(int *image1, int *image2, uint palette[256], int max, int height, 
 		loop--;
 	}
 }
-void drawLulz(int *image1, int *image2, uint palette[256], int max, int height, int width)
+void drawLulz(char *image1, char *image2, uint palette[256], int max, int height, int width)
 {
 	int i, j;
 	int average;
@@ -779,7 +786,7 @@ void drawPalette(int image[], int palette[], int max, int height, int width)
 	}
 }
 
-void drawPlasma(int *image1, int *image2, int palette[], int max, int height, int width, int timer)
+void drawPlasma(char *image1, char *image2, int palette[], int max, int height, int width, int timer)
 {
 	int i, j;
 	int loop = timer;

@@ -34,26 +34,23 @@ void open_ppm(int image[]/**<The array where the image will be saved.*/,
 			  char* file/**<The name of the image file.*/);
 
 ///Change the state of one pixel in the framebuffer.
-void drawPixel(Pixel pixel/**<The information about the pixel.*/,
-	 		   int *image/**<The array where the programm will place the pixel.*/,
-			   int width/**<The width of the screen.*/,
-			   long int max/**<The max index of the image array.*/);
+void drawPixel(Pixel pixel, char *image, int width, long int max);
 
 ///Change the state of one pixel in the framebuffer with the given index.
 void drawPixelIndex(int index/**<The index in the array we want to change*/,
 	 				int color/**<The color we want to use for the new pixel.*/,
 					long int max/**<The max index of the image array.*/,
-					int *image/**<The array where the programm will place the pixel.*/);
+					char *image/**<The array where the programm will place the pixel.*/);
 
 ///Fill the image array with the given color.
-void fillImage(int *image/**<The array where the programm will fill with the given color.*/,
+void fillImage(char *image/**<The array where the programm will fill with the given color.*/,
 			   int color/**<Color of the filling.*/,
 			   int width/**<The width of the screen.*/,
 			   int max/**<The max index of the image array.*/);
 
 ///Copy a image table into the framebuffer.
-void replaceImage(int *image1/**<The current image.*/,
-	 			  int *image2/**<The image we want to insert.*/,
+void replaceImage(char *image1/**<The current image.*/,
+	 			  char *image2/**<The image we want to insert.*/,
 				  long int max/**<The max index of the image array.*/);
 
 ///Shift all the pixel inside the framebuffer to black.
@@ -61,8 +58,8 @@ void fadeToBlack(int fbp[]/**<The current image.*/,
 	 			 long int maxi/**<The max index of the image array.*/);
 
 ///Concatenate image2 into image1 by choosing a x or y.
-void catImage(int *image1/**<The current image.*/,
-	 		  int *image2/**<The image we want to insert.*/,
+void catImage(char *image1/**<The current image.*/,
+	 		  char *image2/**<The image we want to insert.*/,
 			  int x/**<Set the limit of the separation of the two in the x axis (ignored if set to -1).*/,
 			  int y/**<Set the limit of the separation of the two in the y axis (ignored if set to -1).*/,
 			  int direction/**<Set the delimitation the if y = -1 go to the rigth if true and if the x=-1 go up if false.*/,
@@ -72,26 +69,26 @@ void catImage(int *image1/**<The current image.*/,
 ///Replace color1 with color2 on the entire framebuffer.
 void replaceColor(int color1/**<The color that will be replaced.*/,
 	 			  int color2/**<The color to put in found areas.*/,
-				  int *image/**<The current image.*/,
+				  char *image/**<The current image.*/,
 				  long int max/**<The max index of the image array.*/);
 
 ///Draw a line in the given image with Bresenham's algorithm.
 void drawLine(Pixel start/**<The first pixel of the line.*/,
 	 		  Pixel end/**<The last pixel of the line*/,
-			  int *image/**<The current image.*/,
+			  char *image/**<The current image.*/,
 			  int width/**<The height of the screen.*/,
 			  int max/**<The max index of the image array.*/);
 
 ///Draw a circle in the given image.
 void drawCircle(const Pixel center/**<The center pixel of the circle.*/,
 				int radius/**<The radius of the circle.*/,
-				int *image/**<The current image.*/,
+				char *image/**<The current image.*/,
 				long int height/**<The height of the screen.*/,
 				long int width/**<The width of the screen.*/,
 				long int maxi/**<The max index of the image array.*/);
 
 ///Draw a starfiel on the given image with the given color.
-void starField(int *image/**<The image where the starfield will be drawn.*/,
+void starField(char *image/**<The image where the starfield will be drawn.*/,
 			   int max/**<The max index of the image array.*/,
 			   int color/**<The color of the stars.*/,
 			   int prop/**<The chance of apparition of a star.*/);
@@ -100,13 +97,13 @@ void starField(int *image/**<The image where the starfield will be drawn.*/,
 void beamOfLight(Pixel start/**<The start pixel of the middle of the beam.*/,
 	 			 Pixel end/**<The end pixel of the middle of the beam.*/,
 				 int heightBeam/**<The size of the beam in height.*/,
-				 int *image/**<The image where the starfield will be drawn.*/,
+				 char *image/**<The image where the starfield will be drawn.*/,
 				 int width/**<The width of the screen.*/,
 				 int max/**<The max index of the image array.*/,
 				 int speed/**<The spee of appariton of the beam.*/);
 
 ///Move all the point of the given color to the edges of the screen.
-void movingToCorner(int *image/**<The current image.*/,
+void movingToCorner(char *image/**<The current image.*/,
 					int max/**<The max index of the image array.*/,
 					int color/**<The color that will be moved.*/,
 					int colorBG/**<The color of replacement when a piwel moves.*/,
@@ -114,7 +111,7 @@ void movingToCorner(int *image/**<The current image.*/,
 					int width/**<The width of the screen.*/);
 
 ///Move all the points ignoring the color.
-void movingAllToCorner(int *image/**<The current image.*/,
+void movingAllToCorner(char *image/**<The current image.*/,
 					   int max/**<The max index of the image array.*/,
 					   int colorBG/**<The color of replacement when a piwel moves.*/,
 					   int height/**<The height of the screen.*/,
@@ -139,8 +136,8 @@ int getToRightX(int val/**<The index value.*/,
 
 ///Genrate the image1 by transformating image2 with a transform matrix.
 void applyTransform(int transArray[]/**<The transform array.*/,
-					int *image1/**<The current image.*/,
-					int *image2/**<The source image.*/,
+					char *image1/**<The current image.*/,
+					char *image2/**<The source image.*/,
 					int width/**<The width of the images.*/,
 					int height/**<The height of the images.*/,
 					Pixel start/**<The start pixel of the transform.*/,
@@ -149,8 +146,8 @@ void applyTransform(int transArray[]/**<The transform array.*/,
 ///Apply a lens transform the image2 and put it in image1.
 void lens(int radius/**<The radius of the lens.*/,
 		  int magFact/**<The magnifying factor.*/,
-		  int *image1/**<The current image.*/,
-		  int *image2/**<The source image.*/,
+		  char *image1/**<The current image.*/,
+		  char *image2/**<The source image.*/,
 		  int max/**<The max index of the image array.*/,
 		  int width/**<The width of the screen.*/,
 		  int height/**<The height of the screen.*/,
@@ -158,8 +155,8 @@ void lens(int radius/**<The radius of the lens.*/,
 
 ///Applying a plane trasform with the given transformation array.
 void applyPlaneTransform (int mLUT[]/**<The transformation array.*/,
-	 					  int *image1/**<The current image.*/,
-	 					  int *image2/**<The source image.*/,
+	 					  char *image1/**<The current image.*/,
+	 					  char *image2/**<The source image.*/,
 						  int width/**<The width of the screen.*/,
 						  int height/**<The height of the screen.*/,
 	 					  int time/**<The duration of the effect.*/);
@@ -167,8 +164,8 @@ void applyPlaneTransform (int mLUT[]/**<The transformation array.*/,
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
 void planeTransform (int height/**<The height of the screen.*/,
 					 int width/**<The width of the screen.*/,
-					 int *image1/**<The displayed image.*/,
-					 int *image2/**<The source image.*/,
+					 char *image1/**<The displayed image.*/,
+					 char *image2/**<The source image.*/,
 					 int mode/**<The different type of plane transform can take nummber from 1 to 9.*/,
 					 int time/**<The duration of the effect.*/);
 
@@ -178,8 +175,8 @@ void initGradientPalette(uint palette[256]/**<The palette that will be created.*
 						 RGBTriplet endColor/**<The R G B color of end.*/);
 
 ///Fire effect loaded into image1.
-void drawFire(int *image1/**<The displayed image.*/,
-	 		  int *image2/**<A temp image.*/,
+void drawFire(char *image1/**<The displayed image.*/,
+	 		  char *image2/**<A temp image.*/,
 			  uint palette[256]/**<The palette for coloration of the pixels.*/,
 			  int max/**<The max index of the image array.*/,
 			  int height/**<The height of the screen.*/,
@@ -187,8 +184,8 @@ void drawFire(int *image1/**<The displayed image.*/,
 			  uint timer/**<The duration of the effect.*/);
 
 ///Unknow effect, use with caution, there is HUGE memory leak with this function.
-void drawLulz(int *image1/**<The displayed image.*/,
-	 		  int *image2/**<A temp image.*/,
+void drawLulz(char *image1/**<The displayed image.*/,
+	 		  char *image2/**<A temp image.*/,
 			  uint palette[256]/**<The palette for coloration of the pixels.*/,
 			  int max/**<The max index of the image array.*/,
 			  int height/**<The height of the screen.*/,
@@ -209,8 +206,8 @@ void drawPalette(int image[]/**<The displayed image.*/,
 				 int width/**<The width of the screen.*/);
 
 ///Plasma effect loaded into image1.
-void drawPlasma(int *image1/**<The temp image.*/,
-	 			int *image2/**<The displayed image.*/,
+void drawPlasma(char *image1/**<The temp image.*/,
+	 			char *image2/**<The displayed image.*/,
 	 			int palette[]/**<The palette for coloration.*/,
 	 			int max/**<The max index of the image array.*/,
 	 			int height/**<The height of the screen.*/,
