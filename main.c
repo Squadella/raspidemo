@@ -28,8 +28,8 @@ void draw() {
 		pixel1.y = 0;
 		pixel2.x = 320;
 		pixel2.y = 240;
-		pixel1.color = 8;
-		pixel2.color = 8;
+		pixel1.color = 1;
+		pixel2.color = 1;
 
 
     // fill the screen with blue
