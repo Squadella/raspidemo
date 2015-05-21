@@ -65,6 +65,8 @@ int main()
 	height=vinfo.yres;
 	vinfo.bits_per_pixel=32;
 	bufferSize=finfo.smem_len;
+	vinfo.xres_virtual = vinfo.xres;
+    vinfo.yres_virtual = vinfo.yres;
 
 
 	// map framebuffer to user memory
