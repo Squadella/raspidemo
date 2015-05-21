@@ -63,8 +63,8 @@ int main()
 	vinfo.xres/=4;
 	height=vinfo.yres;
 	width=vinfo.xres;
-	bufferSize=finfo.smem_len;
 	vinfo.bits_per_pixel=32;
+	bufferSize=finfo.smem_len;
 
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
