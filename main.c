@@ -61,7 +61,7 @@ int main()
 	*/
 	vinfo.yres/=4;
 	vinfo.xres/=4;
-	width=finfo.line_length;
+	width=finfo.line_length/8;
 	printf("%d\n", width);
 	height=vinfo.yres;
 	printf("%d\n", height);
