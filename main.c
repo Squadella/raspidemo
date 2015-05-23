@@ -31,11 +31,7 @@ void draw() {
 		pixel1.color = 1;
 		pixel2.color = 1;
 
-
-    // fill the screen with blue
-    //memset(fbp, 1, vinfo.xres * vinfo.yres);
-
-		drawLine(pixel1, pixel2, fbp, vinfo.xres, vinfo.xres * vinfo.yres);
+        fillImage(fbp, colorRGB(255,255,255), vinfo.xres, vinfo.xres*vinfo.yres);
 
 }
 
