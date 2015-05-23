@@ -67,11 +67,11 @@ int main(int argc, char* argv[])
     memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
 
     // Change variable info - force 8 bit and resolution
-    /*vinfo.bits_per_pixel = 24;
+    vinfo.bits_per_pixel = 24;
     vinfo.xres = 160;
     vinfo.yres = 120;
     vinfo.xres_virtual = vinfo.xres;
-    vinfo.yres_virtual = vinfo.yres;*/
+    vinfo.yres_virtual = vinfo.yres;
     if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
         printf("Error setting variable information.\n");
     }

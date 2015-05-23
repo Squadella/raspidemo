@@ -516,6 +516,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 	finalval=(ytemp*(width))+val+offset;
 	return finalval;
 }
+
 void applyTransform(int transArray[], char *image1, char *image2, int width, int height, Pixel start, int lenght)
 {
 	int x, y, offset, val;
@@ -528,7 +529,6 @@ void applyTransform(int transArray[], char *image1, char *image2, int width, int
 			val=getToRightX(val, lenght, width, offset);
 			image1[offset+((y*width)+x)]=image2[val];
 		}
-		printf("\n");
 	}
 }
 
