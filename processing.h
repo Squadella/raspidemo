@@ -208,7 +208,7 @@ void drawPalette(int image[]/**<The displayed image.*/,
 ///Plasma effect loaded into image1.
 void drawPlasma(char *image1/**<The temp image.*/,
 	 			char *image2/**<The displayed image.*/,
-	 			int palette[]/**<The palette for coloration.*/,
+	 			char palette[]/**<The palette for coloration.*/,
 	 			int max/**<The max index of the image array.*/,
 	 			int height/**<The height of the screen.*/,
 	 			int width/**<The width of the screen.*/,
