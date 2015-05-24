@@ -46,7 +46,7 @@ void draw() {
     drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
 
     open_ppm(palette, "toast2.ppm");
-    drawPlasma(fbp2, fpb, palette, max, vinfo.yres, vinfo.xres, 1000);
+    drawPlasma(fbp2, fbp, palette, max, vinfo.yres, vinfo.xres, 1000);
 
     sleep(5);
 
