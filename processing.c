@@ -782,7 +782,7 @@ void savePalette(int image[], int palette[], int max, int height, int width)
 }
 
 
-void drawPalette(int image[], int palette[], int max, int height, int width)
+void drawPalette(char image[], char palette[], int max, int height, int width)
 {
 	int i, j;
 	int height3=height*3;
@@ -791,7 +791,7 @@ void drawPalette(int image[], int palette[], int max, int height, int width)
 	{
 		for(j=0; j<width3; j++)
 		{
-			image[i*width+j]=palette[(i*width+j)%256];
+			image[i*width+j]=palette[(i*width+j)%(256*3)];
 		}
 	}
 }
