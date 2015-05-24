@@ -334,12 +334,12 @@ void starField(char *image, int max, int color, int prop)
 {
 	int i;
 	int reduction=0;
-	for (i=0; i<max ;i++)
+	for (i=0; i<max ;i+=3)
 	{
 		if(!(rand()%prop))
 		{
 			reduction=(rand()%128)+50;
-			*(image+i)=color-colorRGB(reduction, reduction, reduction);
+			drawPixelIndex(i, color-colorRGB(reduction, reduction, reduction), max, image);
 		}
 	}
 }
