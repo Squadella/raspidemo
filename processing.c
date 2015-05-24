@@ -88,7 +88,7 @@ void open_ppm(int image[], char* file)
 
 void drawPixel(Pixel pixel, char *image, int width, long int max)
 {
-	int index=(pixel.y) * width + (pixel.x) * 3;
+	int index=(pixel.y) * width + (pixel.x);
 	if (index>=max || index<0)
 	{
 		return;
@@ -267,7 +267,7 @@ void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 	int e2=0;
 	while(1)
 	{
-		drawPixel(start, image, width, max);
+		drawPixel(start, image, width, max*3);
 		if((start.x)==(end.x) && (start.y)==(end.y))
 		break;
 		e2=2*err;

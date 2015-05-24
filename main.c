@@ -32,8 +32,8 @@ void draw() {
 	pixel1.color = colorRGB(255,0,0);
 	pixel2.color = 1;
 
-    fillImage(image, 0, vinfo.xres, max)
-    drawLine(pixel1, pixel2, fbp, vinfo.xres, max)
+    fillImage(fbp, 0, vinfo.xres, max);
+    drawLine(pixel1, pixel2, fbp, vinfo.xres, max/3);
     sleep(5);
 
 }
