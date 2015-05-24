@@ -807,14 +807,14 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 		{
 			for (j = 0; j < height3; j++)
 			{
-				image1[j * width + i] = abs((int)(64 +(loop + 63 * cos( i/(31*(j+1)) )*cos(j*i+42)))% (256*3));
+				image1[j * width3 + i] = abs((int)(64 +(loop + 63 * cos( i/(31*(j+1)) )*cos(j*i+42)))% (256*3));
 			}
 		}
 		for (i = 0 ; i < width3; i++)
 		{
 			for (j = 0; j < height3; j++)
 			{
-				image2[j * width + i] = palette[image1[j * width + i]];
+				image2[j * width3 + i] = palette[image1[j * width3 + i]];
 			}
 		}
 		loop--;
