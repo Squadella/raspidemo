@@ -48,7 +48,7 @@ void draw() {
     open_ppm(palette, "toast2.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);
-    drawPlasma(fbp2, fbp, palette, max, vinfo.yres, vinfo.xres, 1000);
+    drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 1000);
 
     sleep(5);
 
