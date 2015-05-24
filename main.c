@@ -25,6 +25,8 @@ void draw() {
     int x, y, max, i;
 	Pixel pixel1, pixel2;
     max=vinfo.xres*vinfo.yres*3;
+    char *fbp2 = malloc(sizeof(char)*max);
+    char *palette = malloc(sizeof(char)*256*3);
 	pixel1.x = 0;
 	pixel1.y = 0;
 	pixel2.x = vinfo.xres;
@@ -36,12 +38,16 @@ void draw() {
     drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
     starField(fbp, max, colorRGB(255,255,255), 100);
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
-    movingAllToCorner(fbp), max, 0, vinfo.yres, vinfo.xres);
+    movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
 
     drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
+
+    open_ppm(palette, "toast2.ppm");
+    drawPlasma(fbp2, fpb, palette, max, vinfo.yres, vinfo.xres, 1000);
+
     sleep(5);
 
 }

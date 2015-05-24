@@ -30,7 +30,7 @@ void invertRGB(int color/**<The color given by a pixel.*/,
 			   int *blue/**<The resulting blue color after shiting the int.*/);
 
 ///Function for loading a .ppm file inside the framebuffer.
-void open_ppm(int image[]/**<The array where the image will be saved.*/,
+void open_ppm(char image[]/**<The array where the image will be saved.*/,
 			  char* file/**<The name of the image file.*/);
 
 ///Change the state of one pixel in the framebuffer.

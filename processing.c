@@ -17,7 +17,7 @@ void invertRGB(int color, int *red, int *green, int *blue)
 }
 
 //Open a ppm file and print it in the window
-void open_ppm(int image[], char* file)
+void open_ppm(char image[], char* file)
 {
 	// initialising the file
 	FILE *img;
@@ -59,7 +59,7 @@ void open_ppm(int image[], char* file)
 	}
 	size=width*height;
 	//writing the table with the new values
-	for (i=0;i<size; i++)
+	for (i=0;i<size; i+=3)
 	{
 		if(fscanf(img, "%u", &green)!=1)
 		{
@@ -79,7 +79,9 @@ void open_ppm(int image[], char* file)
 			fclose(img);
 			return;
 		}
-		image[i]=colorRGB(red,blue,green);
+		*((char*)(image + i)) = blue;
+		*((char*)(image + i + 1)) = green;
+		*((char*)(image + i + 2)) = red;
 	}
 	fclose(img);
 }
@@ -792,7 +794,7 @@ void drawPalette(int image[], int palette[], int max, int height, int width)
 	}
 }
 
-void drawPlasma(char *image1, char *image2, int palette[], int max, int height, int width, int timer)
+void drawPlasma(char *image1, char *image2, char palette[], int max, int height, int width, int timer)
 {
 	int i, j;
 	int loop = timer;
