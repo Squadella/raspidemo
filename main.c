@@ -27,8 +27,8 @@ void draw() {
     max=vinfo.xres*vinfo.yres*3;
 	pixel1.x = 0;
 	pixel1.y = 0;
-	pixel2.x = 159;
-	pixel2.y = 119;
+	pixel2.x = vinfo.xres;
+	pixel2.y = vinfo.yres;
 	pixel1.color = colorRGB(255,0,0);
 	pixel2.color = 1;
 

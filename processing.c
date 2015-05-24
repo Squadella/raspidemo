@@ -88,7 +88,7 @@ void open_ppm(int image[], char* file)
 
 void drawPixel(Pixel pixel, char *image, int width, long int max)
 {
-	int index=(pixel.y) * width + (pixel.x);
+	int index=((pixel.y) * width + (pixel.x))*3;
 	if (index>=max || index<0)
 	{
 		return;
