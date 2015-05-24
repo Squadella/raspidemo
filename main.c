@@ -22,16 +22,21 @@ struct fb_fix_screeninfo finfo;
 // the main function when just want to change what to draw...
 void draw() {
 
-    int x, y;
-		Pixel pixel1, pixel2;
-		pixel1.x = 0;
-		pixel1.y = 0;
-		pixel2.x = 320;
-		pixel2.y = 240;
-		pixel1.color = 1;
-		pixel2.color = 1;
+    int x, y, max, i;
+	Pixel pixel1, pixel2;
+    max=vinfo.xres*vinfo.yres*3;
+	pixel1.x = 0;
+	pixel1.y = 0;
+	pixel2.x = 320;
+	pixel2.y = 240;
+	pixel1.color = 1;
+	pixel2.color = 1;
 
-        fillImage(fbp, colorRGB(255,255,255), vinfo.xres, vinfo.xres*vinfo.yres);
+    for (i = 0; i < colorRGB(255,255,255); i++)
+    {
+        fillImage(fbp, i, vinfo.xres, max);
+        sleep(1);
+    }
 
 }
 

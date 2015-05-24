@@ -104,7 +104,7 @@ void drawPixel(Pixel pixel, char *image, int width, long int max)
 
 void drawPixelIndex(int index, int color, long int max, char *image)
 {
-	if(index>=max*3)
+	if(index>=max)
 	{
 		return;
 	}
@@ -114,7 +114,7 @@ void drawPixelIndex(int index, int color, long int max, char *image)
 void fillImage(char *image, int color, int width, int max)
 {
 	int i;
-	for(i=0; i<max*3; i++)
+	for(i=0; i<max; i++)
 	{
 		drawPixelIndex(i, color, max, image);
 	}
