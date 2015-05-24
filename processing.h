@@ -199,8 +199,8 @@ void savePalette(int image[]/**<The displayed image.*/,
 				 int width/**<The width of the screen.*/);
 
 ///Put the palette multiple time in image.
-void drawPalette(int image[]/**<The displayed image.*/,
-	 			 int palette[]/**<The palette that will be displayed multiple times.*/,
+void drawPalette(char image[]/**<The displayed image.*/,
+	 			 char palette[]/**<The palette that will be displayed multiple times.*/,
 	 			 int max/**<The max index of the image array.*/,
 				 int height/**<The height of the screen.*/,
 				 int width/**<The width of the screen.*/);
