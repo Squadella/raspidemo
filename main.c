@@ -33,7 +33,12 @@ void draw() {
 	pixel2.color = 1;
 
     fillImage(fbp, 0, vinfo.xres, max);
-    drawLine(pixel1, pixel2, fbp, vinfo.xres, max/3);
+    drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
+
+    pixel1.x=vinfo.xres/2;
+    pixel1.y=vinfo.yres/2;
+
+    drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
     sleep(5);
 
 }

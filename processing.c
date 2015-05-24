@@ -267,7 +267,7 @@ void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 	int e2=0;
 	while(1)
 	{
-		drawPixel(start, image, width, max*3);
+		drawPixel(start, image, width, max);
 		if((start.x)==(end.x) && (start.y)==(end.y))
 		break;
 		e2=2*err;
@@ -281,7 +281,6 @@ void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 			err=err+dx;
 			(start.y)=(start.y)+sy;
 		}
-		sleep(1);
 	}
 }
 
