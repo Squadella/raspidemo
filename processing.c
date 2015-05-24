@@ -281,6 +281,7 @@ void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 			err=err+dx;
 			(start.y)=(start.y)+sy;
 		}
+		sleep(1);
 	}
 }
 
