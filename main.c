@@ -27,16 +27,14 @@ void draw() {
     max=vinfo.xres*vinfo.yres*3;
 	pixel1.x = 0;
 	pixel1.y = 0;
-	pixel2.x = 320;
-	pixel2.y = 240;
-	pixel1.color = 1;
+	pixel2.x = 159;
+	pixel2.y = 119;
+	pixel1.color = colorRGB(255,0,0);
 	pixel2.color = 1;
 
-    for (i = 0; i < colorRGB(255,255,255); i++)
-    {
-        fillImage(fbp, i, vinfo.xres, max);
-        sleep(1);
-    }
+    fillImage(image, 0, vinfo.xres, max)
+    drawLine(pixel1, pixel2, fbp, vinfo.xres, max)
+    sleep(5);
 
 }
 
