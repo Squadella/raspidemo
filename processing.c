@@ -110,7 +110,7 @@ void drawPixelIndex(int index, int color, long int max, char *image)
 	}
 	int r, g, b;
 
-	invertRGB(pixel.color, &r, &g, &b);
+	invertRGB(color, &r, &g, &b);
 
 	*((char*)(image + index)) = b;
 	*((char*)(image + index + 1)) = g;
