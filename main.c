@@ -35,7 +35,7 @@ void draw() {
     fillImage(fbp, 0, vinfo.xres, max);
     drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
     starField(fbp, max, colorRGB(255,255,255), 100);
-    beamOfLight((pixel1, pixel2, 10, fbp, vinfo.yres, vinfo.xres, max, 1);
+    beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
 
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
