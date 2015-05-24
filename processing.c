@@ -108,7 +108,13 @@ void drawPixelIndex(int index, int color, long int max, char *image)
 	{
 		return;
 	}
-	*(image+index)=color;
+	int r, g, b;
+
+	invertRGB(pixel.color, &r, &g, &b);
+
+	*((char*)(image + index)) = b;
+	*((char*)(image + index + 1)) = g;
+	*((char*)(image + index + 2)) = r;
 }
 
 void fillImage(char *image, int color, int width, int max)
