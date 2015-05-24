@@ -47,6 +47,10 @@ void draw() {
 
     open_ppm(palette, "toast2.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
+    for (i = 0; i < (256*3); i++)
+    {
+        printf("%d\n", palette[i]);
+    }
     sleep(2);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 1000);
 
