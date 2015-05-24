@@ -798,19 +798,21 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 {
 	int i, j;
 	int loop = timer;
+	height3=height*3;
+	width3=width*3;
 	fillImage(image1, 0, width, max);
 	while(loop)
 	{
-		for (i = 0 ; i < width*3; i++)
+		for (i = 0 ; i < width3; i++)
 		{
-			for (j = 0; j < height; j++)
+			for (j = 0; j < height3; j++)
 			{
 				image1[j * width + i] = abs((int)(64 +(loop + 63 * sin( cos( i/(31*(j+1)) ))*cos(j*i+42)))% 256);
 			}
 		}
-		for (i = 0 ; i < width*3; i++)
+		for (i = 0 ; i < width3; i++)
 		{
-			for (j = 0; j < height; j++)
+			for (j = 0; j < height3; j++)
 			{
 				image2[j * width + i] = palette[image1[j * width + i]];
 			}
