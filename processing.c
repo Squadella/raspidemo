@@ -120,7 +120,7 @@ void drawPixelIndex(int index, int color, long int max, char *image)
 void fillImage(char *image, int color, int width, int max)
 {
 	int i;
-	for(i=0; i<max; i++)
+	for(i=0; i<max; i+=3)
 	{
 		drawPixelIndex(i, color, max, image);
 	}
