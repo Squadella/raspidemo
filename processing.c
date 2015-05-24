@@ -59,7 +59,7 @@ void open_ppm(char image[], char* file)
 	}
 	size=width*height*3;
 	//writing the table with the new values
-	for (i=0;i<size; i+=3)
+	for (i=0;i<size; i++)
 	{
 		if(fscanf(img, "%c", &green)!=1)
 		{
@@ -67,21 +67,8 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		if(fscanf(img, "%c", &red)!=1)
-		{
-			printf("Reading green error at index %u!\n",i);
-			fclose(img);
-			return;
-		}
-		if(fscanf(img, "%c", &blue)!=1)
-		{
-			printf("Reading blue error at index %u!\n", i);
-			fclose(img);
-			return;
-		}
-		*((char*)(image + i)) = blue;
-		*((char*)(image + i + 1)) = green;
-		*((char*)(image + i + 2)) = red;
+		image[i] = green;
+
 	}
 	fclose(img);
 }
