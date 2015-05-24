@@ -798,8 +798,8 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 {
 	int i, j;
 	int loop = timer;
-	height3=height*3;
-	width3=width*3;
+	int height3=height*3;
+	int width3=width*3;
 	fillImage(image1, 0, width, max);
 	while(loop)
 	{
