@@ -36,6 +36,7 @@ void draw() {
     drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
     starField(fbp, max, colorRGB(255,255,255), 100);
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
+    movingAllToCorner(fbp), max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
