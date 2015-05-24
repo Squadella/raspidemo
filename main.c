@@ -46,6 +46,8 @@ void draw() {
     drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
 
     open_ppm(palette, "toast2.ppm");
+    drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
+    sleep(2);
     drawPlasma(fbp2, fbp, palette, max, vinfo.yres, vinfo.xres, 1000);
 
     sleep(5);
@@ -73,8 +75,7 @@ int main(int argc, char* argv[])
     if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
         printf("Error reading variable information.\n");
     }
-    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres,
-       vinfo.bits_per_pixel );
+    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
 
     // Store for reset (copy vinfo to vinfo_orig)
     memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
