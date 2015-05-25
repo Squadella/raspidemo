@@ -67,7 +67,8 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		image[i] = (char)green;
+		sprintf(image[i], "%d", green);
+		//image[i] = (char)green;
 
 	}
 	fclose(img);
