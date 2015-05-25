@@ -214,6 +214,6 @@ void drawPlasma(char *image1/**<The temp image.*/,
 	 			int width/**<The width of the screen.*/,
 	 			int timer/**<The duration of the effect.*/);
 
-void randRectangle(Pixel pixel1, Pixel pixel2, Pixel pixel3, Pixel pixel4, char *fbp, int width, int max);
+void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, char *fbp, int width, int max);
 
 #endif
