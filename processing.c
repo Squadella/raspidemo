@@ -589,7 +589,7 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
 	for (timeShift= 0; timeShift<time; timeShift++)
 	{
-		for (pixelcount=0; pixelcount<(width*height); pixelcount+=3)
+		for (pixelcount=0; pixelcount<(width*height*3); pixelcount+=3)
 		{
 			offset=(pixelcount << 1)+pixelcount;
 			u=mLUT[offset]+timeShift;
