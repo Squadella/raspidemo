@@ -819,10 +819,10 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	drawLine(*pixel2, *pixel3, fbp, width, max);
 	drawLine(*pixel3, *pixel4, fbp, width, max);
 	drawLine(*pixel4, *pixel1, fbp, width, max);
-	color1=pixel1.color;
-	color2=pixel2.color;
-	color3=pixel3.color;
-	color4=pixel4.color;
+	color1=pixel1->color;
+	color2=pixel2->color;
+	color3=pixel3->color;
+	color4=pixel4->color;
 	pixel1->color=0;
 	pixel2->color=0;
 	pixel3->color=0;
