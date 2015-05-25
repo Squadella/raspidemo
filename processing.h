@@ -118,8 +118,8 @@ void movingAllToCorner(char *image/**<The current image.*/,
 					   int width/**<The width of the screen.*/);
 
 ///Make image2 appear in square in the middle of the screen.
-void squareOpening(int image[]/**<The current image.*/,
-				   int image2[]/**<The image we want to print.*/,
+void squareOpening(char imagege[]/**<The current image.*/,
+				   char imagege2[]/**<The image we want to print.*/,
 				   int max/**<The max index of the image array.*/,
 				   int width/**<The width of the screen.*/,
 				   int height/**<The height of the screen.*/,
@@ -192,7 +192,7 @@ void drawLulz(char *image1/**<The displayed image.*/,
 			  int width/**<The width of the screen.*/);
 
 ///Save all the data of a palette in a file.
-void savePalette(int image[]/**<The displayed image.*/,
+void savePalette(char image[]/**<The displayed image.*/,
 	 			 int palette[]/**<The palette that will be saved.*/,
 	 			 int max/**<The max index of the image array.*/,
 				 int height/**<The height of the screen.*/,

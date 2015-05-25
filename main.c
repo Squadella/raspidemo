@@ -134,8 +134,6 @@ void draw() {
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 1000);
 
-    drawFire(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
-
     sleep(5);
 
 }
@@ -196,7 +194,6 @@ int main(int argc, char* argv[])
     else {
         // draw...
         draw();
-        sleep(5);
     }
 
     // cleanup
@@ -209,6 +206,68 @@ int main(int argc, char* argv[])
     // close fb file
     close(fbfd);
 
-    return 0;
+    //Reopening the framebuffer with other settings
+    //Initialisation of all the variables
+	long int lineSize, bufferSize, heightSize, maxi, height, width;
+	int fbfd=0;
+	srand(time(NULL));
 
+	//Opening framebuffer
+	fbfd=open("/dev/fb0", O_RDWR);
+	if (!fbfd)
+	{
+		printf("Error: cannot open framebuffer device.\n");
+		printf("Try to run the executable file with root privileges.\n");
+		return(-1);
+	}
+
+	//Get fixed sreen information
+	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo))
+	{
+		printf("Error reading fixed information of the screen.\n");
+		return(-1);
+    }
+
+    // Get variable screen information
+	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo))
+	{
+		printf("Error reading variable information.\n");
+		return(-1);
+	}
+
+	//Calculate the size of the framebuffer
+	int depth=vinfo.bits_per_pixel;
+	lineSize=vinfo.xres*depth;
+	heightSize=vinfo.yres*depth;
+	bufferSize=lineSize*vinfo.yres/8;
+	maxi=bufferSize/4;
+	height=vinfo.yres;
+	width=vinfo.xres;
+
+	// map framebuffer to user memory
+	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+	int *fbp2=malloc(bufferSize * sizeof(int));
+	int *palette = malloc(sizeof(int)*256);
+	open_ppm(palette, "fire2.ppm");
+	if ((int)fbp == -1)
+	{
+		printf("Failed to mmap the framebuffer.\n");
+
+		return(-1);
+	}
+
+    // cleanup
+    // unmap fb file from memory
+    munmap(fbp, screensize);
+    // reset the display mode
+    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &orig_vinfo)) {
+        printf("Error re-setting variable information.\n");
+    }
+
+    planeTransform (height, width, fbp, fbp2, 3);
+
+    // close fb file
+    close(fbfd);
+
+    return 0;
 }
