@@ -115,12 +115,20 @@ void draw() {
         usleep(1000);
     }
     replaceImage(fbp2, fbp, max);
+    pixel1.y=0;
+    pixel2.y=vinfo.yres;
+    for(i=0; i<vinfo.xres; i+=3)
+    {
+        pixel1.x+=3;
+        pixel2.x=pixel1.x;
+        drawLine(pixel1, pixel2, fbp2, vinfo.x, max);
+    }
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
     sleep(2);
-    lens(10, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
+    lens(100, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
     fadeToBlack(fbp, max);
     sleep(2);
