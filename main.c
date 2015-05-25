@@ -104,13 +104,14 @@ void draw() {
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
     sleep(1);
+    pixel1.color = colorRGB(34,139,34);
     random=rand()%1000+1000;
     for(i=0; i<random; i++)
     {
-        pixel.x=rand()%320;
-        pixel.y=rand()%240;
+        pixel1.x=rand()%320;
+        pixel1.y=rand()%240;
         drawCircle(pixel1, rand()%120, fbp, vinfo.yres, vinfo.xres, max);
-        pixel.color=rand()%color(255,255,255);
+        pixel1.color=rand()%color(255,255,255);
     }
     sleep(1);
 
