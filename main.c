@@ -36,14 +36,20 @@ void draw() {
 
     fillImage(fbp, 0, vinfo.xres, max);
     drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
+    sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 100);
+    sleep(1);
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
+    sleep(1);
     movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
-
+    sleep(1);
     drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
+    sleep(1);
+
+    open_ppm(fbp, "loup2.ppm");
 
     open_ppm(palette, "toast.ppm");
     for (i = 0; i < (256*3); i++)
