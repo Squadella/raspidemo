@@ -53,8 +53,6 @@ void draw() {
     sleep(2);
     lens(10, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000)
-    sleep(2);
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);

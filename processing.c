@@ -591,17 +591,16 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 	width3=width*3;
 	for (timeShift= 0; timeShift<time; timeShift++)
 	{
-		for (pixelcount=0; pixelcount<(width*height); pixelcount+=3)
+		for (pixelcount=0; pixelcount<(width*height); pixelcount++)
 		{
 			offset=(pixelcount << 1)+pixelcount;
 			u=mLUT[offset]+timeShift;
 			v=mLUT[offset+1]+timeShift;
 			adjustBright=mLUT[offset+2];
-			b=image2[(width*(v & (height-1)))+(u & (width-1))];
-			g=image2[(width*(v & (height-1)))+(u & (width-1))+1];
-			r=image2[(width*(v & (height-1)))+(u & (width-1))+2];
+			color=image2[(width*(v & (height-1)))+(u & (width-1))];
 			if (adjustBright!=0)
 			{
+				invertRGB(color, &r, &g, &b);
 				r+=adjustBright;
 				if (r<0)
 				r=0;
@@ -617,10 +616,9 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 				b=0;
 				if (b>255)
 				b=255;
+				color=colorRGB(r,g,b);
 			}
-			image1[pixelcount]=b;
-			image1[pixelcount+1]=g;
-			image1[pixelcount+2]=r;
+			image1[pixelcount]=color;
 		}
 	}
 }
