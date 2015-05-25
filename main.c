@@ -121,7 +121,7 @@ void draw() {
     {
         pixel1.x+=3;
         pixel2.x=pixel1.x;
-        drawLine(pixel1, pixel2, fbp2, vinfo.x, max);
+        drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
     }
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     sleep(1);
