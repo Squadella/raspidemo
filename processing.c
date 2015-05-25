@@ -525,7 +525,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 		val=val-lenght;
 		ytemp++;
 	}
-	finalval=(((ytemp*(width))+val)*3)+offset;
+	finalval=(((ytemp*(width)))*3)+offset+val;
 	return finalval;
 }
 
