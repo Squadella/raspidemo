@@ -130,6 +130,8 @@ void draw() {
 
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
+    drawPalette(fbp2, palette, max, vinfo.yres, vinfo.xres);
+    squareOpening(fbp, fbp2, max, vinfo.xres, vinfo.yres, 0, 0, 0, 0);
     sleep(2);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 1000);
@@ -263,8 +265,6 @@ int main(int argc, char* argv[])
     if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &orig_vinfo)) {
         printf("Error re-setting variable information.\n");
     }
-
-    planeTransform (height, width, fbp, fbp2, 3);
 
     // close fb file
     close(fbfd);
