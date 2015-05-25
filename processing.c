@@ -823,5 +823,5 @@ void randRectangle(Pixel pixel1, Pixel pixel2, Pixel pixel3, Pixel pixel4, char 
 	rand()%2 ? pixel3.x++ : pixel3.x--;
 	rand()%2 ? pixel4.x++ : pixel4.x--;
 	usleep(1000);
-	fillImage(fbp, 0, vinfo.xres, max);
+	fillImage(fbp, 0, width, max);
 }
