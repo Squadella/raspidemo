@@ -114,6 +114,7 @@ void draw() {
         pixel1.color=rand()%colorRGB(255,255,255);
         usleep(1000);
     }
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
@@ -125,7 +126,6 @@ void draw() {
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 500);
     sleep(2);
