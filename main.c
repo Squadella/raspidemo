@@ -143,7 +143,7 @@ void draw() {
 // application entry point
 int main(int argc, char* argv[])
 {
-
+    srand(time(NULL));
     int fbfd = 0;
     struct fb_var_screeninfo orig_vinfo;
     long int screensize = 0;
@@ -209,10 +209,8 @@ int main(int argc, char* argv[])
     close(fbfd);
 
     //Reopening the framebuffer with other settings
-    //Initialisation of all the variables
-	long int lineSize, bufferSize, heightSize, maxi, height, width;
-	int fbfd=0;
-	srand(time(NULL));
+    //Initialisation of all the variable
+
 
 	//Opening framebuffer
 	fbfd=open("/dev/fb0", O_RDWR);
