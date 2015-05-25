@@ -485,7 +485,7 @@ void movingAllToCorner(char *image, int max, int colorBG, int height, int width)
 				drawPixel(pixel, image, width, max);
 			}
 		}
-		usleep(1000);
+		usleep(8000);
 	}
 	//Going to the middle from the bottom
 	for (heightTemp=height; heightTemp>height/2; heightTemp--)

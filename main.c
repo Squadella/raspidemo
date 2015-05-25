@@ -22,20 +22,71 @@ struct fb_fix_screeninfo finfo;
 // the main function when just want to change what to draw...
 void draw() {
 
-    int x, y, max, i;
-	Pixel pixel1, pixel2;
+    int x, y, max, i, lenghtRectangle, heightRectangle, random;
+	Pixel pixel1, pixel2, pixel3, pixel4;
     max=vinfo.xres*vinfo.yres*3;
     char *fbp2 = malloc(max*sizeof(char));
     char *palette = malloc((256*3)*sizeof(char));
-	pixel1.x = 0;
-	pixel1.y = 0;
-	pixel2.x = vinfo.xres;
-	pixel2.y = vinfo.yres;
-	pixel1.color = colorRGB(255,0,0);
-	pixel2.color = 1;
+    lenghtRectangle=(rand()%128)+32;
+    heightRectangle=(rand()%216)+24;
+
+	pixel1.x = rand()%160;
+	pixel1.y = rand()%120;
+	pixel2.x = pixel1.x+lenghtRectangle;
+	pixel2.y = pixel1.y;
+    pixel3.x = pixel2.x;
+    pixel3.y = pixel2.y+heightRectangle;
+    pixel4.x = pixel1.x;
+    pixel4.y = pixel1.y+heightRectangle;
+
+	pixel1.color = colorRGB(34,139,34);
+	pixel2.color = colorRGB(34,139,34);
+    pixel3.color = colorRGB(34,139,34);
+    pixel4.color = colorRGB(34,139,34);
 
     fillImage(fbp, 0, vinfo.xres, max);
-    drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
+    random=rand()%1000+500;
+    for(i=0; i<random; i++)
+    {
+
+        drawLine(pixel1, pixel2, fbp, vinfo.xres, max);
+        drawLine(pixel2, pixel3, fbp, vinfo.xres, max);
+        drawLine(pixel3, pixel4, fbp, vinfo.xres, max);
+        drawLine(pixel4, pixel1, fbp, vinfo.xres, max);
+        if(rand()%2)
+        {
+            pixel1.x++;
+        }
+        else
+        {
+            pixel1.x--;
+        }
+        if(rand()%2)
+        {
+            pixel2.x++;
+        }
+        else
+        {
+            pixel2.x++;
+        }
+        if (rand()%2)
+        {
+            pixel.y++;
+        }
+        else
+        {
+            pixel.y--;
+        }
+        if (rand()%2)
+        {
+            pixel2.y++;
+        }
+        else
+        {
+            pixel2.y--;
+        }
+        usleep(1000);
+    }
     sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 100);
     sleep(1);
@@ -56,13 +107,9 @@ void draw() {
     sleep(2);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
-
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
-
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 1000);
-
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 1000);
-
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 1000);
     sleep(2);
 
