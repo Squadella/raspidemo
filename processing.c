@@ -826,5 +826,5 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	rand()%2 ? pixel2->y++ : pixel2->y--;
 	rand()%2 ? pixel3->y++ : pixel3->y--;
 	rand()%2 ? pixel4->y++ : pixel4->y--;
-	usleep(2000);
+	usleep(1000);
 }
