@@ -25,8 +25,8 @@ void draw() {
     int x, y, max, i;
 	Pixel pixel1, pixel2;
     max=vinfo.xres*vinfo.yres*3;
-    char *fbp2 = malloc(sizeof(char)*max);
-    char *palette = malloc(sizeof(char)*256*3);
+    char *fbp2 = malloc(sizeof(char*max));
+    char *palette = malloc(sizeof(char*256*3));
 	pixel1.x = 0;
 	pixel1.y = 0;
 	pixel2.x = vinfo.xres;
