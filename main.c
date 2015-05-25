@@ -116,6 +116,8 @@ void draw() {
     }
     replaceImage(fbp2, fbp, max);
     pixel1.y=0;
+    pixel1.x=0;
+    pixel2.x=0;
     pixel2.y=vinfo.yres;
     for(i=0; i<vinfo.xres; i+=3)
     {
