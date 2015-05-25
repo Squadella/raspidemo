@@ -846,7 +846,7 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	rand()%2 ? pixel4->y++ : pixel4->y--;
 }
 
-void squareOpening(char imagege[], char imagege2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2)
+void squareOpening(char image[], char image2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2)
 {
 	int i, j;
 	if(((*widthTemp)*height)+(*heightTemp)>=0 && ((*widthTemp)*height)+(heightTemp)<max && heightTemp>=0 && heightTemp<height)
