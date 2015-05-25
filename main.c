@@ -50,13 +50,13 @@ void draw() {
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
-
+/*
     open_ppm(palette, "toast.ppm");
     for (i = 0; i < (256*3); i++)
     {
         printf("%d\n", palette[i]);
         fflush(stdout);
-    }
+    }*/
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 1000);
