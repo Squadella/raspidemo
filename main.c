@@ -142,6 +142,8 @@ void draw() {
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
+    pixel1.x=vinfo.xres/2;
+    pixel1.y=vinfo.yres/2;
     sleep(2);
     lens(100, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
