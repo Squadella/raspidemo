@@ -827,7 +827,7 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	pixel2->color=0;
 	pixel3->color=0;
 	pixel4->color=0;
-	usleep(13000);
+	usleep(3000);
 	drawLine(*pixel1, *pixel2, fbp, width, max);
 	drawLine(*pixel2, *pixel3, fbp, width, max);
 	drawLine(*pixel3, *pixel4, fbp, width, max);
