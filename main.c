@@ -53,38 +53,10 @@ void draw() {
         drawLine(pixel2, pixel3, fbp, vinfo.xres, max);
         drawLine(pixel3, pixel4, fbp, vinfo.xres, max);
         drawLine(pixel4, pixel1, fbp, vinfo.xres, max);
-        if(rand()%2)
-        {
-            pixel1.x++;
-        }
-        else
-        {
-            pixel1.x--;
-        }
-        if(rand()%2)
-        {
-            pixel2.x++;
-        }
-        else
-        {
-            pixel2.x++;
-        }
-        if (rand()%2)
-        {
-            pixel1.y++;
-        }
-        else
-        {
-            pixel1.y--;
-        }
-        if (rand()%2)
-        {
-            pixel2.y++;
-        }
-        else
-        {
-            pixel2.y--;
-        }
+        rand()%2 ? pixel1.x++ : pixel1.x--;
+        rand()%2 ? pixel2.x++ : pixel2.x--;
+        rand()%2 ? pixel3.x++ : pixel3.x--;
+        rand()%2 ? pixel4.x++ : pixel4.x--;
         usleep(1000);
         fillImage(fbp, 0, vinfo.xres, max);
     }
