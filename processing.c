@@ -485,12 +485,12 @@ void movingAllToCorner(char *image, int max, int colorBG, int height, int width)
 				drawPixel(pixel, image, width, max);
 			}
 		}
-		usleep(900);
+		usleep(1000);
 	}
 	//Going to the middle from the bottom
 	for (heightTemp=height; heightTemp>height/2; heightTemp--)
 	{
-		for(widthTemp=0; widthTemp<=width; widthTemp++)
+		for(widthTemp=0 ; widthTemp<=width; widthTemp++)
 		{
 			//Getting the color of the old pixel
 			colorTmp=image[(heightTemp*width)+widthTemp];
@@ -514,7 +514,7 @@ void movingAllToCorner(char *image, int max, int colorBG, int height, int width)
 				drawPixel(pixel, image, width, max);
 			}
 		}
-		usleep(800);
+		usleep(8000);
 	}
 }
 
