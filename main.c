@@ -41,6 +41,7 @@ void draw() {
     sleep(1);
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
     sleep(1);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
     movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
@@ -53,13 +54,14 @@ void draw() {
     sleep(2);
     lens(10, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000)
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
     sleep(2);
-    
+
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 1000);
 
     drawFire(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
 
