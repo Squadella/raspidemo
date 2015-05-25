@@ -85,10 +85,10 @@ void draw() {
     random=rand()%1000+500;
     for(i=0; i<random; i++)
     {
-        randRectangle(pixel1, pixel2, pixel3, pixel4, fbp, vinfo.x, max);
-        randRectangle(pixel5, pixel6, pixel7, pixel8, fbp, vinfo.x, max);
-        randRectangle(pixel9, pixel10, pixel11, pixel12, fbp, vinfo.x, max);
-        randRectangle(pixel13, pixel14, pixel15, pixel16, fbp, vinfo.x, max);
+        randRectangle(pixel1, pixel2, pixel3, pixel4, fbp, vinfo.xres, max);
+        randRectangle(pixel5, pixel6, pixel7, pixel8, fbp, vinfo.xres, max);
+        randRectangle(pixel9, pixel10, pixel11, pixel12, fbp, vinfo.xres, max);
+        randRectangle(pixel13, pixel14, pixel15, pixel16, fbp, vinfo.xres, max);
     }
     sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 100);
