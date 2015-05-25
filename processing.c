@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 
 int colorRGB(int r, int g, int b) {
 	return( r<<16 | g<<8 | b );
@@ -34,6 +35,8 @@ void open_ppm(char image[], char* file)
 	uint size=0;
 	uint i=0;
 	uint green=0;
+	uint red=0;
+	uint blue=0;
 	//getting the specification of the file
 	returnTest=fscanf(img, "%*[^\n]\n");
 	if (returnTest!=1)
@@ -57,7 +60,7 @@ void open_ppm(char image[], char* file)
 	}
 	size=width*height*3;
 	//writing the table with the new values
-	for (i=0;i<size; i++)
+	for (i=0;i<size; i+=3)
 	{
 		if(fscanf(img, "%u", &green)!=1)
 		{
@@ -65,11 +68,24 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		printf("%d\n", green);
-        fflush(stdout);
-		//sprintf((image+i), "%u", green);
-		//image[i] = (char)green;
 
+		if(fscanf(img, "%u", &red)!=1)
+		{
+			printf("Reading red error at index %u!\n", i);
+			fclose(img);
+			return;
+		}
+
+		if(fscanf(img, "%u", &blue)!=1)
+		{
+			printf("Reading red error at index %u!\n", i);
+			fclose(img);
+			return;
+		}
+
+		memcpy(image+i, (char*)&red, 1);
+		memcpy(image+i+1, (char*)&blue, 1);
+		memcpy(image+i+2, (char*)&green, 1);
 	}
 	fclose(img);
 }
@@ -509,21 +525,21 @@ int getToRightX(int val, int lenght, int width, int offset)
 		val=val-lenght;
 		ytemp++;
 	}
-	finalval=(ytemp*(width))+val+offset;
+	finalval=(((ytemp*(width)))*3)+offset+val;
 	return finalval;
 }
 
 void applyTransform(int transArray[], char *image1, char *image2, int width, int height, Pixel start, int lenght)
 {
 	int x, y, offset, val;
-	offset=((start.y)*width+start.x);
+	offset=((start.y)*width+start.x)*3;
 	for (y=0; y<lenght; y++)
 	{
 		for (x=0; x<lenght; x++)
 		{
 			val=transArray[((y*lenght)+x)];
 			val=getToRightX(val, lenght, width, offset);
-			image1[offset+((y*width)+x)]=image2[val];
+			image1[offset+(((y*width)+x)*3)]=image2[val];
 		}
 	}
 }
@@ -566,7 +582,7 @@ void lens(int radius, int magFact, char *image1, char *image2, int max, int widt
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
 
-void applyPlaneTransform (int mLUT[],char *image1, char *image2, int width, int height, int time)
+void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int height, int time)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
 	for (timeShift= 0; timeShift<time; timeShift++)
@@ -773,7 +789,6 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 {
 	int i, j;
 	int loop = timer;
-	int height3=height*3;
 	int width3=width*3;
 	fillImage(image1, 0, width, max);
 	while(loop)
