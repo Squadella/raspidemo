@@ -712,7 +712,7 @@ void drawFire(char* indexArray, char *image, char palette[], int max, int height
 	uint averageRed, averageGreen, averageBlue;
 	uint loop = timer;
 
-	fillImage(image, 0, width * 3, max);//Fill the screen with black
+	fillImage(image, colorRGB(255,255,255), width * 3, max);//Fill the screen with black
 
 	while(loop != 0)
 	{
@@ -750,6 +750,7 @@ void drawFire(char* indexArray, char *image, char palette[], int max, int height
 				else
 					indexArray[(j * width + i) * 3] = indexArray[(j * width + i) * 3 + 1] = indexArray[(j * width + i) * 3 + 2] = 0;
 			}
+			printf("n");
 		}
 
 		//Fills the screen with corresponding colors from the palette
