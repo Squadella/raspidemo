@@ -812,16 +812,19 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 	}
 }
 
-void randRectangle(Pixel pixel1, Pixel pixel2, Pixel pixel3, Pixel pixel4, char *fbp, int width, int max)
+void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, char *fbp, int width, int max)
 {
 	drawLine(pixel1, pixel2, fbp, width, max);
 	drawLine(pixel2, pixel3, fbp, width, max);
 	drawLine(pixel3, pixel4, fbp, width, max);
 	drawLine(pixel4, pixel1, fbp, width, max);
-	rand()%2 ? pixel1.x++ : pixel1.x--;
-	rand()%2 ? pixel2.x++ : pixel2.x--;
-	rand()%2 ? pixel3.x++ : pixel3.x--;
-	rand()%2 ? pixel4.x++ : pixel4.x--;
-	usleep(1000);
-	fillImage(fbp, 0, width, max);
+	rand()%2 ? pixel1->x++ : pixel1->x--;
+	rand()%2 ? pixel2->x++ : pixel2->x--;
+	rand()%2 ? pixel3->x++ : pixel3->x--;
+	rand()%2 ? pixel4->x++ : pixel4->x--;
+	rand()%2 ? pixel1->y++ : pixel1->y--;
+	rand()%2 ? pixel2->y++ : pixel2->y--;
+	rand()%2 ? pixel3->y++ : pixel3->y--;
+	rand()%2 ? pixel4->y++ : pixel4->y--;
+	usleep(2000);
 }
