@@ -204,57 +204,27 @@ void catImage(char *image1, char *image2, int x, int y, int direction, int heigh
 	}
 }
 
-void fadeToBlack(int fbp[], long int maxi)
+void fadeToBlack(char fbp[], int maxi)
 {
 	int i = 0, j = 0;
-	int r, g, b;
+	int r;
 
-	for(j = 256; j >=0; j-=4)
+	for(j = 256; j>=0; j--)
 	{
 		for(i = 0; i < maxi; i++)
 		{
-			invertRGB(fbp[i], &r, &g, &b);
-
+			r=fbp[i];
 			if(r > 0)
 			{
-				r -= 4;
+				r--;
 				if(r < 0)
 				r = 0;
 			}
-
-			if(g > 0)
-			{
-				g -= 4;
-				if(g < 0)
-				g = 0;
-			}
-
-			if(b > 0)
-			{
-				b -= 4;
-				if(b < 0)
-				b = 0;
-			}
-
-			fbp[i] = colorRGB(r, g, b);
+			fbp[i]=r;
 		}
 	}
 }
-/*
-void catImageColor(char *image1, char *image2, int color, int height, int width)
-{
-int ix, iy;
-for(ix=0; ix<width; ix++)
-{
-for(iy=0; iy<height; iy++)
-{
-if (image2[(iy*width)+ix]==color)
-{
-}
-}
-}
-}
-*/
+
 void drawLine(Pixel start, Pixel end, char *image, int width, int max)
 {
 	int dx = abs((end.x)-(start.x));
@@ -844,45 +814,4 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	rand()%2 ? pixel2->y++ : pixel2->y--;
 	rand()%2 ? pixel3->y++ : pixel3->y--;
 	rand()%2 ? pixel4->y++ : pixel4->y--;
-}
-
-void squareOpening(char image[], char image2[], int max, int width, int height, int *widthTemp, int *widthTemp2, int *heightTemp, int *heightTemp2)
-{
-	int i, j, temp;
-	temp=width;
-	width=height;
-	height=temp;
-
-	if(((*widthTemp)*height)+(*heightTemp)>=0 && ((*widthTemp)*height)+(heightTemp)<max && heightTemp>=0 && heightTemp<height)
-		image[((*widthTemp)*height)+(*heightTemp)]=image2[((*widthTemp)*height)+(*heightTemp)];
-	if(*widthTemp>0)
-		widthTemp--;
-	if(*widthTemp2<width)
-		widthTemp2++;
-	(*heightTemp)--;
-	(*heightTemp2)++;
-	j=*heightTemp;
-	for(i=*widthTemp; i!=*widthTemp2; i++)
-	{
-		if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
-			image[(i*height)+(j)]=image2[(i*height)+(j)];
-	}
-	j=*heightTemp2;
-	for(i=*widthTemp; i!=*widthTemp2; i++)
-	{
-		if((i*height)+(j)>=0 && (i*height)+(j)<max && j>=0 && j<height)
-			image[(i*height)+(j)]=image2[(i*height)+(j)];
-	}
-	j=*widthTemp;
-	for(i=*heightTemp; i!=*heightTemp2; i++)
-	{
-		if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
-			image[(j*height)+(i)]=image2[(j*height)+(i)];
-	}
-	j=*widthTemp2;
-	for(i=*heightTemp; i!=*heightTemp2; i++)
-	{
-		if((j*height)+(i)>=0 && (j*height)+(i)<max && i>=0 && i<height)
-			image[(j*height)+(i)]=image2[(j*height)+(i)];
-	}
 }

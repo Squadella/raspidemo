@@ -54,8 +54,8 @@ void replaceImage(char *image1/**<The current image.*/,
 				  long int max/**<The max index of the image array.*/);
 
 ///Shift all the pixel inside the framebuffer to black.
-void fadeToBlack(int fbp[]/**<The current image.*/,
-	 			 long int maxi/**<The max index of the image array.*/);
+void fadeToBlack(char fbp[]/**<The current image.*/,
+	 			 int maxi/**<The max index of the image array.*/);
 
 ///Concatenate image2 into image1 by choosing a x or y.
 void catImage(char *image1/**<The current image.*/,
@@ -116,17 +116,6 @@ void movingAllToCorner(char *image/**<The current image.*/,
 					   int colorBG/**<The color of replacement when a piwel moves.*/,
 					   int height/**<The height of the screen.*/,
 					   int width/**<The width of the screen.*/);
-
-///Make image2 appear in square in the middle of the screen.
-void squareOpening(char imagege[]/**<The current image.*/,
-				   char imagege2[]/**<The image we want to print.*/,
-				   int max/**<The max index of the image array.*/,
-				   int width/**<The width of the screen.*/,
-				   int height/**<The height of the screen.*/,
-				   int *widthTemp/**<Temp values for calling function multiples times (set to 0 when called).*/,
-				   int *widthTemp2/**<Temp values for calling function multiples times (set to 0 when called).*/,
-				   int *heightTemp/**<Temp values for calling function multiples times (set to 0 when called).*/,
-				   int *heightTemp2/**<Temp values for calling function multiples times (set to 0 when called).*/);
 
 ///Create the good index for applying a transform matrix.
 int getToRightX(int val/**<The index value.*/,
