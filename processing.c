@@ -597,9 +597,9 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 			u=mLUT[offset]+timeShift;
 			v=mLUT[offset+1]+timeShift;
 			adjustBright=mLUT[offset+2];
-			b=image2[(width*(v & (height3-1)))+(u & (width3-1))];
-			g=image2[(width*(v & (height3-1)))+(u & (width3-1))+1];
-			r=image2[(width*(v & (height3-1)))+(u & (width3-1))+2];
+			b=image2[(width*(v & (height-1)))+(u & (width-1))];
+			g=image2[(width*(v & (height-1)))+(u & (width-1))+1];
+			r=image2[(width*(v & (height-1)))+(u & (width-1))+2];
 			if (adjustBright!=0)
 			{
 				r+=adjustBright;
