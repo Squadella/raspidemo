@@ -89,6 +89,7 @@ void draw() {
         randRectangle(&pixel5, &pixel6, &pixel7, &pixel8, fbp, vinfo.xres, max);
         randRectangle(&pixel9, &pixel10, &pixel11, &pixel12, fbp, vinfo.xres, max);
         randRectangle(&pixel13, &pixel14, &pixel15, &pixel16, fbp, vinfo.xres, max);
+        usleep(1000);
     	fillImage(fbp, 0, vinfo.xres, max);
     }
     sleep(1);
