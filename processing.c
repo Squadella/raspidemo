@@ -832,10 +832,10 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	drawLine(*pixel2, *pixel3, fbp, width, max);
 	drawLine(*pixel3, *pixel4, fbp, width, max);
 	drawLine(*pixel4, *pixel1, fbp, width, max);
-	pixel1.color=color1;
-	pixel2.color=color2;
-	pixel3.color=color3;
-	pixel4.color=color4;
+	pixel1->color=color1;
+	pixel2->color=color2;
+	pixel3->color=color3;
+	pixel4->color=color4;
 	rand()%2 ? pixel1->x++ : pixel1->x--;
 	rand()%2 ? pixel2->x++ : pixel2->x--;
 	rand()%2 ? pixel3->x++ : pixel3->x--;
