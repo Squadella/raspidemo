@@ -696,7 +696,7 @@ void drawFire(char *image, char palette[], int max, int height, int width, uint 
 	uint average;
 	uint loop = timer;
 
-	fillImage(image, 0, width * 3, max * 3);//Fill the screen with black
+	fillImage(image, 0, width * 3, max);//Fill the screen with black
 
 	while(loop != 0)
 	{
