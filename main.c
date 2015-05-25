@@ -209,8 +209,8 @@ int main(int argc, char* argv[])
     close(fbfd);
 
     //Reopening the framebuffer with other settings
-    //Initialisation of all the variable
-
+    //Initialisation of all the variables
+	long int lineSize, bufferSize, heightSize, maxi, height, width;
 
 	//Opening framebuffer
 	fbfd=open("/dev/fb0", O_RDWR);
