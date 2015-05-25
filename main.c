@@ -112,6 +112,7 @@ void draw() {
         pixel1.y=rand()%240;
         drawCircle(pixel1, rand()%120, fbp, vinfo.yres, vinfo.xres, max);
         pixel1.color=rand()%colorRGB(255,255,255);
+        usleep(1000);
     }
     sleep(1);
 
