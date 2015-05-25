@@ -67,9 +67,7 @@ void open_ppm(char image[], char* file)
 		}
 		printf("%d\n", green);
         fflush(stdout);
-		//sprintf((image+i), "%u", green);
-		//image[i] = (char)green;
-
+		memcpy(image+i, (char*)&green, 1);
 	}
 	fclose(img);
 }
