@@ -82,7 +82,7 @@ void draw() {
     pixel16.color = rand()%colorRGB(255,255,255);
 
     fillImage(fbp, 0, vinfo.xres, max);
-    random=rand()%1000+500;
+    random=rand()%1000+1000;
     for(i=0; i<random; i++)
     {
         randRectangle(&pixel1, &pixel2, &pixel3, &pixel4, fbp, vinfo.xres, max);
@@ -104,7 +104,14 @@ void draw() {
     pixel1.x=vinfo.xres/2;
     pixel1.y=vinfo.yres/2;
     sleep(1);
-    drawCircle(pixel1, 10, fbp, vinfo.yres, vinfo.xres, max);
+    random=rand()%1000+1000;
+    for(i=0; i<random; i++)
+    {
+        pixel.x=rand()%320;
+        pixel.y=rand()%240;
+        drawCircle(pixel1, rand()%120, fbp, vinfo.yres, vinfo.xres, max);
+        pixel.color=rand()%color(255,255,255);
+    }
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
