@@ -122,8 +122,6 @@ void draw() {
     sleep(2);
     fadeToBlack(fbp, max);
     sleep(2);
-    squareOpening(fbp, fbp2, max, vinfo.xres, vinfo.yres, 0, 0, 0, 0);
-    sleep(1);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
