@@ -823,10 +823,10 @@ void randRectangle(Pixel *pixel1, Pixel *pixel2, Pixel *pixel3, Pixel *pixel4, c
 	color2=pixel2.color;
 	color3=pixel3.color;
 	color4=pixel4.color;
-	pixel1.color=0;
-	pixel2.color=0;
-	pixel3.color=0;
-	pixel4.color=0;
+	pixel1->color=0;
+	pixel2->color=0;
+	pixel3->color=0;
+	pixel4->color=0;
 	usleep(1000);
 	drawLine(*pixel1, *pixel2, fbp, width, max);
 	drawLine(*pixel2, *pixel3, fbp, width, max);
