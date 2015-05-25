@@ -91,11 +91,14 @@ void draw() {
         randRectangle(&pixel13, &pixel14, &pixel15, &pixel16, fbp, vinfo.xres, max);
     }
     sleep(1);
-    starField(fbp, max, colorRGB(255,255,255), 100);
+    starField(fbp, max, colorRGB(255,255,255), 50);
     sleep(1);
+    pixel1.x=rand()%160;
+    pixel1.x=rand()%120;
+    pixel2.x=(rand()%160)+160;
+    pixel2.y=(rand()%120)+120;
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
     sleep(1);
-    starField(fbp, max, colorRGB(255,255,255), 10);
     movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
