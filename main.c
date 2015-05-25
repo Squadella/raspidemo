@@ -119,9 +119,9 @@ void draw() {
     pixel1.x=0;
     pixel2.x=0;
     pixel2.y=vinfo.yres;
-    for(i=0; i<vinfo.xres; i+=3)
+    for(i=0; i<vinfo.xres; i+=2)
     {
-        pixel1.x+=3;
+        pixel1.x+=2;
         pixel2.x=pixel1.x;
         drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
     }
@@ -129,9 +129,9 @@ void draw() {
     pixel1.y=0;
     pixel2.y=0;
     pixel2.x=vinfo.xres;
-    for(i=0; i<vinfo.xres; i+=3)
+    for(i=0; i<vinfo.xres; i+=2)
     {
-        pixel1.y+=3;
+        pixel1.y+=2;
         pixel2.y=pixel1.y;
         drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
     }
