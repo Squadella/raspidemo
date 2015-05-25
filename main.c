@@ -71,11 +71,11 @@ void draw() {
         }
         if (rand()%2)
         {
-            pixel.y++;
+            pixel1.y++;
         }
         else
         {
-            pixel.y--;
+            pixel1.y--;
         }
         if (rand()%2)
         {
