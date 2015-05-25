@@ -542,7 +542,9 @@ void applyTransform(int transArray[], char *image1, char *image2, int width, int
 			image1[offset+(((y*width)+x)*3)]=image2[val];
 			image1[offset+(((y*width)+x)*3)+1]=image2[val+1];
 			image1[offset+(((y*width)+x)*3)+2]=image2[val+2];
+			printf("%d ", offset+(((y*width)+x)*3));
 		}
+		printf("\n");
 	}
 }
 
