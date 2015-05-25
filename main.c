@@ -105,7 +105,7 @@ void draw() {
     pixel1.y=vinfo.yres/2;
     sleep(1);
     pixel1.color = colorRGB(34,139,34);
-    random=rand()%1000+1000;
+    random=10000;
     for(i=0; i<random; i++)
     {
         pixel1.x=rand()%320;
