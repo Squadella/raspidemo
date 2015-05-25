@@ -125,6 +125,17 @@ void draw() {
         pixel2.x=pixel1.x;
         drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
     }
+    pixel1.x=0;
+    pixel1.y=0;
+    pixel2.y=0;
+    pixel2.x=vinfo.xres;
+    for(i=0; i<vinfo.xres; i+=3)
+    {
+        pixel1.y+=3;
+        pixel2.y=pixel1.y;
+        drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
+    }
+
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     sleep(1);
 
