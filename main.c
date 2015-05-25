@@ -120,6 +120,8 @@ void draw() {
     sleep(2);
     lens(10, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
+    squareOpening(fbp, fbp2, max, vinfo.xres, vinfo.yres, 0, 0, 0, 0);
+    sleep(1);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
@@ -131,7 +133,6 @@ void draw() {
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     drawPalette(fbp2, palette, max, vinfo.yres, vinfo.xres);
-    squareOpening(fbp, fbp2, max, vinfo.xres, vinfo.yres, 0, 0, 0, 0);
     sleep(2);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 1000);
