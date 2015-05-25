@@ -142,10 +142,10 @@ void draw() {
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
-    pixel1.x=vinfo.xres/2;
-    pixel1.y=vinfo.yres/2;
+    pixel1.x=(vinfo.xres/2)-100;
+    pixel1.y=(vinfo.yres/2)-100;
     sleep(2);
-    lens(100, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
+    lens(50, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
     fadeToBlack(fbp, max);
     sleep(2);
