@@ -630,7 +630,7 @@ void planeTransform (int height, int width, char *image1, char *image2, int mode
 {
 	int k=0, j, i, height3, width3;
 	double u,v,bright=0, y, x, d, a, r;
-	int mLUT[((height*width)*3)+1];
+	int mLUT[((height*width)*9)+1];
 	height3=height*3;
 	width3=width3*3;
 	for (j=0; j<height3; j++)
