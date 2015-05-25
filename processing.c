@@ -705,7 +705,8 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 		palette[i] = (red<<16 | green<<8 | blue);
 	}
 }
-void drawFire(char *image1, char *image2, uint palette[256], int max, int height, int width, uint timer)
+
+void drawFire(char *image1, char *image2, char *palette, int max, int height, int width, uint timer)
 {
 	int i, j;
 	uint average;
@@ -745,27 +746,6 @@ void drawFire(char *image1, char *image2, uint palette[256], int max, int height
 			}
 		}
 		usleep(10);
-		loop--;
-	}
-}
-void drawLulz(char *image1, char *image2, uint palette[256], int max, int height, int width)
-{
-	int i, j;
-	int average;
-	int loop = height;
-	while(loop != 0)
-	{
-		for(i = 0 ; i < width-1 ; i++)
-		image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
-		for (i = 0 ; i < width-1 ; ++i)
-		{
-			for (j = 1 ; j < (height - 1) ; ++j)
-			{
-				average = (image1[(j - 1) * width + ((i - 1) % width)] + image1[(j - 1) * width + (i % width)] + image1[(j - 1) * width + ((i + 1) % width)]) / 3;
-				image2[j * width + i] = palette[(average - 1) % 256];
-			}
-		}
-		image1 = image2;
 		loop--;
 	}
 }
