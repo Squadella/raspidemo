@@ -532,7 +532,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 void applyTransform(int transArray[], char *image1, char *image2, int width, int height, Pixel start, int lenght)
 {
 	int x, y, offset, val;
-	offset=((start.y)*width+start.x);
+	offset=((start.y)*width+start.x)*3;
 	for (y=0; y<lenght; y++)
 	{
 		for (x=0; x<lenght; x++)
