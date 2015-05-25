@@ -149,7 +149,6 @@ void draw() {
     sleep(2);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 500);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 500);
     sleep(2);

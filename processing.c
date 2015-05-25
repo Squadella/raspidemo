@@ -144,11 +144,16 @@ void replaceImage(char *image1, char *image2, long int max)
 void replaceColor(int color1, int color2, char *image, long int max)
 {
 	int index;
+	int r, g, b;
+
+	invertRGB(color1, &r, &g, &b);
 	for(index=0; index<max; index++)
 	{
-		if(*(image+index)==color1)
+		if(*(image+index)==b)
 		{
-			drawPixelIndex(index, color2, max, image);
+			if(*(image+index)==g)
+				if(*(image+index)==r)
+					drawPixelIndex(index, color2, max, image);
 		}
 	}
 }
