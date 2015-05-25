@@ -625,13 +625,15 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 
 void planeTransform (int height, int width, char *image1, char *image2, int mode, int time)
 {
-	int k=0, j, i;
+	int k=0, j, i, height3, width3;
 	double u,v,bright=0, y, x, d, a, r;
 	int mLUT[((height*width)*3)+1];
-	for (j=0; j<height; j++)
+	height3=height*3;
+	width3=width3*3;
+	for (j=0; j<height3; j++)
 	{
 		y= -1.0 + 2.0*((double)j/((double)height));
-		for (i=0; i<width; i++)
+		for (i=0; i<width3; i++)
 		{
 			x=-1.0+2.0*((double)i/((double)width));
 			d=sqrt(x*x+y*y);
