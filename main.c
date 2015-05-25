@@ -122,12 +122,12 @@ void draw() {
     sleep(2);
     fadeToBlack(fbp, max);
     sleep(2);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 1000);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 1000);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 1000);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 500);
     sleep(2);
 
     open_ppm(palette, "toast.ppm");
