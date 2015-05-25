@@ -41,7 +41,7 @@ void draw() {
     sleep(1);
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
     sleep(1);
-    starField(fbp, max, colorRGB(255,255,255), 200);
+    starField(fbp, max, colorRGB(255,255,255), 10);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
     movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
