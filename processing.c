@@ -694,17 +694,16 @@ void drawFire(char *image1, char *image2, uint palette[256], int max, int height
 	int i, j;
 	uint average;
 	uint loop = timer;
-	for (i = 0 ; i < width; i++)
-	{
-		for (j = 0; j < height; j++)
-		{
-			image1[j * width + i] = colorRGB(0, 0, 0);
-		}
-	}
+
+	fillImage(image1, 0, width * 3, max);//Fill the screen with black
+
 	while(loop != 0)
 	{
+		//Seeding the fire
 		for(i = 0 ; i < width ; i+= width / 500)
-		image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
+			drawPixelIndex(((height - 1) * width + i) * 3, rand() % 2 ? 0 : colorRGB(255, 255, 255), max, image1);
+
+
 		for (i = 0 ; i < width-1 ; i++)
 		{
 			for (j = height-2 ; j > 1 ; --j)
