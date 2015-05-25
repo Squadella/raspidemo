@@ -50,7 +50,7 @@ void draw() {
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
-
+    sleep(2);
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);
