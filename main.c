@@ -86,6 +86,7 @@ void draw() {
             pixel2.y--;
         }
         usleep(1000);
+        fillImage(fbp, 0, vinfo.xres, max);
     }
     sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 100);
@@ -153,8 +154,8 @@ int main(int argc, char* argv[])
 
     // Change variable info - force 8 bit and resolution
     vinfo.bits_per_pixel = 24;
-    vinfo.xres = 160;
-    vinfo.yres = 120;
+    vinfo.xres = 320;
+    vinfo.yres = 240;
     vinfo.xres_virtual = vinfo.xres;
     vinfo.yres_virtual = vinfo.yres;
     if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
