@@ -33,8 +33,6 @@ void open_ppm(char image[], char* file)
 	uint width=0;
 	uint size=0;
 	uint i=0;
-	char red=0;
-	char blue=0;
 	uint green=0;
 	//getting the specification of the file
 	returnTest=fscanf(img, "%*[^\n]\n");
@@ -67,7 +65,9 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		sprintf((image+i), "%u", green);
+		printf("%d\n", green);
+        fflush(stdout);
+		//sprintf((image+i), "%u", green);
 		//image[i] = (char)green;
 
 	}
