@@ -587,17 +587,19 @@ void lens(int radius, int magFact, char *image1, char *image2, int max, int widt
 void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int height, int time)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
+	height3=height*3;
+	width3=width*3;
 	for (timeShift= 0; timeShift<time; timeShift++)
 	{
-		for (pixelcount=0; pixelcount<(width*height*2); pixelcount+=3)
+		for (pixelcount=0; pixelcount<(width*height*3); pixelcount+=3)
 		{
 			offset=(pixelcount << 1)+pixelcount;
 			u=mLUT[offset]+timeShift;
 			v=mLUT[offset+1]+timeShift;
 			adjustBright=mLUT[offset+2];
-			b=image2[(width*(v & (height-1)))+(u & (width-1))];
-			g=image2[(width*(v & (height-1)))+(u & (width-1))+1];
-			r=image2[(width*(v & (height-1)))+(u & (width-1))+2];
+			b=image2[(width*(v & (height3-1)))+(u & (width3-1))];
+			g=image2[(width*(v & (height3-1)))+(u & (width3-1))+1];
+			r=image2[(width*(v & (height3-1)))+(u & (width3-1))+2];
 			if (adjustBright!=0)
 			{
 				r+=adjustBright;
