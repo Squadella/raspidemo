@@ -138,7 +138,7 @@ void draw() {
         drawLine(pixel1, pixel2, fbp2, vinfo.xres, max);
     }
 
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 500);
     sleep(1);
 
     open_ppm(fbp, "loup2.ppm");
