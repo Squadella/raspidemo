@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 
 int colorRGB(int r, int g, int b) {
 	return( r<<16 | g<<8 | b );
@@ -65,8 +66,6 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		printf("%d\n", green);
-        fflush(stdout);
 		memcpy(image+i, (char*)&green, 1);
 	}
 	fclose(img);
