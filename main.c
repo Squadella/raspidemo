@@ -42,7 +42,6 @@ void draw() {
     beamOfLight(pixel1, pixel2, 10, fbp, vinfo.xres, max, 1);
     sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 10);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
     movingAllToCorner(fbp, max, 0, vinfo.yres, vinfo.xres);
 
     pixel1.x=vinfo.xres/2;
@@ -56,6 +55,15 @@ void draw() {
     lens(10, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     sleep(2);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 3, 1000);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
+
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 7, 1000);
+
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 1000);
+
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 5, 1000);
+
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 4, 1000);
     sleep(2);
 
     open_ppm(palette, "toast.ppm");
