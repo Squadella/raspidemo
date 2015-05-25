@@ -118,6 +118,8 @@ void draw() {
     pixel1.y=0;
     pixel1.x=0;
     pixel2.x=0;
+    pixel1.color=0;
+    pixel2.color=0;
     pixel2.y=vinfo.yres;
     for(i=0; i<vinfo.xres; i+=2)
     {
