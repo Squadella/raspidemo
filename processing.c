@@ -594,7 +594,6 @@ void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int
 		for (pixelcount=0; pixelcount<(width*height*3); pixelcount+=3)
 		{
 			offset=(pixelcount << 1)+pixelcount;
-			printf("loln");
 			u=mLUT[offset]+timeShift;
 			v=mLUT[offset+1]+timeShift;
 			adjustBright=mLUT[offset+2];
