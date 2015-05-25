@@ -82,8 +82,9 @@ void open_ppm(char image[], char* file)
 			fclose(img);
 			return;
 		}
-		memcpy(image+i, (char*)&blue, 1);
-		memcpy(image+i+1, (char*)&red, 1);
+
+		memcpy(image+i, (char*)&red, 1);
+		memcpy(image+i+1, (char*)&blue, 1);
 		memcpy(image+i+2, (char*)&green, 1);
 	}
 	fclose(img);
