@@ -148,7 +148,6 @@ int main(int argc, char* argv[])
     struct fb_var_screeninfo orig_vinfo;
     long int screensize = 0;
 
-
     // Open the file for reading and writing
     fbfd = open("/dev/fb0", O_RDWR);
     if (fbfd == -1) {
@@ -247,8 +246,6 @@ int main(int argc, char* argv[])
 	// map framebuffer to user memory
 	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	int *fbp2=malloc(bufferSize * sizeof(int));
-	int *palette = malloc(sizeof(int)*256);
-	open_ppm(palette, "fire2.ppm");
 	if ((int)fbp == -1)
 	{
 		printf("Failed to mmap the framebuffer.\n");
