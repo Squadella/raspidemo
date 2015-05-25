@@ -689,68 +689,54 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 		palette[i] = (red<<16 | green<<8 | blue);
 	}
 }
-void drawFire(char *image1, char *image2, uint palette[256], int max, int height, int width, uint timer)
+void drawFire(char *image, char palette[], int max, int height, int width, uint timer)
 {
 	int i, j;
+	char *indexArray = malloc(sizeof(char) * width * height);
 	uint average;
 	uint loop = timer;
 
-	fillImage(image1, 0, width * 3, max);//Fill the screen with black
+	fillImage(image, 0, width * 3, max * 3);//Fill the screen with black
 
 	while(loop != 0)
 	{
-		//Seeding the fire
-		for(i = 0 ; i < width ; i+= width / 500)
-			drawPixelIndex(((height - 1) * width + i) * 3, rand() % 2 ? 0 : colorRGB(255, 255, 255), max, image1);
+		//Seeds the fire
+		for(i = 0 ; i < width ; i += width / 500)
+			indexArray[((height - 1) * width + i) * 3] = rand() % 2 ? 0 : 255;
 
-
-		for (i = 0 ; i < width-1 ; i++)
+		//Computes the palette index of each pixel
+		for (i = 0 ; i < width-1 ; ++i)
 		{
 			for (j = height-2 ; j > 1 ; --j)
 			{
 				if(i > 0 || i < width-1)
 				{
-					average = (image1[(j + 1) * width + (i - 1)] + image1[(j + 1) * width + i] + image1[(j + 1) * width + (i + 1)]) / 3;
+					average = (indexArray[(j + 1) * width + (i - 1)] + indexArray[(j + 1) * width + i] + indexArray[(j + 1) * width + (i + 1)]) / 3;
 					if(average > 0)
-					image1[j * width + i] = average - 1;
+					indexArray[j * width + i] = average - 1;
 					else
-					image1[j * width + i] = 0;
+					indexArray[j * width + i] = 0;
 				}
 				else
-				image1[j * width + i] = 0;
+				indexArray[j * width + i] = 0;
 			}
 		}
+
+		//Fills the screen with corresponding colors from the palette
 		for (i = 0 ; i < width; ++i)
 		{
 			for (j = 0; j < height; ++j)
 			{
-				image2[j * width + i] = palette[image1[j * width + i]];
+				image[(j * width + i) * 3] = palette[(indexArray[j * width + i]) * 3];
+				image[(j * width + i) * 3 + 1] = palette[(indexArray[j * width + i]) * 3 + 1];
+				image[(j * width + i) * 3 + 2] = palette[(indexArray[j * width + i]) * 3 + 2];
 			}
 		}
+
 		usleep(10);
 		loop--;
 	}
-}
-void drawLulz(char *image1, char *image2, uint palette[256], int max, int height, int width)
-{
-	int i, j;
-	int average;
-	int loop = height;
-	while(loop != 0)
-	{
-		for(i = 0 ; i < width-1 ; i++)
-		image1[(height - 1) * width + i] = rand() % 2 ? 0 : 255;
-		for (i = 0 ; i < width-1 ; ++i)
-		{
-			for (j = 1 ; j < (height - 1) ; ++j)
-			{
-				average = (image1[(j - 1) * width + ((i - 1) % width)] + image1[(j - 1) * width + (i % width)] + image1[(j - 1) * width + ((i + 1) % width)]) / 3;
-				image2[j * width + i] = palette[(average - 1) % 256];
-			}
-		}
-		image1 = image2;
-		loop--;
-	}
+	free(indexArray);
 }
 
 void savePalette(int image[], int palette[], int max, int height, int width)

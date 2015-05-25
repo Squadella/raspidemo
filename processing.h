@@ -175,21 +175,12 @@ void initGradientPalette(uint palette[256]/**<The palette that will be created.*
 						 RGBTriplet endColor/**<The R G B color of end.*/);
 
 ///Fire effect loaded into image1.
-void drawFire(char *image1/**<The displayed image.*/,
-	 		  char *image2/**<A temp image.*/,
-			  uint palette[256]/**<The palette for coloration of the pixels.*/,
+void drawFire(char *image/**<The displayed image.*/,
+			  char palette[]/**<The palette for coloration of the pixels.*/,
 			  int max/**<The max index of the image array.*/,
 			  int height/**<The height of the screen.*/,
 			  int width/**<The width of the screen.*/,
 			  uint timer/**<The duration of the effect.*/);
-
-///Unknow effect, use with caution, there is HUGE memory leak with this function.
-void drawLulz(char *image1/**<The displayed image.*/,
-	 		  char *image2/**<A temp image.*/,
-			  uint palette[256]/**<The palette for coloration of the pixels.*/,
-			  int max/**<The max index of the image array.*/,
-			  int height/**<The height of the screen.*/,
-			  int width/**<The width of the screen.*/);
 
 ///Save all the data of a palette in a file.
 void savePalette(int image[]/**<The displayed image.*/,
