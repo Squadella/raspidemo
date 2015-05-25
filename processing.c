@@ -717,7 +717,7 @@ void drawFire(char* indexArray, char *image, char palette[], int max, int height
 	while(loop != 0)
 	{
 		//Seeds the fire
-		for(i = 0 ; i < width ; i += width / 500)
+		for(i = 0 ; i < width; i += width / 80)
 			indexArray[((height - 1) * width + i) * 3] = indexArray[((height - 1) * width + i) * 3 + 1] = indexArray[((height - 1) * width + i) * 3 + 2] = rand() % 2 ? 0 : 255;
 
 
