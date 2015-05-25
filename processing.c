@@ -705,11 +705,11 @@ void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet en
 		palette[i] = (red<<16 | green<<8 | blue);
 	}
 }
-void drawFire(char *image, char palette[], int max, int height, int width, uint timer)
+void drawFire(char* indexArray, char *image, char palette[], int max, int height, int width, uint timer)
 {
 	int i, j;
-	char *indexArray = malloc(sizeof(char) * width * height);
-	uint average;
+	//char *indexArray = malloc(sizeof(char) * width * height);
+	uint averageRed, averageGreen, averageBlue;
 	uint loop = timer;
 
 	fillImage(image, 0, width * 3, max);//Fill the screen with black
@@ -718,7 +718,8 @@ void drawFire(char *image, char palette[], int max, int height, int width, uint 
 	{
 		//Seeds the fire
 		for(i = 0 ; i < width ; i += width / 500)
-			indexArray[((height - 1) * width + i) * 3] = rand() % 2 ? 0 : 255;
+			indexArray[((height - 1) * width + i) * 3] = indexArray[((height - 1) * width + i) * 3 + 1] = indexArray[((height - 1) * width + i) * 3 + 2] = rand() % 2 ? 0 : 255;
+
 
 		//Computes the palette index of each pixel
 		for (i = 0 ; i < width-1 ; ++i)
@@ -727,14 +728,27 @@ void drawFire(char *image, char palette[], int max, int height, int width, uint 
 			{
 				if(i > 0 || i < width-1)
 				{
-					average = (indexArray[(j + 1) * width + (i - 1)] + indexArray[(j + 1) * width + i] + indexArray[(j + 1) * width + (i + 1)]) / 3;
-					if(average > 0)
-					indexArray[j * width + i] = average - 1;
+					averageRed = (indexArray[((j + 1) * width + (i - 1)) * 3 + 2] + indexArray[((j + 1) * width + i) * 3 + 2] + indexArray[((j + 1) * width + (i + 1)) * 3 + 2]) / 3;
+					averageGreen= (indexArray[((j + 1) * width + (i - 1)) * 3 + 1] + indexArray[((j + 1) * width + i) * 3 + 1] + indexArray[((j + 1) * width + (i + 1)) * 3 + 1]) / 3;
+					averageBlue= (indexArray[((j + 1) * width + (i - 1)) * 3] + indexArray[((j + 1) * width + i) * 3] + indexArray[((j + 1) * width + (i + 1)) * 3]) / 3;
+
+					if(averageRed > 0)
+						indexArray[(j * width + i) * 3 + 2] = averageRed - 1;
 					else
-					indexArray[j * width + i] = 0;
+						indexArray[(j * width + i) * 3 + 2] = 0;
+
+					if(averageGreen > 0)
+						indexArray[(j * width + i) * 3 + 1] = averageGreen - 1;
+					else
+						indexArray[(j * width + i) * 3 + 1] = 0;
+
+					if(averageBlue > 0)
+						indexArray[(j * width + i) * 3] = averageBlue - 1;
+					else
+						indexArray[(j * width + i) * 3] = 0;
 				}
 				else
-				indexArray[j * width + i] = 0;
+					indexArray[(j * width + i) * 3] = indexArray[(j * width + i) * 3 + 1] = indexArray[(j * width + i) * 3 + 2] = 0;
 			}
 		}
 

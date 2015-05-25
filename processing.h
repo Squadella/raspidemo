@@ -175,7 +175,8 @@ void initGradientPalette(uint palette[256]/**<The palette that will be created.*
 						 RGBTriplet endColor/**<The R G B color of end.*/);
 
 ///Fire effect loaded into image1.
-void drawFire(char *image/**<The displayed image.*/,
+void drawFire(char *indexArray,
+				char *image/**<The displayed image.*/,
 			  char palette[]/**<The palette for coloration of the pixels.*/,
 			  int max/**<The max index of the image array.*/,
 			  int height/**<The height of the screen.*/,

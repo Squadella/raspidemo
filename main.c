@@ -26,7 +26,7 @@ void draw() {
 	Pixel pixel1, pixel2;
     max=vinfo.xres*vinfo.yres*3;
     char *fbp2 = malloc(max*sizeof(char));
-    char *palette = malloc((256*3)*sizeof(char));
+    char *palette = malloc((256 * 3)*sizeof(char));
 	pixel1.x = 0;
 	pixel1.y = 0;
 	pixel2.x = vinfo.xres;
@@ -35,7 +35,7 @@ void draw() {
 	pixel2.color = 1;
 
     open_ppm(palette, "fire2.ppm");
-    drawFire(fbp, palette, max, vinfo.yres, vinfo.xres, 1000);
+    drawFire(fbp2, fbp, palette, max, vinfo.yres, vinfo.xres, 1000);
 
     sleep(5);
 
