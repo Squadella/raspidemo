@@ -525,7 +525,7 @@ int getToRightX(int val, int lenght, int width, int offset)
 		val=val-lenght;
 		ytemp++;
 	}
-	finalval=(ytemp*(width))+val+offset;
+	finalval=(((ytemp*(width))+val)*3)+offset;
 	return finalval;
 }
 
@@ -539,7 +539,9 @@ void applyTransform(int transArray[], char *image1, char *image2, int width, int
 		{
 			val=transArray[((y*lenght)+x)];
 			val=getToRightX(val, lenght, width, offset);
-			image1[offset+((y*width)+x)]=image2[val];
+			image1[offset+(((y*width)+x)*3)]=image2[val];
+			image1[offset+(((y*width)+x)*3)+1]=image2[val+1];
+			image1[offset+(((y*width)+x)*3)+2]=image2[val+2];
 		}
 	}
 }
