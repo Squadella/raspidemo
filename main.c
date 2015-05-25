@@ -51,6 +51,8 @@ void draw() {
 
     open_ppm(fbp, "loup2.ppm");
     sleep(2);
+    lens(10, 2, fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, pixel1);
+    sleep(2);
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     sleep(2);

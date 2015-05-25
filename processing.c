@@ -582,7 +582,7 @@ void lens(int radius, int magFact, char *image1, char *image2, int max, int widt
 	applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
 
-void applyPlaneTransform (int mLUT[],char *image1, char *image2, int width, int height, int time)
+void applyPlaneTransform (int mLUT[], char *image1, char *image2, int width, int height, int time)
 {
 	int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
 	for (timeShift= 0; timeShift<time; timeShift++)
@@ -784,7 +784,6 @@ void drawPlasma(char *image1, char *image2, char palette[], int max, int height,
 {
 	int i, j;
 	int loop = timer;
-	int height3=height*3;
 	int width3=width*3;
 	fillImage(image1, 0, width, max);
 	while(loop)
