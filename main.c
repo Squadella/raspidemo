@@ -114,6 +114,7 @@ void draw() {
         pixel1.color=rand()%colorRGB(255,255,255);
         usleep(1000);
     }
+    replaceImage(fbp2, fbp, max);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 6, 500);
     sleep(1);
 
