@@ -89,7 +89,7 @@ void draw() {
     pixel16.color = rand()%colorRGB(255,255,255);
 
     fillImage(fbp, 0, vinfo.xres, max);
-    random=2000;
+    random=500;
     for(i=0; i<random; i++)
     {
         randRectangle(&pixel1, &pixel2, &pixel3, &pixel4, fbp, vinfo.xres, max);
