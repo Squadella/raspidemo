@@ -22,8 +22,8 @@ struct fb_fix_screeninfo finfo;
 // the main function when just want to change what to draw...
 void draw() {
 
-    int x, y, max, i, lenghtRectangle, heightRectangle, random;
-	Pixel pixel1, pixel2, pixel3, pixel4, pixel5, pixel6, pixel7, pixel8, pixel9, pixel10, pixel11, pixel12, pixel13, pixel14, pixel15, pixel16;
+    int x, y, max, i, lenghtRectangle, heightRectangle, random, j;
+	Pixel pixel1, pixel2, pixel3, pixel4, pixel5, pixel6, pixel7, pixel8, pixel9, pixel10, pixel11, pixel12, pixel13, pixel14, pixel15, pixel16, pixelrand[40];
     max=vinfo.xres*vinfo.yres*3;
     char *fbp2 = malloc(max*sizeof(char));
     char *palette = malloc((256*3)*sizeof(char));
@@ -64,6 +64,13 @@ void draw() {
     pixel16.x = rand()%160;
     pixel16.y = rand()%120;
 
+    for(i=0; i<40; i++)
+    {
+        pixelrand[i].x=rand()%320;
+        pixelrand[i].y=rand()%240;
+        pixelrand[i].color=rand()%colorRGB(255,255,255);
+    }
+
 	pixel1.color = colorRGB(34,139,34);
 	pixel2.color = colorRGB(34,139,34);
     pixel3.color = colorRGB(34,139,34);
@@ -89,6 +96,10 @@ void draw() {
         randRectangle(&pixel5, &pixel6, &pixel7, &pixel8, fbp, vinfo.xres, max);
         randRectangle(&pixel9, &pixel10, &pixel11, &pixel12, fbp, vinfo.xres, max);
         randRectangle(&pixel13, &pixel14, &pixel15, &pixel16, fbp, vinfo.xres, max);
+        for (j=0; j<40; j+=4)
+        {
+            randRectangle(pixelrand[j], pixelrand[j+1], pixelrand[j+2], pixelrand[j+3], fbp, vinfo.xres, max);
+        }
     }
     sleep(1);
     starField(fbp, max, colorRGB(255,255,255), 50);
