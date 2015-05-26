@@ -98,7 +98,7 @@ void draw() {
         randRectangle(&pixel13, &pixel14, &pixel15, &pixel16, fbp, vinfo.xres, max);
         for (j=0; j<40; j+=4)
         {
-            randRectangle(pixelrand[j], pixelrand[j+1], pixelrand[j+2], pixelrand[j+3], fbp, vinfo.xres, max);
+            randRectangle(&pixelrand[j], &pixelrand[j+1], &pixelrand[j+2], &pixelrand[j+3], fbp, vinfo.xres, max);
         }
     }
     sleep(1);
