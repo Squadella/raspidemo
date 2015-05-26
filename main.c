@@ -158,12 +158,19 @@ void draw() {
     open_ppm(palette, "toast.ppm");
     drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
     drawPalette(fbp2, palette, max, vinfo.yres, vinfo.xres);
-    sleep(2);
-    drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
-    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 1000);
+
 
     sleep(5);
 
+}
+
+drawPlasmaMain()
+{
+    int max;
+    max=vinfo.xres*vinfo.yres*3;
+    char *fbp2 = malloc(max*sizeof(char));
+    drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
+    planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 500);
 }
 
 // application entry point
@@ -233,51 +240,55 @@ int main(int argc, char* argv[])
     // close fb file
     close(fbfd);
 
-    //Reopening the framebuffer with other settings
-    //Initialisation of all the variables
-	long int lineSize, bufferSize, heightSize, maxi, height, width;
-
-	//Opening framebuffer
-	fbfd=open("/dev/fb0", O_RDWR);
-	if (!fbfd)
-	{
-		printf("Error: cannot open framebuffer device.\n");
-		printf("Try to run the executable file with root privileges.\n");
-		return(-1);
-	}
-
-	//Get fixed sreen information
-	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo))
-	{
-		printf("Error reading fixed information of the screen.\n");
-		return(-1);
+    // Open the file for reading and writing
+    fbfd = open("/dev/fb0", O_RDWR);
+    if (fbfd == -1) {
+        printf("Error: cannot open framebuffer device.\n");
+        return(1);
     }
+    printf("The framebuffer device was opened successfully.\n");
 
     // Get variable screen information
-	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo))
-	{
-		printf("Error reading variable information.\n");
-		return(-1);
-	}
+    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
+        printf("Error reading variable information.\n");
+    }
+    printf("Original %dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
 
-	//Calculate the size of the framebuffer
-	int depth=vinfo.bits_per_pixel;
-	lineSize=vinfo.xres*depth;
-	heightSize=vinfo.yres*depth;
-	bufferSize=lineSize*vinfo.yres/8;
-	maxi=bufferSize/4;
-	height=vinfo.yres;
-	width=vinfo.xres;
+    // Store for reset (copy vinfo to vinfo_orig)
+    memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
 
-	// map framebuffer to user memory
-	fbp = (int*)mmap(NULL, bufferSize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
-	int *fbp2=malloc(bufferSize * sizeof(int));
-	if ((int)fbp == -1)
-	{
-		printf("Failed to mmap the framebuffer.\n");
+    // Change variable info - force 8 bit and resolution
+    vinfo.bits_per_pixel = 24;
+    vinfo.xres = 160;
+    vinfo.yres = 120;
+    vinfo.xres_virtual = vinfo.xres;
+    vinfo.yres_virtual = vinfo.yres;
+    if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo)) {
+        printf("Error setting variable information.\n");
+    }
 
-		return(-1);
-	}
+    // Get fixed screen information
+    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
+        printf("Error reading fixed information.\n");
+    }
+
+    // map fb to user mem
+    screensize = finfo.smem_len;
+    fbp = (char*)mmap(0,
+              screensize,
+              PROT_READ | PROT_WRITE,
+              MAP_SHARED,
+              fbfd,
+              0);
+
+    if ((int)fbp == -1) {
+        printf("Failed to mmap.\n");
+    }
+    else {
+        // draw...
+        drawPlasmaMain();
+
+    }
 
     // cleanup
     // unmap fb file from memory
@@ -286,9 +297,9 @@ int main(int argc, char* argv[])
     if (ioctl(fbfd, FBIOPUT_VSCREENINFO, &orig_vinfo)) {
         printf("Error re-setting variable information.\n");
     }
-
     // close fb file
     close(fbfd);
+
 
     return 0;
 }
