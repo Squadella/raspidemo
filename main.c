@@ -167,8 +167,12 @@ void draw() {
 drawPlasmaMain()
 {
     int max;
+    char *palette = malloc((256*3)*sizeof(char));
     max=vinfo.xres*vinfo.yres*3;
     char *fbp2 = malloc(max*sizeof(char));
+    open_ppm(palette, "toast.ppm");
+    drawPalette(fbp, palette, max, vinfo.yres, vinfo.xres);
+    drawPalette(fbp2, palette, max, vinfo.yres, vinfo.xres);
     drawPlasma(fbp, fbp2, palette, max, vinfo.yres, vinfo.xres, 300);
     planeTransform(vinfo.yres, vinfo.xres, fbp, fbp2, 8, 500);
 }
