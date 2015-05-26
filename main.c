@@ -160,13 +160,16 @@ void draw() {
     lens(30, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     pixel1.x+=40;
     pixel1.y+=20;
-    lens(30, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
+    sleep(1);
+    lens(20, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     pixel1.x+=40;
     pixel1.y+=20;
-    lens(30, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
+    sleep(1);
+    lens(40, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
     pixel1.x-=70;
     pixel1.y+=50;
-    lens(30, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
+    sleep(1);
+    lens(50, 2, fbp, fbp2, max,  vinfo.xres, vinfo.yres, pixel1);
 
 
     sleep(2);
