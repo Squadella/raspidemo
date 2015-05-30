@@ -226,7 +226,7 @@ int main(int argc, char* argv[])
     // Store for reset (copy vinfo to vinfo_orig)
     memcpy(&orig_vinfo, &vinfo, sizeof(struct fb_var_screeninfo));
 
-    // Change variable info - force 8 bit and resolution
+    // Change variable info - force 24 bit and resolution
     vinfo.bits_per_pixel = 24;
     vinfo.xres = 320;
     vinfo.yres = 240;
