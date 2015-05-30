@@ -85,9 +85,9 @@ int main()
 		pixel2.y=300;
 		pixel2.color=colorRGB(0, 0, 0);
 		color2=colorRGB(255, 255, 255);
-
+		open_ppm(palette, "toast2.ppm");
 		fillImage(fbp, color, lineSize, maxi);
-		drawPlasma(fbp2, fbp, palette, maxi, height, width, 1000);
+		drawPlasma(fbp2, fbp, palette, maxi, height, width, 500);
 		sleep(1);
 		replaceColor(color, color2, fbp, maxi);
 		sleep(2);
@@ -96,6 +96,7 @@ int main()
 		color=colorRGB(255, 255, 255);
 		fillImage(fbp, color, lineSize, maxi);
 
+		open_ppm(palette, "fire2.ppm");
 		//drawCircle(pixel2, 100, fbp, width, height, maxi);
 		sleep(2);
 		color=0;
@@ -106,6 +107,8 @@ int main()
 		pixel.color=colorRGB(0,255,0);
 		beamOfLight(pixel, pixel2, 42, fbp, width, maxi, 0);
 		sleep(2);
+		replaceImage(fbp, fbp2, max);
+		planeTransform (height, width, fbp, fbp2, 6);
 		color2=0;
 		for(i=0; i<width; i++)
 			movingAllToCorner(fbp, maxi, color2, height, width);
