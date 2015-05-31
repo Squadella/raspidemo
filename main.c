@@ -72,6 +72,7 @@ int main()
 	while(1)
 	{
 		//Initialisation for drawing
+		
 		Pixel pixel, pixel2;
 		int color, color2;
 		int i;
