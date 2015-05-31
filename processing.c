@@ -693,7 +693,7 @@ void planeTransform (int height, int width, int *image1, int *image2, int mode, 
       mLUT[k++]=((int)bright);
     }
   }
-  applyPlaneTransform (mLUT, image1, image2, width, height);
+  applyPlaneTransform (mLUT, image1, image2, width, height, timer);
 }
 
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor)
