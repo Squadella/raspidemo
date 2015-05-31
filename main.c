@@ -90,12 +90,6 @@ int main()
 		fillImage(fbp, color, lineSize, maxi);
 		drawPlasma(fbp2, fbp, palette, maxi, height, width, 500);
 		sleep(1);
-		replaceColor(color, color2, fbp, maxi);
-		sleep(2);
-		open_ppm(fbp, "4");
-		sleep(1);
-		color=colorRGB(255, 255, 255);
-		fillImage(fbp, color, lineSize, maxi);
 
 		open_ppm(palette, "fire2.ppm");
 		//drawCircle(pixel2, 100, fbp, width, height, maxi);
@@ -108,7 +102,7 @@ int main()
 		pixel.color=colorRGB(0,255,0);
 		beamOfLight(pixel, pixel2, 42, fbp, width, maxi, 0);
 		sleep(2);
-		replaceImage(fbp, fbp2, maxi);
+		replaceImage(fbp2, fbp, maxi);
 		planeTransform (height, width, fbp, fbp2, 6);
 		color2=0;
 		for(i=0; i<width; i++)
