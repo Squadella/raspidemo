@@ -50,6 +50,9 @@ int main()
 	}
 
 	//Calculate the size of the framebuffer
+	vinfo.bits_per_pixel=32;
+	vinfo.yres=1920;
+	vinfo.xres=1080;
 	int depth=vinfo.bits_per_pixel;
 	lineSize=vinfo.xres*depth;
 	heightSize=vinfo.yres*depth;
