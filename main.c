@@ -72,7 +72,7 @@ int main()
 	while(1)
 	{
 		//Initialisation for drawing
-		
+
 		Pixel pixel, pixel2;
 		int color, color2;
 		int i;
@@ -108,7 +108,7 @@ int main()
 		pixel.color=colorRGB(0,255,0);
 		beamOfLight(pixel, pixel2, 42, fbp, width, maxi, 0);
 		sleep(2);
-		replaceImage(fbp, fbp2, max);
+		replaceImage(fbp, fbp2, maxi);
 		planeTransform (height, width, fbp, fbp2, 6);
 		color2=0;
 		for(i=0; i<width; i++)
