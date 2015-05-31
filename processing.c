@@ -588,10 +588,10 @@ void lens(int radius, int magFact, int *image1, int *image2, int max, int width,
   applyTransform(lensTrans, image1, image2, width, height, start, radius*2);
 }
 
-void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height)
+void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height, int timer)
 {
   int pixelcount, offset, u, v, adjustBright, r, g, b, color, timeShift;
-  for (timeShift= 0; timeShift<100; timeShift++)
+  for (timeShift= 0; timeShift<timer; timeShift++)
   {
     for (pixelcount=0; pixelcount<(width*height); pixelcount++)
     {
@@ -626,7 +626,7 @@ void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int he
   }
 }
 
-void planeTransform (int height, int width, int *image1, int *image2, int mode)
+void planeTransform (int height, int width, int *image1, int *image2, int mode, int timer)
 {
   int k=0, j, i;
   double u,v,bright=0, y, x, d, a, r;

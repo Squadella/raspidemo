@@ -62,9 +62,9 @@ void applyTransform(int transArray[], int *image1, int *image2, int width, int h
 ///Apply a lens transform the image2 and put it in image1.
 void lens(int radius, int magFact, int *image1, int *image2, int max, int width, int height, Pixel start);
 ///Apply a plane transform with a transform array, mLUT, to image2 and save it into image1.
-void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height);
+void applyPlaneTransform (int mLUT[],int *image1, int *image2, int width, int height, int timer);
 ///Different sort of plane transform applied to image2 and saved in imag1 depending of the mode.
-void planeTransform (int height, int width, int *image1, int *image2, int mode);
+void planeTransform (int height, int width, int *image1, int *image2, int mode, int timer);
 ///Creates a gradient color palette.
 void initGradientPalette(uint palette[256], RGBTriplet startColor, RGBTriplet endColor);
 ///Load fire effect into image1.

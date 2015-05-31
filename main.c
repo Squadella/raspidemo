@@ -103,13 +103,13 @@ int main()
 		beamOfLight(pixel, pixel2, 42, fbp, width, maxi, 0);
 		sleep(2);
 		replaceImage(fbp2, fbp, maxi);
-		planeTransform (height, width, fbp, fbp2, 6);
+		planeTransform (height, width, fbp, fbp2, 6, 500);
 		color2=0;
 		for(i=0; i<width; i++)
 			movingAllToCorner(fbp, maxi, color2, height, width);
 
 			open_ppm(fbp2, "4");
-		planeTransform (height, width, fbp, fbp2, 3);
+		planeTransform (height, width, fbp, fbp2, 3, 500);
 		int widthTemp=width/2, widthTemp2=width/2, heightTemp=height/2, heightTemp2=height/2;
 		if(height>width)
 			for (i=0; i<height; i++)
